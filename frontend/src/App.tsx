@@ -37,8 +37,10 @@ function apiPoint(d: Detection, i: number): FirePoint {
     lon: d.lon.toFixed(3),
     frp: d.frp.toFixed(1),
     conf: Math.round(d.confidence),
-    dist: '—',
-    dt: '—',
+    // Real partner evidence from the static GeoJSON (matched pairs only);
+    // '—' when the detection has no partner (unmatched / ambiguous).
+    dist: d.distance_km != null ? d.distance_km.toFixed(2) : '—',
+    dt: d.time_diff_hours != null ? d.time_diff_hours.toFixed(1) : '—',
     sat: d.satellite,
   }
 }
@@ -142,7 +144,7 @@ function Shell() {
         <h2>One selection. Every view updates.</h2>
 
         <div style={{ fontSize: 11, color: 'var(--text)', marginTop: 10, background: 'rgba(4,5,13,.52)', padding: '6px 10px', borderRadius: 8, display: 'inline-block', fontWeight: 600, textShadow: '0 1px 6px rgba(0,0,0,.85), 0 0 2px rgba(0,0,0,.9)' }} className="mono">
-          ▸ ALL NUMBERS BELOW ARE {isSample ? 'DEMO / SAMPLE VALUES FOR UI PREVIEW' : 'LIVE FROM THE FIRE FUSION API'}
+          ▸ ALL NUMBERS BELOW ARE {isSample ? 'DEMO / SAMPLE VALUES FOR UI PREVIEW' : 'REAL DATA — NASA FIRMS, JUL–SEP 2023'}
         </div>
 
         <KpiStrip season={season} />
@@ -181,9 +183,9 @@ function Shell() {
                 <div className="card">
                   <div className="card-h">
                     <b>Interactive Fire Map</b>
-                    <span id="mapMeta">Showing sample • click a lime point</span>
+                    <span id="mapMeta">{isSample ? 'Showing sample • click a lime point' : 'Real detections • click a lime point'}</span>
                   </div>
-                  <FireMap points={points} />
+                  <FireMap points={points} isSample={isSample} />
                 </div>
 
                 <div className="card" id="tour-calendar" style={{ marginTop: 12 }}>
