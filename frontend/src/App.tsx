@@ -59,8 +59,8 @@ function DownloadButton({ file, label }: { file: 'harmonized.csv' | 'comparison.
       a.click()
       URL.revokeObjectURL(url)
     } catch {
-      // Offline / demo: no backend file yet — same behaviour as the demo.
-      setNote('✓ Demo only — no file yet')
+      // Static file missing or offline — tell the user plainly.
+      setNote('✕ Download failed — try again')
       setTimeout(() => setNote(label), 1800)
     }
   }
