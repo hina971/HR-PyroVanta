@@ -4,10 +4,24 @@
 // No API keys, no live FIRMS calls at runtime — the backend serves
 // precomputed outputs only. If the backend is unreachable, callers
 // fall back to the embedded sample data in src/data/sample.ts.
+//
+// CONSOLE FIX — when the site is deployed (Vercel) and no VITE_API_URL is
+// set, there is no backend to call: localhost:8000 would mean the viewer's
+// own computer, which has no backend running, so every fetch fails with
+// ERR_CONNECTION_REFUSED and the browser logs it. In that case get()
+// rejects WITHOUT fetching, and callers fall back to sample data silently
+// — no failed requests, no red console lines. As soon as VITE_API_URL is
+// set (Render backend), fetches resume normally. Local dev (page on
+// localhost) still defaults to http://localhost:8000.
+const envUrl = (import.meta.env.VITE_API_URL as string | undefined)?.replace(/\/$/, '')
+const isLocalPage =
+  typeof window !== 'undefined' &&
+  (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
 
-export const API_BASE: string =
-  (import.meta.env.VITE_API_URL as string | undefined)?.replace(/\/$/, '') ||
-  'http://localhost:8000'
+export const API_BASE: string = envUrl || 'http://localhost:8000'
+
+// True when there is a real backend URL to call.
+const hasBackend = Boolean(envUrl) || isLocalPage
 
 export interface Meta {
   region: string
@@ -106,6 +120,10 @@ export interface Health {
 }
 
 async function get<T>(path: string, params?: Record<string, string>): Promise<T> {
+  // No backend configured on a deployed site — do not fire a request at
+  // localhost:8000 (it would fail with ERR_CONNECTION_REFUSED and log in
+  // the console). Reject immediately; callers fall back to sample data.
+  if (!hasBackend) throw new Error('No backend configured — using sample data')
   const url = new URL(`${API_BASE}/api/v1${path}`)
   if (params) {
     Object.entries(params).forEach(([k, v]) => url.searchParams.set(k, v))
