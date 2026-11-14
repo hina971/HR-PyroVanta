@@ -192,5 +192,5 @@ export const api = {
   },
   health: () => get<Health>('/health'),
   downloadUrl: (file: 'harmonized.csv' | 'comparison.csv') =>
-    `${API_BASE}/api/v1/download/${file}`,
+    `${import.meta.env.BASE_URL}data/${file}`,
 }
