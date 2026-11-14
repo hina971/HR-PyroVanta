@@ -11,8 +11,8 @@ export default function Footer() {
             Challenge 2026 • Team #786 • Challenge: Harmonization of MODIS and VIIRS
             Hot Spots
             <br />
-            Data: NASA FIRMS • MODIS C6.1 (Terra/Aqua) • VIIRS 375 m (NOAA-20) •
-            California, Jul–Sep 2023 case study
+            Data: NASA FIRMS • MODIS C6.1 (Terra/Aqua) • VIIRS 375 m (NOAA-20,
+            S-NPP) • California, Jul–Sep 2023 case study
           </div>
           <br />
           <span style={{ color: 'var(--text)' }}>
