@@ -96,9 +96,11 @@ function HeroParticles() {
 export default function Hero({
   season,
   points,
+  isSample,
 }: {
   season: SeasonNumbers
   points: FirePoint[]
+  isSample: boolean
 }) {
   const selectDay = useFireStore((s) => s.selectDay)
   const heroModis = useCountUp(season.modis, 1400)
@@ -120,9 +122,9 @@ export default function Hero({
           FireFusion <span style={{ color: 'var(--ember)' }}>AI</span>
         </div>
         <div className="top-links">
-          <span className="pill">NASA Space Apps 2026</span>
+          <span className="pill nasa">NASA Space Apps 2026</span>
           <span className="pill">Team #786</span>
-          <span className="pill live">● UI Demo</span>
+          <span className="pill live">● {isSample ? 'UI Demo' : 'Live'}</span>
           <button className="btn-ember" onClick={scrollToMission}>
             Explore the data ↓
           </button>
@@ -194,7 +196,7 @@ export default function Hero({
               </div>
             </div>
             <p
-              style={{ fontSize: 11, color: 'var(--muted2)', marginTop: 12 }}
+              style={{ fontSize: 11, color: 'var(--muted)', marginTop: 12 }}
               className="mono demo-note"
             >
               DEMO VALUES — REPRESENTATIVE SAMPLE FOR UI PREVIEW • FORMAT: NASA FIRMS •

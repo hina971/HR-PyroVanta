@@ -13,13 +13,13 @@ export default function Footer() {
           Data: NASA FIRMS • MODIS C6.1 (Terra/Aqua) • VIIRS 375 m (NOAA-20) •
           California, Jul–Sep 2023 case study
           <br />
-          <span style={{ color: 'var(--muted2)' }}>
+          <span style={{ color: 'var(--muted)' }}>
             This page is a UI demo with representative sample data to preview the
             design. The real app runs React + Vite + FastAPI on precomputed
             harmonized data.
           </span>
           <br />
-          <span style={{ color: 'var(--muted2)' }}>
+          <span style={{ color: 'var(--muted)' }}>
             Backdrop — real photographs only, nothing drawn or generated,
             colour-graded with light washes into the darker, muted Ember Dark
             nebula sky of the earlier version, the galactic band dimmed back down:
