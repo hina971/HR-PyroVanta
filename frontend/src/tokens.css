@@ -306,7 +306,7 @@ footer{position:relative;z-index:1}
 /* HERO EYEBROW — an inline-block so its border wraps as ONE pill even
    when the text runs to two lines; on phones the lines are BALANCED,
    so no orphan word ("2023") is left alone on the second line. */
-.eyebrow{display:inline-block;line-height:1.5}
+.eyebrow{display:inline-block;line-height:1.5;font-weight:600;font-style:italic}
 @media(max-width:760px){
   /* Round-20 follow-up: the pill is capped at 232px so it wraps into
      two BALANCED lines (no orphan "2023"). */
