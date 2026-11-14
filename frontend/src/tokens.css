@@ -32,6 +32,7 @@ button{font-family:inherit;cursor:pointer;min-height:40px}
 .top-links{display:flex;gap:8px;align-items:center}
 .pill{font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:6px 10px;border-radius:999px;border:1px solid var(--line);color:var(--muted);background:rgba(255,255,255,.02)}
 .pill.live{color:#0A0A0B;background:var(--match);border-color:var(--match);font-weight:700}
+.pill.nasa{color:#BFD9F5;background:rgba(47,107,255,.16);border-color:rgba(47,107,255,.55);font-weight:600}
 .btn-ember{background:linear-gradient(135deg,#FF7A22 0%,#E85D04 58%,#C2450A 100%);color:white;border:1px solid rgba(169,198,232,.38);padding:10px 16px;border-radius:999px;font-weight:600;font-size:13px;box-shadow:0 6px 22px rgba(232,93,4,.28), inset 0 1px 0 rgba(255,255,255,.28), inset 0 -1px 0 rgba(140,175,225,.35);transition:box-shadow .3s ease,filter .3s ease,transform .3s ease}
 .btn-ember:hover{filter:brightness(1.07);box-shadow:0 8px 28px rgba(232,93,4,.4), inset 0 1px 0 rgba(255,255,255,.32), inset 0 -1px 0 rgba(140,175,225,.45)}
 @media(max-width:640px){.top-links .pill:not(.live){display:none}.topbar{top:8px;width:calc(100% - 16px);padding:8px 10px 8px 14px}.topbar .btn-ember{display:none}.logo{font-size:16px;white-space:nowrap}.pill.live{white-space:nowrap;font-size:10px;padding:5px 8px}}
@@ -291,6 +292,15 @@ button{font-family:inherit;cursor:pointer;min-height:40px}
   .hero p.lead::before{content:"";position:absolute;inset:-14px -18px;z-index:-1;border-radius:16px;
     background:radial-gradient(115% 125% at 35% 50%, rgba(4,5,13,.82), rgba(4,5,13,.52) 55%, rgba(4,5,13,0) 80%)}
 }
+/* DEMO VALUES NOTE — the small note sits where Jupiter (bottom-right) and
+   Mars (bottom-left) station, so a planet can pass behind its lines. A soft
+   dark wash behind the note only, plus a text shadow, keeps it fully readable
+   where a planet passes behind it. Same technique as the desktop lead wash;
+   layout untouched. This was mobile-only; the desktop hero has the same
+   problem (the note crosses Mars), so it now applies at every width. */
+.demo-note{position:relative;z-index:0;text-shadow:0 1px 8px rgba(4,5,13,.9),0 0 3px rgba(4,5,13,.9)}
+.demo-note::before{content:"";position:absolute;inset:-8px -10px;z-index:-1;border-radius:10px;
+  background:radial-gradient(120% 130% at 40% 50%, rgba(4,5,13,.78), rgba(4,5,13,.45) 58%, rgba(4,5,13,0) 82%)}
 .shell{position:relative;z-index:1}
 footer{position:relative;z-index:1}
 /* HERO EYEBROW — an inline-block so its border wraps as ONE pill even
@@ -323,14 +333,6 @@ footer{position:relative;z-index:1}
   .planet-violet{width:112px;height:112px;left:auto;right:2%;top:auto;bottom:20px}
   .planet-ember{width:92px;height:92px;left:3%;right:auto;top:auto;bottom:20px}
   .planet-moon{width:96px;height:54px;left:35%;right:auto;top:68%;bottom:auto}
-  /* The small DEMO VALUES note sits in the bottom band where Jupiter
-     (bottom-right) and Mars (bottom-left) station on phones — a soft
-     dark wash behind the note only, plus a text shadow, keeps its
-     two lines fully readable where a planet passes behind them.
-     Same technique as the desktop lead wash; layout untouched. */
-  .demo-note{position:relative;z-index:0;text-shadow:0 1px 8px rgba(4,5,13,.9),0 0 3px rgba(4,5,13,.9)}
-  .demo-note::before{content:"";position:absolute;inset:-8px -10px;z-index:-1;border-radius:10px;
-    background:radial-gradient(120% 130% at 40% 50%, rgba(4,5,13,.78), rgba(4,5,13,.45) 58%, rgba(4,5,13,0) 82%)}
   /* Round-20 repair: the ISS moves DOWN and clear of the eyebrow.
      Beside the pill (top:8.5%, 112px) its solar panels still lay
      across the eyebrow's "JUL–SEP 2023" line, so it now stations

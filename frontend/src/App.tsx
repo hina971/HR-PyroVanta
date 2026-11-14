@@ -135,7 +135,7 @@ function Shell() {
   return (
     <>
       <SpaceBackdrop />
-      <Hero season={season} points={points} />
+      <Hero season={season} points={points} isSample={isSample} />
 
       <main className="shell" id="mission">
         <div className="section-label">Act 2 — Mission Control</div>
