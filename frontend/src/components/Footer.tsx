@@ -1,6 +1,6 @@
-// Footer — attribution, products, limitations, and the demo's photo
-// credits, copied EXACTLY from the approved demo. Do not edit the
-// credit text: every space photograph is real, and its source is named.
+// Footer — attribution and the real photo credits.
+// The demo text is removed; only the project lines and the
+// reference-images description remain.
 export default function Footer() {
   return (
     <footer>
@@ -13,13 +13,7 @@ export default function Footer() {
           Data: NASA FIRMS • MODIS C6.1 (Terra/Aqua) • VIIRS 375 m (NOAA-20) •
           California, Jul–Sep 2023 case study
           <br />
-          <span style={{ color: 'var(--muted)' }}>
-            This page is a UI demo with representative sample data to preview the
-            design. The real app runs React + Vite + FastAPI on precomputed
-            harmonized data.
-          </span>
-          <br />
-          <span style={{ color: 'var(--muted)' }}>
+          <span style={{ color: 'var(--text)' }}>
             Backdrop — real photographs only, nothing drawn or generated,
             colour-graded with light washes into the darker, muted Ember Dark
             nebula sky of the earlier version, the galactic band dimmed back down:
@@ -48,13 +42,6 @@ export default function Footer() {
             never overlaps Earth. The only effects are light itself: a live
             starfield, meteors and a comet.
           </span>
-        </div>
-        <div className="mono" style={{ fontSize: 11 }}>
-          EMBER DARK v1.0
-          <br />
-          MODIS #FFB020 • VIIRS #22D3EE
-          <br />
-          MATCH #A3E635 • AMB #FB7185
         </div>
       </div>
     </footer>
