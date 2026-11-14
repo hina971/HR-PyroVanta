@@ -140,7 +140,7 @@ export default function Hero({
               className="pill eyebrow"
               style={{ color: 'var(--amber)', borderColor: 'rgba(255,176,32,.35)' }}
             >
-              MODIS + VIIRS HARMONIZATION • CALIFORNIA • JUL–SEP 2023
+              "MODIS + VIIRS HARMONIZATION • CALIFORNIA • JUL–SEP 2023"
             </span>
             <h1>
               Two satellites
