@@ -254,6 +254,7 @@ export function FireDot({ p }: { p: FirePoint }) {
       onClick={(e) => {
         e.stopPropagation()
         selectPoint(p.id)
+        document.getElementById('inspector')?.scrollIntoView({ behavior: 'smooth', block: 'center' })
       }}
     ></div>
   )
