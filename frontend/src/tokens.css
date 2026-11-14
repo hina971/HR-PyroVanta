@@ -1,0 +1,518 @@
+/* FireFusion AI — tokens.css
+   Ported verbatim from the FINAL approved demo (round 20, rated 8/10, "Perfect"):
+   ~/workspace/your_files/firefusion-ai-ui-demo/firefusion-ai-ui-demo.html
+   The demo's single <style> block, unchanged except:
+   - the 12 inlined base64 photos are now real files in /assets/
+     (same bytes, same order: nebula, milkyway, galaxy-a, galaxy-b, saturn,
+      moon, earth, jupiter, mars, iss, hubble)
+   - the Google Fonts <link> is gone; fonts come from @fontsource (see main.tsx)
+   Do NOT redesign anything here — this file is the visual truth. */
+@import "tailwindcss";
+
+:root{
+  --bg:#04050D; --surface:rgba(16,18,33,.96); --surface2:#1B1D2E; --line:#2B2D44;
+  --text:#F5F2EA; --muted:#A6A3B8; --muted2:#716E85;
+  --ember:#FF6B1A; --amber:#FFB020; --cyan:#22D3EE; --match:#A3E635; --amb:#FB7185; --danger:#EF4444;
+  --violet:#8B5CF6; --indigo:#6366F1; --nebula:#2DD4BF;
+  --blue:#2F6BFF; --sky:#38BDF8; --deepblue:#1D4ED8;
+  --radius:16px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif;overflow-x:hidden}
+a{color:inherit}
+button{font-family:inherit;cursor:pointer;min-height:40px}
+.mono{font-family:"JetBrains Mono",monospace}
+.display{font-family:"Unbounded",sans-serif}
+
+/* TOP BAR */
+.topbar{position:fixed;top:12px;left:50%;transform:translateX(-50%);width:min(1240px,calc(100% - 24px));z-index:50;display:flex;align-items:center;justify-content:space-between;padding:10px 12px 10px 20px;border-radius:999px;background:linear-gradient(120deg, rgba(22,19,18,.60), rgba(14,14,18,.55) 55%, rgba(18,20,26,.60));backdrop-filter:blur(18px) saturate(1.25);-webkit-backdrop-filter:blur(18px) saturate(1.25);border:1px solid rgba(255,255,255,.13);box-shadow:0 12px 40px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.14)}
+.logo{display:flex;align-items:center;gap:10px;font-family:"Unbounded";font-weight:700;font-size:16px;letter-spacing:0}
+.logo-mark{width:32px;height:32px;border-radius:9px;background:#1a0f08;border:1px solid rgba(255,107,26,.4);display:grid;place-items:center;font-size:17px}
+.top-links{display:flex;gap:8px;align-items:center}
+.pill{font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:6px 10px;border-radius:999px;border:1px solid var(--line);color:var(--muted);background:rgba(255,255,255,.02)}
+.pill.live{color:#0A0A0B;background:var(--match);border-color:var(--match);font-weight:700}
+.btn-ember{background:linear-gradient(135deg,#FF7A22 0%,#E85D04 58%,#C2450A 100%);color:white;border:1px solid rgba(169,198,232,.38);padding:10px 16px;border-radius:999px;font-weight:600;font-size:13px;box-shadow:0 6px 22px rgba(232,93,4,.28), inset 0 1px 0 rgba(255,255,255,.28), inset 0 -1px 0 rgba(140,175,225,.35);transition:box-shadow .3s ease,filter .3s ease,transform .3s ease}
+.btn-ember:hover{filter:brightness(1.07);box-shadow:0 8px 28px rgba(232,93,4,.4), inset 0 1px 0 rgba(255,255,255,.32), inset 0 -1px 0 rgba(140,175,225,.45)}
+@media(max-width:640px){.top-links .pill:not(.live){display:none}.topbar{top:8px;width:calc(100% - 16px);padding:8px 10px 8px 14px}.topbar .btn-ember{display:none}.logo{font-size:16px;white-space:nowrap}.pill.live{white-space:nowrap;font-size:10px;padding:5px 8px}}
+
+/* HERO */
+.hero{position:relative;min-height:92vh;display:flex;flex-direction:column;justify-content:center;padding:110px 20px 40px;overflow:hidden}
+#particles{position:absolute;inset:0;width:100%;height:100%;opacity:.9}
+.hero-glow{position:absolute;width:760px;height:760px;border-radius:50%;background:radial-gradient(circle, rgba(255,140,50,.15) 0%, rgba(120,145,185,.08) 46%, transparent 68%);top:8%;right:-10%;pointer-events:none}
+.hero-inner{position:relative;max-width:1180px;margin:0 auto;width:100%;display:grid;grid-template-columns:1.05fr .95fr;gap:32px;align-items:center}
+@media(max-width:900px){.hero-inner{grid-template-columns:1fr}}
+.hero h1{font-family:"Unbounded";font-weight:700;font-size:clamp(30px,4.6vw,54px);line-height:1.12;letter-spacing:0;margin:14px 0 16px}
+.hero h1 em{font-style:normal;color:var(--amber)}
+.hero h1 span{color:#A9C6E8}
+.hero p.lead{color:#CFC9BC;font-size:17px;line-height:1.6;max-width:520px;margin:0}
+.hero-cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+.btn-ghost{background:rgba(150,175,215,.07);color:var(--text);border:1px solid rgba(169,198,232,.42);padding:11px 18px;border-radius:999px;font-weight:600;box-shadow:inset 0 1px 0 rgba(255,255,255,.08);transition:background .3s ease,border-color .3s ease}
+.btn-ghost:hover{background:rgba(150,175,215,.15);border-color:rgba(169,198,232,.65)}
+.hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:28px;max-width:560px}
+.hstat{background:rgba(16,16,21,.95);border:1px solid var(--line);border-radius:14px;padding:14px;box-shadow:0 14px 34px rgba(0,0,0,.35)}
+.hstat b{font-family:"Unbounded";font-weight:600;font-size:21px;display:block}
+.hstat span{font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+.dot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:6px;vertical-align:middle}
+
+/* SPACE BACKDROP — starfield, nebulas, floating planets behind the whole UI */
+.space-bg{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;background:
+  radial-gradient(1200px 760px at 85% -10%, rgba(255,120,60,.16), rgba(90,80,180,.12) 46%, transparent 68%),
+  radial-gradient(1000px 700px at -10% 30%, rgba(40,90,200,.16), rgba(255,140,90,.08) 52%, transparent 68%),
+  radial-gradient(1100px 850px at 110% 75%, rgba(120,70,180,.12), rgba(255,107,26,.08) 50%, transparent 68%),
+  radial-gradient(760px 540px at 20% 95%, rgba(20,140,160,.12), rgba(90,80,180,.08) 55%, transparent 70%),
+  linear-gradient(160deg,#070B2E 0%, #0B1038 34%, #120E33 58%, #0A0A24 100%)}
+#starfield{position:absolute;inset:0;width:100%;height:100%}
+.nebula-photo{position:absolute;inset:0;background:url(/assets/nebula.jpg) center 28%/cover no-repeat;opacity:.55}
+.nebula-scrim{position:absolute;inset:0;background:linear-gradient(180deg, rgba(6,8,28,.5), rgba(7,7,24,.62) 52%, rgba(6,6,20,.85))}
+
+/* MILKY WAY — a REAL photograph of the galactic centre, sweeping diagonally behind everything,
+   angled like the reference: a band running from lower-left to upper-right,
+   DIMMED back down to the darker, muted grade of the earlier version */
+.milkyway{position:absolute;left:50%;top:48%;width:185vmax;height:125vmax;transform:translate(-50%,-50%) rotate(-31deg);
+  background:url(/assets/milkyway.jpg) center/cover no-repeat;opacity:.42;mix-blend-mode:screen;
+  -webkit-mask-image:radial-gradient(ellipse 64% 54% at 50% 50%, #000 30%, rgba(0,0,0,.6) 58%, transparent 78%);
+  mask-image:radial-gradient(ellipse 64% 54% at 50% 50%, #000 30%, rgba(0,0,0,.6) 58%, transparent 78%)}
+
+/* COSMOS WASH — warm and cool light gradients over the real
+   photographs, now turned right DOWN (opacity .18): the vivid galaxy
+   grade was retired at the user's request in favour of the OLDER,
+   DARKER, muted Ember Dark sky, so only a faint hint of the warm core
+   remains. No animation and no transform, so scrolling stays
+   butter-smooth and no blend above it is disturbed. */
+.cosmos-wash{position:absolute;inset:0;mix-blend-mode:screen;opacity:.18;background:
+  radial-gradient(560px 380px at 52% 46%, rgba(255,244,214,.5), rgba(255,196,120,.28) 42%, transparent 70%),
+  radial-gradient(1100px 480px at 50% 50%, rgba(255,150,110,.20), rgba(226,110,160,.13) 52%, transparent 74%),
+  radial-gradient(900px 620px at 88% 6%, rgba(214,110,70,.20), rgba(150,60,120,.10) 55%, transparent 72%),
+  radial-gradient(820px 600px at 4% 88%, rgba(38,170,190,.20), rgba(50,90,200,.12) 55%, transparent 74%),
+  radial-gradient(1000px 700px at 16% 12%, rgba(70,90,220,.16), transparent 65%),
+  radial-gradient(900px 640px at 82% 88%, rgba(110,70,200,.15), transparent 68%)}
+
+/* SPIRAL GALAXIES — REAL Hubble photographs, slowly turning */
+.galaxy{position:absolute;will-change:transform;mix-blend-mode:screen;
+  -webkit-mask-image:radial-gradient(circle, #000 52%, rgba(0,0,0,.6) 62%, transparent 72%);mask-image:radial-gradient(circle, #000 52%, rgba(0,0,0,.6) 62%, transparent 72%)}
+.galaxy-a{width:280px;height:280px;right:29%;left:auto;top:27%;opacity:.95;
+  background:url(/assets/galaxy-a.jpg) center/contain no-repeat;
+  animation:spinSlow 120s linear infinite}
+.galaxy-b{width:220px;height:220px;left:45%;right:auto;top:4%;bottom:auto;opacity:.92;
+  background:url(/assets/galaxy-b.jpg) center/contain no-repeat;
+  animation:spinSlow 95s linear infinite reverse}
+@keyframes spinSlow{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+
+/* The nebula washes are plain radial gradients that already fade to transparent —
+   no CSS blur filter: blurring three viewport-sized layers forced a full repaint
+   of each on every scroll frame and was a major source of scroll lag. */
+.nebula{position:absolute;border-radius:50%;opacity:.48}
+.nebula-a{width:640px;height:640px;right:-160px;top:20%;background:radial-gradient(circle, rgba(255,150,80,.28) 0%, rgba(190,90,160,.18) 46%, transparent 68%)}
+.nebula-b{width:560px;height:560px;left:-180px;top:56%;background:radial-gradient(circle, rgba(70,110,220,.22) 0%, rgba(255,130,80,.15) 52%, transparent 70%)}
+.nebula-c{width:480px;height:480px;right:10%;bottom:-200px;background:radial-gradient(circle, rgba(255,130,90,.18) 0%, rgba(120,80,210,.18) 50%, transparent 70%)}
+/* PLANETS — REAL NASA mission photographs in the PREVIOUS version's
+   arrangement, over the OLD DARKER, muted Ember Dark sky, EVERY ONE
+   FULLY ON THE PAGE: no planet or spacecraft spills past any edge, at
+   any scroll position. Saturn TOP-LEFT behind the hero headline,
+   exactly where it sat in the approved version; Earth RAISED UP to the
+   TOP-RIGHT; Jupiter BOTTOM-RIGHT; Mars BOTTOM-LEFT; the Moon small
+   MID-PAGE. The ISS is ENLARGED at the TOP-CENTRE, and Hubble is back,
+   fitted into the left column BETWEEN Saturn above it and Mars below
+   it, with clear space on both sides. The bottom row (Jupiter, Mars)
+   and every repositioned body carry data-depth="0", so scroll parallax
+   can never push a body past an edge or out of its station — their own
+   float / drift animations are untouched. No negative left/right
+   offsets remain on any planet or spacecraft. */
+.planet{position:absolute;border-radius:50%;will-change:transform;background-repeat:no-repeat}
+/* Saturn, TOP-LEFT in its original approved position behind the hero
+   headline, with SLOW ORBITAL MOTION. The photograph is NASA/ESA Hubble's
+   Saturn portrait: the COMPLETE ring system sits well inside the frame with black
+   space all around it, so nothing can crop. The photo lives on ::before (whole,
+   contain, no mask) with mix-blend screen melting its black background into the
+   starfield. BLEND ISOLATION: the screen blend only reaches the nebula behind
+   Saturn if NO ancestor between the photo and the backdrop creates a stacking
+   context — a transform animation, will-change:transform, or the parallax
+   `translate` property on this container each isolate the blend inside the
+   container's own transparent box, leaving the photo's black background a solid
+   rectangle. So this container carries NO animation, NO will-change and is
+   excluded from the parallax layers; the drift instead animates the photo and
+   the moonlet themselves via the individual translate/rotate properties (the
+   blend element's own motion never isolates its own blend — the same reason
+   Earth's float + blend works). A small moonlet (the real full-Moon photograph,
+   ::after) circles Saturn IN the ring plane: nearer and larger as it crosses in
+   front, farther and smaller behind, where the screen-blended photo occludes it
+   exactly as a real moon passing behind the rings would. */
+.planet-ringed{width:440px;height:205px;left:1.5%;right:auto;top:2.5%;border-radius:0;
+  will-change:auto}
+.planet-ringed::before{content:"";position:absolute;inset:0;z-index:1;
+  background:url(/assets/saturn.jpg) center/contain no-repeat;
+  mix-blend-mode:screen;opacity:.94;
+  animation:saturnDriftT 52s ease-in-out infinite}
+.planet-ringed::after{content:"";position:absolute;left:50%;top:50%;z-index:2;
+  width:26px;height:26px;margin:-13px 0 0 -13px;border-radius:50%;
+  background:url(/assets/moon.jpg) center/266% auto no-repeat;
+  box-shadow:inset -6px -5px 10px rgba(0,0,0,.5), 0 0 14px rgba(220,228,240,.25);
+  animation:moonOrbit 30s linear infinite, saturnDriftT 52s ease-in-out infinite;will-change:transform}
+/* The drift animates the individual translate/rotate properties, NOT the
+   transform property, so on the moonlet it composes with (never overrides) the
+   orbit's transform animation. Same path and tilt as the old group drift. */
+@keyframes saturnDriftT{
+  0%{translate:0 0;rotate:-1.1deg}
+  25%{translate:16px 9px;rotate:0deg}
+  50%{translate:0 16px;rotate:1.1deg}
+  75%{translate:-16px 7px;rotate:0deg}
+  100%{translate:0 0;rotate:-1.1deg}}
+@keyframes moonOrbit{
+  0%{transform:translate(168px,0) scale(1);z-index:2}
+  12.5%{transform:translate(119px,16px) scale(1.04);z-index:2}
+  25%{transform:translate(0,22px) scale(1.08);z-index:2}
+  37.5%{transform:translate(-119px,16px) scale(1.04);z-index:2}
+  49%{transform:translate(-168px,0) scale(1);z-index:2}
+  50%{transform:translate(-168px,0) scale(1);z-index:0}
+  62.5%{transform:translate(-119px,-16px) scale(.96);z-index:0}
+  75%{transform:translate(0,-22px) scale(.92);z-index:0}
+  87.5%{transform:translate(119px,-16px) scale(.96);z-index:0}
+  99%{transform:translate(168px,0) scale(1);z-index:0}
+  100%{transform:translate(168px,0) scale(1);z-index:2}}
+/* Earth, LARGE in the TOP-RIGHT corner — moved UP from the bottom
+   corner at the user's request, back to the previous version's
+   arrangement. NO circular frame, NO disc. The whole photograph
+   is shown the way Saturn is handled: contain in a frame matching the
+   photo's own aspect, mix-blend screen so its black surround melts into
+   the nebula, and a radial mask feathering the frame edges to
+   transparent. The disc measured from the photo: ~52% of its width,
+   centred at (50%, 51%). Top-anchored at 5% with zero scroll parallax
+   (data-depth="0"), so the whole disc stays fully on the page and
+   Hubble — now stationed on the far left — can never overlap it. */
+.planet-ice{width:392px;height:269px;left:auto;right:1.2%;top:5%;bottom:auto;border-radius:0;
+  background-image:url(/assets/earth.jpg);background-position:center;background-size:contain;
+  mix-blend-mode:screen;opacity:.96;
+  -webkit-mask-image:radial-gradient(ellipse 60% 60% at 50% 51%, #000 76%, transparent 96%);
+  mask-image:radial-gradient(ellipse 60% 60% at 50% 51%, #000 76%, transparent 96%);
+  animation:floatEarth 23s ease-in-out infinite}
+/* Earth's float is deliberately gentle (±7px), so the disc stays in
+   its raised top-right station throughout the cycle. */
+@keyframes floatEarth{0%,100%{transform:translateY(0)}50%{transform:translateY(7px)}}
+/* Jupiter, bottom-right — its station in the previous version's
+   arrangement, sitting FULLY inside the right edge. Its photograph's
+   disc fills its square frame, so it keeps its round presentation.
+   Bottom-anchored 24px up — more than its float's 8px downward / ±6px
+   sideways travel — with zero scroll parallax (data-depth="0"), so it
+   never spills off the bottom or the right at the end of the page. */
+.planet-violet{width:196px;height:196px;left:auto;right:1%;top:auto;bottom:24px;
+  background-image:url(/assets/jupiter.jpg);background-position:center;background-size:109%;
+  box-shadow:0 0 56px rgba(255,170,90,.26), inset -16px -14px 38px rgba(0,0,0,.35);
+  animation:floatC 15s ease-in-out infinite}
+/* Mars, bottom-left corner — the planet lower to Saturn in the left
+   column, with Hubble fitted in the sky between the two of them.
+   Bottom-anchored 24px up with zero scroll parallax (data-depth="0"),
+   so it stays fully on the page. Same presentation: its disc fills
+   its frame. */
+.planet-ember{width:172px;height:172px;left:1%;right:auto;top:auto;bottom:24px;
+  background-image:url(/assets/mars.jpg);background-position:center;background-size:103%;
+  box-shadow:0 0 46px rgba(255,107,26,.38), inset -12px -10px 28px rgba(0,0,0,.35);
+  animation:floatB 13s ease-in-out infinite reverse}
+/* The Moon, small MID-PAGE — its station in the previous version's
+   arrangement, floating centre-left below the hero headline, clear of
+   Hubble's column on its left and of every planet. Zero scroll
+   parallax (data-depth="0"), so it holds its station. Same de-framed
+   treatment as Earth: whole photograph, screen blend, feathered mask,
+   no disc, no ring. Disc measured from the photo: ~38% of its width,
+   centred at (49.5%, 51.7%). */
+.planet-moon{width:136px;height:77px;left:30%;right:auto;top:55%;bottom:auto;border-radius:0;
+  background-image:url(/assets/moon.jpg);background-position:center;background-size:contain;
+  mix-blend-mode:screen;opacity:.95;
+  -webkit-mask-image:radial-gradient(ellipse 44% 66% at 49.5% 51.5%, #000 72%, transparent 95%);
+  mask-image:radial-gradient(ellipse 44% 66% at 49.5% 51.5%, #000 72%, transparent 95%);
+  animation:floatC 11s ease-in-out infinite}
+
+/* SATELLITE — a 100% REAL PHOTOGRAPH of a real spacecraft, in its own open
+   corridor of sky and IN MOTION. The ISS was photographed against PURE
+   BLACK space from a departing crew vehicle with the whole station inside
+   the frame — so screen-blend lifts the spacecraft cleanly out of its
+   photograph: no frame, no edges, no drawn art, nothing generated. (The old
+   TIROS portrait sat on a lighter studio backdrop whose grey box screen-blend
+   could not hide — that is why it was replaced.) Its drift animation runs on
+   the photograph itself (the blend element), never on a parent — the same
+   blend-isolation rule Saturn taught: an animated ancestor would wall the
+   blend off and revive the black-box look. Its parallax depth is kept shallow,
+   so scrolling eases it only a little and never drags it across a card. */
+.sat-photo{position:absolute;background-repeat:no-repeat;background-position:center;will-change:transform;pointer-events:none;
+  /* A radial mask feathers the photograph's rectangular edges to transparent,
+     so no straight photo edge can ever show against the nebula. The feather band
+     sits outside every part of the spacecraft, so the craft itself stays
+     fully opaque. */
+  -webkit-mask-image:radial-gradient(ellipse 90% 90% at 50% 50%, #000 80%, transparent 99%);
+  mask-image:radial-gradient(ellipse 90% 90% at 50% 50%, #000 80%, transparent 99%)}
+/* The ISS flies across the TOP-CENTRE of the sky, ENLARGED at the
+   user's request (440px wide — the video version's station read too
+   small) and shifted a little LOWER on the same straight flight path
+   (same left 36%, same drift): at left 36% its swept drift path (±46px
+   — the wide arc and bob of issDrift) still clears Saturn's ring on
+   the left and Earth's disc on the right at every phase. Zero scroll
+   parallax (data-depth="0"), so the whole station stays fully on the
+   page. Its drift animation itself is UNCHANGED. Transform-only, so
+   the motion stays compositor-driven. */
+.sat-iss{width:440px;height:278px;left:36%;right:auto;top:6.5%;bottom:auto;
+  background-image:url(/assets/iss.jpg);background-size:contain;
+  mix-blend-mode:screen;opacity:.94;
+  animation:issDrift 34s ease-in-out infinite}
+@keyframes issDrift{
+  0%,100%{transform:translate(0,0) rotate(0deg)}
+  25%{transform:translate(46px,14px) rotate(1.4deg)}
+  50%{transform:translate(16px,28px) rotate(.4deg)}
+  75%{transform:translate(-42px,10px) rotate(-1.6deg)}}
+/* HUBBLE — back in the sky, fitted into the LEFT column between Saturn
+   above it (top-left) and Mars below it (bottom-left), with clear space
+   on both sides: Saturn's ring ends ~160px above Hubble's frame and
+   Mars's disc starts ~160px below it at desktop height, and Hubble's
+   drift is deliberately LIMITED (±7px, under half a degree of tumble)
+   so it can never wander into either neighbour. Same real-photograph
+   treatment as the ISS: shot against black space, screen blend, feathered
+   mask, zero scroll parallax (data-depth="0") so its fitted position
+   never shifts. It no longer sits anywhere near Earth. */
+.sat-hubble{width:268px;height:201px;left:7.5%;right:auto;top:41%;bottom:auto;
+  background-image:url(/assets/hubble.jpg);background-size:contain;
+  mix-blend-mode:screen;opacity:.95;
+  animation:hubbleDrift 30s ease-in-out infinite}
+@keyframes hubbleDrift{
+  0%,100%{transform:translate(0,0) rotate(0deg)}
+  50%{transform:translate(7px,5px) rotate(.4deg)}}
+@keyframes floatA{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-26px) rotate(1.5deg)}}
+@keyframes floatB{0%,100%{transform:translateY(0)}50%{transform:translateY(20px)}}
+@keyframes floatC{0%,100%{transform:translateY(0) translateX(0)}33%{transform:translateY(-14px) translateX(6px)}66%{transform:translateY(8px) translateX(-5px)}}
+.hero{z-index:1}
+.hero h1{text-shadow:0 2px 26px rgba(255,120,40,.22), 0 2px 60px rgba(10,12,24,.65)}
+/* DESKTOP LEAD WASH — on wide screens Hubble's station (left 7.5%,
+   top 41%) crosses the hero paragraph's left lines. A soft dark wash
+   sits behind the paragraph ONLY (a pseudo-element, so the text's
+   layout, width and line breaks are untouched) and the words stay
+   fully readable where the telescope passes behind them. On phones
+   Hubble is stationed away from the paragraph instead, so no wash
+   is needed there. */
+@media(min-width:761px){
+  .hero p.lead{position:relative;z-index:0}
+  .hero p.lead::before{content:"";position:absolute;inset:-14px -18px;z-index:-1;border-radius:16px;
+    background:radial-gradient(115% 125% at 35% 50%, rgba(4,5,13,.82), rgba(4,5,13,.52) 55%, rgba(4,5,13,0) 80%)}
+}
+.shell{position:relative;z-index:1}
+footer{position:relative;z-index:1}
+/* HERO EYEBROW — an inline-block so its border wraps as ONE pill even
+   when the text runs to two lines; on phones the lines are BALANCED,
+   so no orphan word ("2023") is left alone on the second line. */
+.eyebrow{display:inline-block;line-height:1.5}
+@media(max-width:760px){
+  /* Round-20 follow-up: the pill is capped at 232px so it wraps into
+     two BALANCED lines (no orphan "2023"). */
+  .eyebrow{font-size:10px;letter-spacing:.05em;padding:7px 12px;text-wrap:balance;max-width:232px}
+  /* Mobile sky mirrors desktop's arrangement in separate bands, and
+     EVERY body stays fully inside the page here too — no negative
+     offsets anywhere. Round-20 hero pass: on a phone the hero text
+     runs almost the full width, so Earth, Hubble and the ISS are
+     moved / shrunk OUT of the text column into the pockets of sky
+     the text never reaches — Saturn top-left in its original
+     position (2%); the ISS small on the right at 29.5%, stationed
+     BELOW the eyebrow in the open sky beside the headline's last
+     two lines, clear of the eyebrow, the headline words and the
+     paragraph below; Earth down the
+     right side (57.5%) beside the CTA buttons, its disc clear of
+     every headline and paragraph line; Hubble low in the left
+     column (bottom 132px), still between Saturn above it and Mars
+     below it; the Moon mid-page lower (68%), Jupiter bottom-right
+     and Mars bottom-left — so no float / drift cycle can carry any
+     body into a neighbour, a text line, or off any screen edge. */
+  .planet-ringed{width:248px;height:115px;left:2%;right:auto;top:2%}
+  .planet-ringed::after{width:15px;height:15px;margin:-7.5px 0 0 -7.5px;animation-name:moonOrbitS, saturnDriftT}
+  .planet-ice{width:164px;height:113px;left:auto;right:1.5%;top:57.5%;bottom:auto}
+  .planet-violet{width:112px;height:112px;left:auto;right:2%;top:auto;bottom:20px}
+  .planet-ember{width:92px;height:92px;left:3%;right:auto;top:auto;bottom:20px}
+  .planet-moon{width:96px;height:54px;left:35%;right:auto;top:68%;bottom:auto}
+  /* The small DEMO VALUES note sits in the bottom band where Jupiter
+     (bottom-right) and Mars (bottom-left) station on phones — a soft
+     dark wash behind the note only, plus a text shadow, keeps its
+     two lines fully readable where a planet passes behind them.
+     Same technique as the desktop lead wash; layout untouched. */
+  .demo-note{position:relative;z-index:0;text-shadow:0 1px 8px rgba(4,5,13,.9),0 0 3px rgba(4,5,13,.9)}
+  .demo-note::before{content:"";position:absolute;inset:-8px -10px;z-index:-1;border-radius:10px;
+    background:radial-gradient(120% 130% at 40% 50%, rgba(4,5,13,.78), rgba(4,5,13,.45) 58%, rgba(4,5,13,0) 82%)}
+  /* Round-20 repair: the ISS moves DOWN and clear of the eyebrow.
+     Beside the pill (top:8.5%, 112px) its solar panels still lay
+     across the eyebrow's "JUL–SEP 2023" line, so it now stations
+     at top:29.5% on the right, in the open sky beside the
+     headline's last two lines: at 96px wide its frame starts at
+     ~290px, right of where "We show where" ends (~272px), and its
+     bottom (~310px, +9px at the drift's lowest) stays above the
+     hero paragraph's first line (~326px) — so at every drift
+     extreme (issDriftS: −13px left, +9px down) the station clears
+     the eyebrow above it, the headline words on its left and the
+     paragraph below. Same small drift, unchanged. Desktop's ISS
+     (top-centre, 440px, issDrift) is untouched. */
+  .sat-iss{width:96px;height:61px;right:1%;left:auto;top:29.5%;animation-name:issDriftS}
+  .sat-hubble{width:138px;height:104px;left:3%;right:auto;top:auto;bottom:132px;animation-name:hubbleDriftS}
+  .galaxy-a{width:170px;height:170px;left:32%;right:auto;top:50%}
+  .galaxy-b{width:140px;height:140px;right:6%;left:auto;top:28%;bottom:auto}
+  .milkyway{opacity:.38}
+  .cosmos-wash{opacity:.16}
+  .nebula{opacity:.42}
+  .comet{display:none}
+}
+@keyframes issDriftS{
+  0%,100%{transform:translate(0,0) rotate(0deg)}
+  25%{transform:translate(14px,5px) rotate(1deg)}
+  50%{transform:translate(5px,9px) rotate(.3deg)}
+  75%{transform:translate(-13px,4px) rotate(-1.1deg)}}
+@keyframes hubbleDriftS{
+  0%,100%{transform:translate(0,0) rotate(0deg)}
+  50%{transform:translate(4px,3px) rotate(.3deg)}}
+@keyframes moonOrbitS{
+  0%{transform:translate(96px,0) scale(1);z-index:2}
+  12.5%{transform:translate(68px,9px) scale(1.04);z-index:2}
+  25%{transform:translate(0,13px) scale(1.08);z-index:2}
+  37.5%{transform:translate(-68px,9px) scale(1.04);z-index:2}
+  49%{transform:translate(-96px,0) scale(1);z-index:2}
+  50%{transform:translate(-96px,0) scale(1);z-index:0}
+  62.5%{transform:translate(-68px,-9px) scale(.96);z-index:0}
+  75%{transform:translate(0,-13px) scale(.92);z-index:0}
+  87.5%{transform:translate(68px,-9px) scale(.96);z-index:0}
+  99%{transform:translate(96px,0) scale(1);z-index:0}
+  100%{transform:translate(96px,0) scale(1);z-index:2}}
+
+/* COMET — a bright head with a soft white-to-warm tail, streaking across every loop */
+.comet{position:absolute;left:-240px;top:20%;width:9px;height:9px;border-radius:50%;background:#fff;
+  box-shadow:0 0 16px 5px rgba(225,232,245,.8),0 0 42px 12px rgba(200,205,225,.3);
+  animation:cometFly 16s linear infinite;animation-delay:5s;opacity:0;will-change:transform,opacity}
+.comet::before{content:"";position:absolute;right:6px;top:50%;transform:translateY(-50%) rotate(9deg);transform-origin:right center;
+  width:210px;height:4px;border-radius:999px;
+  background:linear-gradient(270deg, rgba(255,255,255,.95), rgba(205,215,235,.5) 45%, rgba(255,170,100,.25) 78%, transparent)}
+@keyframes cometFly{
+  0%{transform:translate(0,0) rotate(9deg);opacity:0}
+  3%{opacity:1}
+  15%{transform:translate(118vw,19vh) rotate(9deg);opacity:1}
+  18%,100%{transform:translate(118vw,19vh) rotate(9deg);opacity:0}
+}
+
+/* SCROLL REVEAL — sections rise gently into view as you scroll */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .9s cubic-bezier(.22,.61,.36,1),transform .9s cubic-bezier(.22,.61,.36,1)}
+.reveal.in{opacity:1;transform:none}
+.grid>.reveal:nth-child(2){transition-delay:.08s}
+.grid>.reveal:nth-child(3){transition-delay:.16s}
+
+/* EXTRA LIFE — pulsing matched dots, gently floating hero map card.
+   The pulse is an expanding ring on a pseudo-element (transform + opacity only,
+   compositor-driven) — animating box-shadow instead repainted the map every frame. */
+.fire-dot.matched::after{content:"";position:absolute;inset:-4px;border-radius:50%;border:1.5px solid var(--match);opacity:.8;animation:dotRing 2.2s ease-out infinite;pointer-events:none}
+@keyframes dotRing{0%{transform:scale(.55);opacity:.85}70%{transform:scale(1.5);opacity:0}100%{transform:scale(1.5);opacity:0}}
+.map-card{animation:cardFloat 9s ease-in-out infinite}
+/* Hero map card, adjusted for the planet layout: narrower and pulled in
+   from the right edge, lifted with a bottom margin, so Earth stays
+   visible in the top-right corner above it, while Saturn fills its
+   original top-left spot behind the headline on the other side. */
+.hero .map-card{max-width:530px;width:100%;justify-self:end;margin-bottom:30px;background:rgba(12,13,25,.96)}
+@keyframes cardFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+.pill.live{animation:livePulse 2.6s ease-in-out infinite}
+@keyframes livePulse{0%,100%{box-shadow:0 0 0 rgba(163,230,53,0)}50%{box-shadow:0 0 18px rgba(163,230,53,.55)}}
+
+/* MINI MAP CARD */
+.map-card{background:rgba(13,14,27,.94);border:1px solid #30324A;border-radius:20px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.62), 0 0 70px rgba(255,120,40,.07)}
+.map-head{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;border-bottom:1px solid var(--line);font-size:12px;color:var(--muted)}
+.map-head b{color:var(--text);font-family:"JetBrains Mono";font-size:12px}
+.map-stage{position:relative;height:360px;background:
+  radial-gradient(600px 300px at 30% 20%, rgba(255,176,32,.08), transparent 60%),
+  radial-gradient(500px 300px at 75% 70%, rgba(34,211,238,.07), transparent 60%),
+  #0E0E10;overflow:hidden}
+.map-stage::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);background-size:36px 36px}
+.ca-shape{position:absolute;left:8%;top:8%;width:62%;height:84%;opacity:.18}
+.fire-dot{position:absolute;width:9px;height:9px;border-radius:50%;transform:translate(-50%,-50%);cursor:pointer;border:1px solid rgba(0,0,0,.4)}
+.fire-dot.modis{background:var(--amber);box-shadow:0 0 10px var(--amber)}
+.fire-dot.viirs{background:var(--cyan);box-shadow:0 0 10px var(--cyan);width:7px;height:7px}
+.fire-dot.matched{background:var(--match);box-shadow:0 0 16px var(--match);width:11px;height:11px;z-index:2}
+.fire-dot.amb{background:var(--amb);box-shadow:0 0 12px var(--amb)}
+.fire-dot:hover{transform:translate(-50%,-50%) scale(1.5)}
+.map-foot{display:flex;gap:14px;flex-wrap:wrap;padding:10px 14px;border-top:1px solid var(--line);font-size:11px;color:var(--muted)}
+
+/* APP SHELL */
+.shell{max-width:1240px;margin:0 auto;padding:18px 16px 30px}
+.section-label{font-family:"Unbounded";font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#D9A05B;font-weight:600;margin:28px 0 6px}
+.shell h2{font-family:"Unbounded";font-weight:600;font-size:24px;margin:0 0 6px;letter-spacing:0;line-height:1.25}
+.shell .sub{color:var(--muted);font-size:14px;line-height:1.5;max-width:700px}
+
+/* KPI */
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:16px 0}
+@media(max-width:900px){.kpis{grid-template-columns:repeat(2,1fr)}}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 14px 12px;box-shadow:inset 0 1px 0 rgba(255,255,255,.06)}
+.kpi label{font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:6px}
+.kpi strong{font-family:"Unbounded";font-weight:600;font-size:22px;display:block;margin-top:6px}
+.kpi small{color:var(--muted2);font-size:11px}
+.kpi.highlight{border-color:rgba(163,230,53,.4);background:linear-gradient(180deg, rgba(163,230,53,.08), transparent)}
+
+/* MAIN GRID */
+.grid{display:grid;grid-template-columns:230px 1fr 320px;gap:12px;align-items:start}
+@media(max-width:1020px){.grid{grid-template-columns:1fr 1fr}}
+@media(max-width:640px){.grid{grid-template-columns:1fr}}
+/* No backdrop-filter on the cards/KPIs/map card: a dozen large blurred regions
+   sitting over the animated starfield forced the browser to re-blur them on
+   every scroll frame — the main cause of the laggy scrolling. Their fills are
+   near-opaque, so the frosted look is unchanged; only the glass pill nav keeps
+   a backdrop blur. */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:0 20px 54px rgba(0,0,0,.38)}
+.card-h{padding:13px 14px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+.card-h b{font-size:13px}
+.card-h span{font-size:11px;color:var(--muted)}
+.card-b{padding:14px}
+
+/* RAIL */
+.rail-group{margin-bottom:16px}
+.rail-group h4{margin:0 0 8px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:9px 10px;border:1px solid var(--line);border-radius:10px;margin-bottom:7px;background:var(--surface2);cursor:pointer;min-height:44px}
+.toggle-row input{accent-color:#7FA3CC;width:18px;height:18px}
+.toggle-row span{font-size:13px;font-weight:500;display:flex;gap:8px;align-items:center}
+.info-box{background:rgba(9,10,24,.85);border:1px dashed #3A3C58;border-radius:10px;padding:10px;font-size:12px;line-height:1.5;color:var(--muted)}
+.info-box b{color:var(--text)}
+
+/* TABS */
+.tabs{display:flex;gap:6px;padding:8px;background:var(--surface);border:1px solid var(--line);border-radius:999px;width:fit-content;max-width:100%;flex-wrap:wrap;margin-bottom:12px}
+.tab{border:none;background:transparent;color:var(--muted);padding:8px 14px;border-radius:999px;font-weight:600;font-size:13px}
+.tab.active{background:linear-gradient(120deg,#22344E,#2C4A73);color:#EAF1FA;box-shadow:inset 0 1px 0 rgba(255,255,255,.14), 0 4px 14px rgba(10,20,40,.35)}
+.tab:hover{color:#C7D8EE}
+.big-map{height:430px}
+@media(max-width:640px){.big-map{height:320px}}
+.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:11px;color:var(--muted);margin-top:10px}
+
+/* CALENDAR */
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
+.cal-day{aspect-ratio:1;border-radius:7px;border:1px solid rgba(255,255,255,.06);display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:11px;cursor:pointer;min-height:36px;position:relative;background:#181A2C}
+.cal-day:hover{outline:2px solid rgba(255,255,255,.25)}
+.cal-day.selected{outline:2px solid white;outline-offset:1px}
+.cal-day.anomaly{border-color:var(--danger);box-shadow:inset 0 0 0 1px var(--danger)}
+.cal-day small{font-size:9px;opacity:.7}
+.cal-months{display:flex;gap:8px;margin-bottom:10px}
+.cal-months button{flex:1;border:1px solid var(--line);background:var(--surface2);color:var(--muted);border-radius:999px;padding:8px;font-weight:600;font-size:12px}
+.cal-months button.active{background:linear-gradient(120deg,#8A3B12,#5C2E14 48%,#22344E);color:white;border-color:rgba(169,198,232,.45);box-shadow:inset 0 1px 0 rgba(255,255,255,.12)}
+
+/* FIRA */
+.fira-text{font-size:14px;line-height:1.7;color:#EDE8DB;min-height:110px}
+.cursor-blink{display:inline-block;width:8px;height:16px;background:var(--ember);vertical-align:-2px;margin-left:3px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.chip{display:inline-flex;padding:5px 9px;border-radius:999px;background:rgba(255,255,255,.04);border:1px solid var(--line);font-size:11px;color:#C3CEDE;margin:3px 3px 0 0}
+.inspector-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #222;font-size:13px}
+.inspector-row span{color:var(--muted)}
+.inspector-row b{font-family:"JetBrains Mono";font-size:12px}
+
+/* COMPARISON */
+.bar-row{display:grid;grid-template-columns:110px 1fr 52px;gap:10px;align-items:center;margin:10px 0;font-size:12px}
+.bar-track{height:10px;background:#222226;border-radius:999px;overflow:hidden}
+.bar-fill{height:100%;border-radius:999px}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:700px){.two-col{grid-template-columns:1fr}}
+
+footer{border-top:1px solid var(--line);margin-top:28px;padding:20px 16px 30px;color:var(--muted);font-size:12px;line-height:1.6}
+.footer-inner{max-width:1240px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.downloads{display:flex;gap:8px;flex-wrap:wrap}
+.dl{border:1px solid rgba(169,198,232,.38);background:rgba(255,255,255,.03);color:var(--text);padding:9px 12px;border-radius:999px;font-size:12px;font-weight:600;transition:border-color .3s ease,background .3s ease}
+.dl:hover{border-color:rgba(255,150,80,.55);background:rgba(255,107,26,.08)}
+.notice{background:rgba(255,176,32,.08);border:1px solid rgba(255,176,32,.25);color:#FDE9B8;padding:10px 12px;border-radius:10px;font-size:12px;line-height:1.5;margin-top:12px}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}.reveal{opacity:1!important;transform:none!important}}
+/* SMOOTHNESS — while the user is actually scrolling, every backdrop
+   animation pauses (the script toggles .is-scrolling on the backdrop and
+   removes it ~160ms after the scroll settles). A dozen blended, rotating,
+   drifting layers repainting on every scroll frame was the last source of
+   scroll jank; with them frozen, a scroll frame only has to composite
+   still layers. The pause is invisible in practice — the content is what
+   moves during a scroll — and everything resumes the moment it settles. */
+.space-bg.is-scrolling *, .space-bg.is-scrolling *::before, .space-bg.is-scrolling *::after{animation-play-state:paused!important}
