@@ -1,0 +1,210 @@
+/* RealMap — styling for the real basemap prototype.
+   Uses the app's Ember Dark tokens (tokens.css variables) so it looks like
+   it belongs in FireFusion AI. Leaflet's own default chrome (white popups,
+   white zoom buttons) is overridden to dark here. */
+
+.realmap-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 20px 54px rgba(0, 0, 0, 0.38);
+}
+
+.realmap-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 14px;
+  border-bottom: 1px solid var(--line);
+}
+
+.realmap-head b {
+  font-size: 13px;
+  display: block;
+}
+
+.realmap-head span {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.realmap-pill {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  color: var(--muted);
+  background: rgba(255, 255, 255, 0.02);
+  white-space: nowrap;
+}
+
+.realmap-timebar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--line);
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.realmap-timebar button {
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--muted);
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.realmap-timebar button:hover {
+  color: var(--text);
+  border-color: rgba(169, 198, 232, 0.45);
+}
+
+.realmap-timebar button.active {
+  background: rgba(255, 31, 31, 0.16);
+  border-color: rgba(255, 31, 31, 0.55);
+  color: #ffb3b3;
+}
+
+.realmap-wrap {
+  position: relative;
+}
+
+.realmap {
+  height: 460px;
+  width: 100%;
+  background: #0a0a12;
+  font-family: Inter, system-ui, sans-serif;
+  z-index: 0;
+}
+
+.realmap-legend {
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  z-index: 500;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(13, 14, 27, 0.92);
+  border: 1px solid var(--line);
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.realmap-legend span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.realmap-legend i {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.realmap-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 600;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 20px;
+  background: rgba(10, 10, 18, 0.72);
+  color: var(--text);
+  font-size: 13px;
+}
+
+.realmap-overlay-error button {
+  margin-top: 10px;
+  border: 1px solid rgba(169, 198, 232, 0.38);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text);
+  padding: 9px 14px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.realmap-foot {
+  padding: 10px 14px;
+  border-top: 1px solid var(--line);
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+/* --- Leaflet dark overrides (Leaflet's defaults are white) --- */
+.realmap .leaflet-container {
+  background: #0a0a12;
+  font-family: Inter, system-ui, sans-serif;
+}
+
+.realmap .leaflet-control-attribution {
+  background: rgba(13, 14, 27, 0.85);
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.realmap .leaflet-control-attribution a {
+  color: #a9c6e8;
+}
+
+.realmap .leaflet-control-zoom a {
+  background: rgba(13, 14, 27, 0.92);
+  color: var(--text);
+  border-color: var(--line);
+}
+
+.realmap .leaflet-control-zoom a:hover {
+  background: rgba(30, 32, 55, 0.95);
+}
+
+.realmap .leaflet-popup-content-wrapper {
+  background: rgba(16, 18, 33, 0.97);
+  color: var(--text);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.55);
+}
+
+.realmap .leaflet-popup-tip {
+  background: rgba(16, 18, 33, 0.97);
+  border: 1px solid var(--line);
+}
+
+.realmap .leaflet-popup-content {
+  margin: 12px 14px;
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.realmap .leaflet-popup-close-button {
+  color: var(--muted);
+}
+
+@media (max-width: 640px) {
+  .realmap {
+    height: 380px;
+  }
+  .realmap-head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

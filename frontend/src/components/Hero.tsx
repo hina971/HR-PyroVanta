@@ -103,6 +103,7 @@ export default function Hero({
   isSample: boolean
 }) {
   const selectDay = useFireStore((s) => s.selectDay)
+  const setTourOpen = useFireStore((s) => s.setTourOpen)
   const heroModis = useCountUp(season.modis, 1400)
   const heroViirs = useCountUp(season.viirs, 1400)
   const heroMatch = useCountUp(season.matched, 1400)
@@ -123,7 +124,9 @@ export default function Hero({
         </div>
         <div className="top-links">
           <span className="pill nasa">NASA Space Apps 2026</span>
-          <span className="pill">Team #786</span>
+          <button className="btn-tour-nav" onClick={() => setTourOpen(true)}>
+            ✦ Guided tour
+          </button>
           <span className="pill live">● {isSample ? 'UI Demo' : 'Live'}</span>
           <button className="btn-ember" onClick={scrollToMission}>
             Explore the data ↓
