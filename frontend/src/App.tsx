@@ -5,7 +5,7 @@ import SpaceBackdrop from './components/SpaceBackdrop'
 import Hero from './components/Hero'
 import LeftRail from './components/LeftRail'
 import KpiStrip from './components/KpiStrip'
-import FireMap from './components/FireMap'
+import RealMap from './components/RealMap'
 import CalendarDock from './components/CalendarDock'
 import ComparisonLab from './components/ComparisonLab'
 import FiraPanel from './components/FiraPanel'
@@ -183,9 +183,9 @@ function Shell() {
                 <div className="card">
                   <div className="card-h">
                     <b>Interactive Fire Map</b>
-                    <span id="mapMeta">{isSample ? 'Showing sample • click a lime point' : 'Real detections • click a lime point'}</span>
+                    <span id="mapMeta">{isSample ? 'Showing sample • click a red point' : 'Real detections • click a red point'}</span>
                   </div>
-                  <FireMap points={points} isSample={isSample} />
+                  <RealMap />
                 </div>
 
                 <div className="card" id="tour-calendar" style={{ marginTop: 12 }}>
