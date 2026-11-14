@@ -1,0 +1,467 @@
+{
+    "season": {
+        "region": "California, USA",
+        "date_range": {
+            "from": "2023-07-01",
+            "to": "2023-09-30"
+        },
+        "products": [
+            "MODIS Collection 6.1 (Terra/Aqua)",
+            "VIIRS 375 m NOAA-20 Collection 2",
+            "VIIRS 375 m S-NPP Collection 2"
+        ],
+        "source": "NASA FIRMS"
+    },
+    "counts": {
+        "modis": 3721,
+        "viirs": 36178,
+        "matched_pairs": 98,
+        "ambiguous_groups": 954,
+        "unmatched": 23559,
+        "exact_duplicates": 0
+    },
+    "by_sensor": {
+        "MODIS": {
+            "detections": 3721,
+            "by_satellite": {
+                "Terra": 1966,
+                "Aqua": 1755
+            },
+            "mean_frp_mw": 76.7,
+            "by_match_status": {
+                "ambiguous": 2698,
+                "unmatched": 925,
+                "matched": 98
+            },
+            "by_confidence": {
+                "nominal": 1866,
+                "high": 1596,
+                "low": 259
+            }
+        },
+        "VIIRS": {
+            "detections": 36178,
+            "by_satellite": {
+                "NOAA-20": 18399,
+                "S-NPP": 17779
+            },
+            "mean_frp_mw": 10.4,
+            "by_match_status": {
+                "unmatched": 22634,
+                "ambiguous": 13446,
+                "matched": 98
+            },
+            "by_confidence": {
+                "nominal": 33168,
+                "high": 1651,
+                "low": 1359
+            }
+        }
+    },
+    "peak_day": {
+        "date": "2023-08-19",
+        "modis": 154,
+        "viirs": 1957,
+        "total": 2111
+    },
+    "highest_robust_z": {
+        "date": "2023-08-19",
+        "sensor": "VIIRS",
+        "count": 1957,
+        "median": 160.5,
+        "mad": 100.0,
+        "robust_z": 12.12
+    },
+    "critical_periods": [
+        {
+            "start": "2023-07-29",
+            "end": "2023-07-30",
+            "days": [
+                "2023-07-29",
+                "2023-07-30"
+            ]
+        },
+        {
+            "start": "2023-08-16",
+            "end": "2023-08-21",
+            "days": [
+                "2023-08-16",
+                "2023-08-17",
+                "2023-08-18",
+                "2023-08-19",
+                "2023-08-20",
+                "2023-08-21"
+            ]
+        },
+        {
+            "start": "2023-08-23",
+            "end": "2023-08-31",
+            "days": [
+                "2023-08-23",
+                "2023-08-24",
+                "2023-08-25",
+                "2023-08-26",
+                "2023-08-27",
+                "2023-08-28",
+                "2023-08-29",
+                "2023-08-30",
+                "2023-08-31"
+            ]
+        },
+        {
+            "start": "2023-09-15",
+            "end": "2023-09-17",
+            "days": [
+                "2023-09-15",
+                "2023-09-16",
+                "2023-09-17"
+            ]
+        },
+        {
+            "start": "2023-09-20",
+            "end": "2023-09-23",
+            "days": [
+                "2023-09-20",
+                "2023-09-21",
+                "2023-09-22",
+                "2023-09-23"
+            ]
+        }
+    ],
+    "frp_correlation": {
+        "pearson_r": 0.075,
+        "spearman_rho": 0.352,
+        "n_matched_pairs": 98,
+        "note": "FRP is never summed across sensors.",
+        "by_satellite_pair": {
+            "Aqua-NOAA-20": {
+                "pearson_r": 0.392,
+                "spearman_rho": 0.428,
+                "n_matched_pairs": 18
+            },
+            "Aqua-S-NPP": {
+                "pearson_r": -0.04,
+                "spearman_rho": -0.015,
+                "n_matched_pairs": 23
+            },
+            "Terra-NOAA-20": {
+                "pearson_r": 0.48,
+                "spearman_rho": 0.575,
+                "n_matched_pairs": 34
+            },
+            "Terra-S-NPP": {
+                "pearson_r": -0.051,
+                "spearman_rho": 0.332,
+                "n_matched_pairs": 23
+            }
+        }
+    },
+    "sensitivity": [
+        {
+            "radius_km": 0.5,
+            "window_hours": 1,
+            "satellite_pair": "Aqua-NOAA-20",
+            "match_coverage_pct": 17.4,
+            "denominator_modis": 1642,
+            "matched_pairs": 286
+        },
+        {
+            "radius_km": 0.5,
+            "window_hours": 4,
+            "satellite_pair": "Aqua-NOAA-20",
+            "match_coverage_pct": 17.7,
+            "denominator_modis": 1642,
+            "matched_pairs": 290
+        },
+        {
+            "radius_km": 0.5,
+            "window_hours": 6,
+            "satellite_pair": "Aqua-NOAA-20",
+            "match_coverage_pct": 17.7,
+            "denominator_modis": 1642,
+            "matched_pairs": 290
+        },
+        {
+            "radius_km": 0.5,
+            "window_hours": 1,
+            "satellite_pair": "Aqua-S-NPP",
+            "match_coverage_pct": 16.4,
+            "denominator_modis": 1642,
+            "matched_pairs": 269
+        },
+        {
+            "radius_km": 0.5,
+            "window_hours": 4,
+            "satellite_pair": "Aqua-S-NPP",
+            "match_coverage_pct": 16.1,
+            "denominator_modis": 1642,
+            "matched_pairs": 264
+        },
+        {
+            "radius_km": 0.5,
+            "window_hours": 6,
+            "satellite_pair": "Aqua-S-NPP",
+            "match_coverage_pct": 16.1,
+            "denominator_modis": 1642,
+            "matched_pairs": 264
+        },
+        {
+            "radius_km": 0.5,
+            "window_hours": 1,
+            "satellite_pair": "Terra-NOAA-20",
+            "match_coverage_pct": 0.8,
+            "denominator_modis": 1820,
+            "matched_pairs": 15
+        },
+        {
+            "radius_km": 0.5,
+            "window_hours": 4,
+            "satellite_pair": "Terra-NOAA-20",
+            "match_coverage_pct": 12.2,
+            "denominator_modis": 1820,
+            "matched_pairs": 222
+        },
+        {
+            "radius_km": 0.5,
+            "window_hours": 6,
+            "satellite_pair": "Terra-NOAA-20",
+            "match_coverage_pct": 15.8,
+            "denominator_modis": 1820,
+            "matched_pairs": 288
+        },
+        {
+            "radius_km": 0.5,
+            "window_hours": 1,
+            "satellite_pair": "Terra-S-NPP",
+            "match_coverage_pct": 0.2,
+            "denominator_modis": 1820,
+            "matched_pairs": 4
+        },
+        {
+            "radius_km": 0.5,
+            "window_hours": 4,
+            "satellite_pair": "Terra-S-NPP",
+            "match_coverage_pct": 14.7,
+            "denominator_modis": 1820,
+            "matched_pairs": 267
+        },
+        {
+            "radius_km": 0.5,
+            "window_hours": 6,
+            "satellite_pair": "Terra-S-NPP",
+            "match_coverage_pct": 16.0,
+            "denominator_modis": 1820,
+            "matched_pairs": 292
+        },
+        {
+            "radius_km": 1.0,
+            "window_hours": 1,
+            "satellite_pair": "Aqua-NOAA-20",
+            "match_coverage_pct": 6.2,
+            "denominator_modis": 1642,
+            "matched_pairs": 101
+        },
+        {
+            "radius_km": 1.0,
+            "window_hours": 4,
+            "satellite_pair": "Aqua-NOAA-20",
+            "match_coverage_pct": 5.8,
+            "denominator_modis": 1642,
+            "matched_pairs": 95
+        },
+        {
+            "radius_km": 1.0,
+            "window_hours": 6,
+            "satellite_pair": "Aqua-NOAA-20",
+            "match_coverage_pct": 5.8,
+            "denominator_modis": 1642,
+            "matched_pairs": 95
+        },
+        {
+            "radius_km": 1.0,
+            "window_hours": 1,
+            "satellite_pair": "Aqua-S-NPP",
+            "match_coverage_pct": 5.5,
+            "denominator_modis": 1642,
+            "matched_pairs": 90
+        },
+        {
+            "radius_km": 1.0,
+            "window_hours": 4,
+            "satellite_pair": "Aqua-S-NPP",
+            "match_coverage_pct": 5.8,
+            "denominator_modis": 1642,
+            "matched_pairs": 95
+        },
+        {
+            "radius_km": 1.0,
+            "window_hours": 6,
+            "satellite_pair": "Aqua-S-NPP",
+            "match_coverage_pct": 5.8,
+            "denominator_modis": 1642,
+            "matched_pairs": 95
+        },
+        {
+            "radius_km": 1.0,
+            "window_hours": 1,
+            "satellite_pair": "Terra-NOAA-20",
+            "match_coverage_pct": 0.8,
+            "denominator_modis": 1820,
+            "matched_pairs": 14
+        },
+        {
+            "radius_km": 1.0,
+            "window_hours": 4,
+            "satellite_pair": "Terra-NOAA-20",
+            "match_coverage_pct": 4.6,
+            "denominator_modis": 1820,
+            "matched_pairs": 83
+        },
+        {
+            "radius_km": 1.0,
+            "window_hours": 6,
+            "satellite_pair": "Terra-NOAA-20",
+            "match_coverage_pct": 4.6,
+            "denominator_modis": 1820,
+            "matched_pairs": 83
+        },
+        {
+            "radius_km": 1.0,
+            "window_hours": 1,
+            "satellite_pair": "Terra-S-NPP",
+            "match_coverage_pct": 0.3,
+            "denominator_modis": 1820,
+            "matched_pairs": 5
+        },
+        {
+            "radius_km": 1.0,
+            "window_hours": 4,
+            "satellite_pair": "Terra-S-NPP",
+            "match_coverage_pct": 4.5,
+            "denominator_modis": 1820,
+            "matched_pairs": 81
+        },
+        {
+            "radius_km": 1.0,
+            "window_hours": 6,
+            "satellite_pair": "Terra-S-NPP",
+            "match_coverage_pct": 4.6,
+            "denominator_modis": 1820,
+            "matched_pairs": 84
+        },
+        {
+            "radius_km": 2.0,
+            "window_hours": 1,
+            "satellite_pair": "Aqua-NOAA-20",
+            "match_coverage_pct": 2.7,
+            "denominator_modis": 1642,
+            "matched_pairs": 44
+        },
+        {
+            "radius_km": 2.0,
+            "window_hours": 4,
+            "satellite_pair": "Aqua-NOAA-20",
+            "match_coverage_pct": 2.2,
+            "denominator_modis": 1642,
+            "matched_pairs": 36
+        },
+        {
+            "radius_km": 2.0,
+            "window_hours": 6,
+            "satellite_pair": "Aqua-NOAA-20",
+            "match_coverage_pct": 2.2,
+            "denominator_modis": 1642,
+            "matched_pairs": 36
+        },
+        {
+            "radius_km": 2.0,
+            "window_hours": 1,
+            "satellite_pair": "Aqua-S-NPP",
+            "match_coverage_pct": 3.3,
+            "denominator_modis": 1642,
+            "matched_pairs": 54
+        },
+        {
+            "radius_km": 2.0,
+            "window_hours": 4,
+            "satellite_pair": "Aqua-S-NPP",
+            "match_coverage_pct": 2.8,
+            "denominator_modis": 1642,
+            "matched_pairs": 46
+        },
+        {
+            "radius_km": 2.0,
+            "window_hours": 6,
+            "satellite_pair": "Aqua-S-NPP",
+            "match_coverage_pct": 2.8,
+            "denominator_modis": 1642,
+            "matched_pairs": 46
+        },
+        {
+            "radius_km": 2.0,
+            "window_hours": 1,
+            "satellite_pair": "Terra-NOAA-20",
+            "match_coverage_pct": 0.5,
+            "denominator_modis": 1820,
+            "matched_pairs": 9
+        },
+        {
+            "radius_km": 2.0,
+            "window_hours": 4,
+            "satellite_pair": "Terra-NOAA-20",
+            "match_coverage_pct": 2.9,
+            "denominator_modis": 1820,
+            "matched_pairs": 52
+        },
+        {
+            "radius_km": 2.0,
+            "window_hours": 6,
+            "satellite_pair": "Terra-NOAA-20",
+            "match_coverage_pct": 3.0,
+            "denominator_modis": 1820,
+            "matched_pairs": 54
+        },
+        {
+            "radius_km": 2.0,
+            "window_hours": 1,
+            "satellite_pair": "Terra-S-NPP",
+            "match_coverage_pct": 0.0,
+            "denominator_modis": 1820,
+            "matched_pairs": 0
+        },
+        {
+            "radius_km": 2.0,
+            "window_hours": 4,
+            "satellite_pair": "Terra-S-NPP",
+            "match_coverage_pct": 3.0,
+            "denominator_modis": 1820,
+            "matched_pairs": 55
+        },
+        {
+            "radius_km": 2.0,
+            "window_hours": 6,
+            "satellite_pair": "Terra-S-NPP",
+            "match_coverage_pct": 3.0,
+            "denominator_modis": 1820,
+            "matched_pairs": 54
+        }
+    ],
+    "note": "Ambiguous groups are NOT counted as confirmed matches. Raw counts are detections, not unique real-world fires. FRP is never summed across sensors.",
+    "match_coverage": {
+        "MODIS": {
+            "eligible_records": 3462,
+            "confirmed_matched_records": 98,
+            "match_coverage_pct": 2.83,
+            "ambiguous_records": 2698,
+            "ambiguous_coverage_pct": 77.93
+        },
+        "VIIRS": {
+            "eligible_records": 34819,
+            "confirmed_matched_records": 98,
+            "match_coverage_pct": 0.28,
+            "ambiguous_records": 13446,
+            "ambiguous_coverage_pct": 38.62
+        }
+    },
+    "counting_note": "Raw detection counts are not unique real-world fires. Ambiguous groups are not confirmed matches."
+}

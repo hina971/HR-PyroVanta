@@ -1,0 +1,94 @@
+{
+  "inputs": {
+    "modis_terra.csv": {
+      "rows": 1966,
+      "path": "data/processed/modis_terra.csv"
+    },
+    "modis_aqua.csv": {
+      "rows": 1755,
+      "path": "data/processed/modis_aqua.csv"
+    },
+    "viirs_noaa20.csv": {
+      "rows": 18399,
+      "path": "data/processed/viirs_noaa20.csv"
+    },
+    "viirs_snpp.csv": {
+      "rows": 17779,
+      "path": "data/processed/viirs_snpp.csv"
+    },
+    "total_rows": 39899
+  },
+  "rows": {
+    "MODIS": {
+      "total": 3721,
+      "by_satellite": {
+        "Terra": 1966,
+        "Aqua": 1755
+      },
+      "date_min": "2023-07-01",
+      "date_max": "2023-09-30",
+      "lat_min": 32.6,
+      "lat_max": 41.996,
+      "lon_min": -124.269,
+      "lon_max": -114.69
+    },
+    "VIIRS": {
+      "total": 36178,
+      "by_satellite": {
+        "NOAA-20": 18399,
+        "S-NPP": 17779
+      },
+      "date_min": "2023-07-01",
+      "date_max": "2023-09-30",
+      "lat_min": 32.596,
+      "lat_max": 42.005,
+      "lon_min": -124.272,
+      "lon_max": -114.521
+    }
+  },
+  "validation": {
+    "invalid_coordinates": 0,
+    "invalid_timestamps": 0,
+    "low_confidence_excluded": 1618,
+    "exact_duplicates": 0,
+    "missing_frp": 0,
+    "frp_min_mw": 0.0,
+    "frp_max_mw": 3343.1
+  },
+  "coverage": {
+    "date_range": {
+      "from": "2023-07-01",
+      "to": "2023-09-30"
+    },
+    "days_with_data": 92,
+    "known_gaps": [
+      "VIIRS NOAA-20 has no rows on 2023-09-30 (file ends 2023-09-29)."
+    ],
+    "bbox_notes": [
+      "One row at latitude 42.01, 0.01 deg above the configured bbox top edge (42.0); kept, not dropped."
+    ]
+  },
+  "distributions": {
+    "match_status": {
+      "unmatched": 23559,
+      "ambiguous": 16144,
+      "matched": 196
+    },
+    "confidence": {
+      "MODIS|high": 1596,
+      "MODIS|low": 259,
+      "MODIS|nominal": 1866,
+      "VIIRS|high": 1651,
+      "VIIRS|low": 1359,
+      "VIIRS|nominal": 33168
+    },
+    "daynight": {
+      "MODIS|D": 2113,
+      "MODIS|N": 1608,
+      "VIIRS|D": 13181,
+      "VIIRS|N": 22997
+    },
+    "flagged_days": 36,
+    "critical_periods": 5
+  }
+}

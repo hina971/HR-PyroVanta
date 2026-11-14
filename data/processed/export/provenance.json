@@ -1,0 +1,173 @@
+{
+    "team": "NASA Space Apps Challenge 2026, team #786",
+    "challenge": "Harmonization of MODIS and VIIRS Hot Spots",
+    "source": "NASA FIRMS",
+    "products": [
+        "MODIS Collection 6.1 (Terra/Aqua)",
+        "VIIRS 375 m NOAA-20 Collection 2",
+        "VIIRS 375 m S-NPP Collection 2"
+    ],
+    "region": "California, USA",
+    "date_range": {
+        "from": "2023-07-01",
+        "to": "2023-09-30"
+    },
+    "inputs": {
+        "modis_terra.csv": {
+            "rows": 1966,
+            "path": "data/processed/modis_terra.csv"
+        },
+        "modis_aqua.csv": {
+            "rows": 1755,
+            "path": "data/processed/modis_aqua.csv"
+        },
+        "viirs_noaa20.csv": {
+            "rows": 18399,
+            "path": "data/processed/viirs_noaa20.csv"
+        },
+        "viirs_snpp.csv": {
+            "rows": 17779,
+            "path": "data/processed/viirs_snpp.csv"
+        },
+        "total_rows": 39899
+    },
+    "harmonization": {
+        "script": "harmonize.py",
+        "version": "1.2.0",
+        "run_at_utc": "2026-11-14T04:45:31.677895+00:00",
+        "config": {
+            "max_distance_km": 1.0,
+            "max_time_diff_hours": 4,
+            "modis_min_confidence": 30,
+            "spatial_sensitivity_km": [
+                0.5,
+                1.0,
+                2.0
+            ],
+            "temporal_sensitivity_hours": [
+                1,
+                4,
+                6
+            ],
+            "viirs_eligible_confidence": [
+                "nominal",
+                "high"
+            ]
+        },
+        "counts": {
+            "harmonized_parquet": "data/processed/out_real_v2/harmonized.parquet",
+            "comparison_json": "data/processed/out_real_v2/comparison.json",
+            "periods_json": "data/processed/out_real_v2/periods.json",
+            "rows": 39899,
+            "matched_pairs": 98,
+            "ambiguous_groups": 954,
+            "unmatched": 23559
+        }
+    },
+    "exports": [
+        "summary.json",
+        "daily_report.csv",
+        "points.csv",
+        "grid.csv",
+        "audit.json",
+        "provenance.json"
+    ],
+    "note": "Raw FIRMS files are kept untouched in data/raw/. S-NPP is included alongside NOAA-20 (team-approved scope extension; PRD lists extra VIIRS satellites as P2).",
+    "retrieval_date": "2026-11-10",
+    "retrieved_from": "NASA FIRMS Archive Download (https://firms.modaps.eosdis.nasa.gov/download/)",
+    "query_parameters": {
+        "region_bbox": {
+            "lat_max": 42.0,
+            "lat_min": 32.5,
+            "lon_max": -114.1,
+            "lon_min": -124.4
+        },
+        "date_range": {
+            "from": "2023-07-01",
+            "to": "2023-09-30"
+        },
+        "products": [
+            "MODIS Collection 6.1 (Terra/Aqua)",
+            "VIIRS 375 m NOAA-20 Collection 2",
+            "VIIRS 375 m S-NPP Collection 2 (team-approved scope extension; PRD P2)"
+        ]
+    },
+    "source_files": {
+        "modis_terra": {
+            "source_file": "fire_archive_M-C61_841863.csv (Terra rows)",
+            "processed_file": "data/processed/modis_terra.csv",
+            "rows": 1966,
+            "version_field_values": [
+                "61.03"
+            ],
+            "date_min": "2023-07-01",
+            "date_max": "2023-09-30"
+        },
+        "modis_aqua": {
+            "source_file": "fire_archive_M-C61_841863.csv (Aqua rows)",
+            "processed_file": "data/processed/modis_aqua.csv",
+            "rows": 1755,
+            "version_field_values": [
+                "61.03"
+            ],
+            "date_min": "2023-07-01",
+            "date_max": "2023-09-29"
+        },
+        "viirs_noaa20": {
+            "source_file": "fire_archive_J1V-C2_841864.csv",
+            "processed_file": "data/processed/viirs_noaa20.csv",
+            "rows": 18399,
+            "version_field_values": [
+                "2"
+            ],
+            "date_min": "2023-07-01",
+            "date_max": "2023-09-29"
+        },
+        "viirs_snpp": {
+            "source_file": "fire_archive_SV-C2_841865.csv",
+            "processed_file": "data/processed/viirs_snpp.csv",
+            "rows": 17779,
+            "version_field_values": [
+                "2"
+            ],
+            "date_min": "2023-07-01",
+            "date_max": "2023-09-30"
+        }
+    },
+    "audit_summary": {
+        "validation": {
+            "invalid_coordinates": 0,
+            "invalid_timestamps": 0,
+            "low_confidence_excluded": 1618,
+            "exact_duplicates": 0,
+            "missing_frp": 0,
+            "frp_min_mw": 0.0,
+            "frp_max_mw": 3343.1
+        },
+        "coverage": {
+            "date_range": {
+                "from": "2023-07-01",
+                "to": "2023-09-30"
+            },
+            "days_with_data": 92,
+            "known_gaps": [
+                "VIIRS NOAA-20 has no rows on 2023-09-30 (file ends 2023-09-29)."
+            ],
+            "bbox_notes": [
+                "One row at latitude 42.01, 0.01 deg above the configured bbox top edge (42.0); kept, not dropped."
+            ]
+        }
+    },
+    "harmonization_log": "harmonization_log.json",
+    "contract_files": [
+        "comparison.json",
+        "config.json",
+        "daily.json",
+        "fira_narration.json",
+        "grid.json",
+        "periods.json",
+        "points/",
+        "provenance.json",
+        "summary.json"
+    ]
+}
