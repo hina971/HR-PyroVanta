@@ -214,7 +214,7 @@ export default function Hero({
               </span>
             </div>
             <div className="map-stage" id="heroMap">
-              {points.slice(0, 70).map((p) => (
+              {points.map((p) => (
                 <FireDot key={p.id} p={p} />
               ))}
             </div>
