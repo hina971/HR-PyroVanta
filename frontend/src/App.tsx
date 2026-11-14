@@ -84,7 +84,7 @@ function Shell() {
   })
   const { data: detections } = useQuery({
     queryKey: ['detections'],
-    queryFn: () => api.detections({ from: '2023-07-01', to: '2023-09-30', limit: '1000' }),
+    queryFn: () => api.detections({ from: '2023-07-01', to: '2023-09-30', limit: '800' }),
   })
 
   const season = summary
