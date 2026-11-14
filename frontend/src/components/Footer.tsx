@@ -6,18 +6,14 @@ export default function Footer() {
     <footer>
       <div className="footer-inner">
         <div>
-          <b style={{ color: 'var(--text)' }}>FireFusion AI</b> — NASA Space Apps
-          Challenge 2026 • Team #786 • Challenge: Harmonization of MODIS and VIIRS
-          Hot Spots
-          <br />
-          Data: NASA FIRMS • MODIS C6.1 (Terra/Aqua) • VIIRS 375 m (NOAA-20) •
-          California, Jul–Sep 2023 case study
-          <br />
-          <span style={{ color: 'var(--text)' }}>
-            This page is a UI demo with representative sample data to preview the
-            design. The real app runs React + Vite + FastAPI on precomputed
-            harmonized data.
-          </span>
+          <div style={{ fontWeight: 600 }}>
+            <b style={{ color: 'var(--text)' }}>FireFusion AI</b> — NASA Space Apps
+            Challenge 2026 • Team #786 • Challenge: Harmonization of MODIS and VIIRS
+            Hot Spots
+            <br />
+            Data: NASA FIRMS • MODIS C6.1 (Terra/Aqua) • VIIRS 375 m (NOAA-20) •
+            California, Jul–Sep 2023 case study
+          </div>
           <br />
           <span style={{ color: 'var(--text)' }}>
             Backdrop — real photographs only, nothing drawn or generated,
@@ -48,13 +44,6 @@ export default function Footer() {
             never overlaps Earth. The only effects are light itself: a live
             starfield, meteors and a comet.
           </span>
-        </div>
-        <div className="mono" style={{ fontSize: 11 }}>
-          EMBER DARK v1.0
-          <br />
-          MODIS #FFB020 • VIIRS #22D3EE
-          <br />
-          MATCH #A3E635 • AMB #FB7185
         </div>
       </div>
     </footer>
