@@ -1,9 +1,9 @@
 # FireFusion AI — Member 2: Data and Export Handover (team #786)
 
 **Case study:** California, USA, 1 July – 30 September 2023
-**Owner:** Member 2 (M2), Data Engineer (Data and Export)
+**Leader:** Member 2 (Hina Ramzan) (M2), Data Engineer (Data and Export)
 **Built and verified:** 14 November 2026
-**Data source:** NASA FIRMS 
+**Data source:** NASA FIRMS
 
 ---
 
@@ -28,7 +28,7 @@
 | `data/processed/DATA_GATE.md` | PRD §6.1 data-readiness gate report |
 | `data/processed/audit_report.md` | Full human-readable data audit |
 | `data/processed/export/` | Review exports: `summary.json`, `daily_report.csv`, `points.csv`, `grid.csv`, `audit.json`, `provenance.json`, `fira_narration.json` |
-| `frontend_data/` | **The data contract the website reads (PRD §11.2).** Copy it to `frontend/public/data/` |
+| `frontend_data/` | **The data contract the website reads (PRD §11.2).** Already copied to `frontend/public/data/` and live on the site — the app reads the real data from there, no backend needed. |
 | `export/export.py` | Builds the summary, daily report, points, grid, audit and provenance |
 | `export/to_contract.py` | Builds `frontend_data/` from the harmonized results |
 | `export/fira.py` | FIRA narration generator |
@@ -75,7 +75,7 @@ H=data/processed/out_real_v2
 # 1. Core exports, audit and provenance
 python export/export.py --harmonized $H/harmonized.parquet --comparison $H/comparison.json \
     --periods $H/periods.json --log $H/harmonization_log.json \
-    --out-dir data/processed/export --config harmonize/config.json
+    --out-dir data/processed/export
 
 # 2. FIRA narration
 python export/fira.py --harmonized $H/harmonized.parquet --comparison $H/comparison.json \
