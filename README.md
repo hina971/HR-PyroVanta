@@ -1,10 +1,9 @@
 # FireFusion AI — Member 2: Data and Export Handover (team #786)
 
-**NASA Space Apps Challenge 2026 — "Harmonization of MODIS and VIIRS Hot Spots"**
 **Case study:** California, USA, 1 July – 30 September 2023
 **Owner:** Member 2 (M2), Data Engineer (Data and Export)
 **Built and verified:** 14 November 2026
-**Data source:** NASA FIRMS (https://firms.modaps.eosdis.nasa.gov/), archive files downloaded 10 November 2026
+**Data source:** NASA FIRMS 
 
 ---
 
@@ -17,7 +16,6 @@
 5. **Export:** `export/export.py` and `export/to_contract.py` turn M3's harmonized results into the files the website reads.
 6. **FIRA narration:** `export/fira.py` writes template-driven narration to `fira_narration.json`.
 
-M3 owns the matching logic (`harmonize.py`, sensitivity analysis, anomaly flags). It is delivered separately and is not part of this folder.
 
 ---
 
@@ -127,7 +125,3 @@ The FIRMS MAP_KEY is not needed for any of this. The pipeline runs offline from 
 - **Frontend:** read only from `frontend_data/`. Do not use the CSV files in `data/processed/export/` for the app.
 
 ---
-
-## 8. Attribution
-
-Data: NASA Fire Information for Resource Management System (FIRMS), MODIS Collection 6.1 and VIIRS 375 m active fire products, retrieved 10 November 2026. Please also use the acknowledgement wording that FIRMS publishes for its data.
