@@ -140,14 +140,8 @@ function Shell() {
       <main className="shell" id="mission">
         <div className="section-label">Act 2 — Mission Control</div>
         <h2>One selection. Every view updates.</h2>
-        <p className="sub">
-          This is the exact layout from the UI framework: left rail always visible,
-          KPI strip on top, map in the centre, FIRA + Inspector on the right,
-          calendar docked below. Try it — toggle a layer, click a glowing point, or
-          pick a day.
-        </p>
 
-        <div style={{ fontSize: 11, color: 'var(--muted)', marginTop: 10 }} className="mono">
+        <div style={{ fontSize: 11, color: 'var(--text)', marginTop: 10, background: 'rgba(4,5,13,.52)', padding: '6px 10px', borderRadius: 8, display: 'inline-block', fontWeight: 600, textShadow: '0 1px 6px rgba(0,0,0,.85), 0 0 2px rgba(0,0,0,.9)' }} className="mono">
           ▸ ALL NUMBERS BELOW ARE {isSample ? 'DEMO / SAMPLE VALUES FOR UI PREVIEW' : 'LIVE FROM THE FIRE FUSION API'}
         </div>
 

@@ -432,7 +432,6 @@ footer{position:relative;z-index:1}
 .shell{max-width:1240px;margin:0 auto;padding:18px 16px 30px}
 .section-label{font-family:"Unbounded";font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#D9A05B;font-weight:600;margin:28px 0 6px}
 .shell h2{font-family:"Unbounded";font-weight:600;font-size:24px;margin:0 0 6px;letter-spacing:0;line-height:1.25}
-.shell .sub{color:var(--muted);font-size:14px;line-height:1.5;max-width:700px}
 
 /* KPI */
 .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:16px 0}
@@ -503,7 +502,7 @@ footer{position:relative;z-index:1}
 .two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 @media(max-width:700px){.two-col{grid-template-columns:1fr}}
 
-footer{border-top:1px solid var(--line);margin-top:28px;padding:20px 16px 30px;color:var(--muted);font-size:12px;line-height:1.6}
+footer{border-top:1px solid var(--line);margin-top:28px;padding:20px 16px 30px;color:var(--text);font-size:12px;line-height:1.6;background:rgba(4,5,13,.62);font-weight:600;text-shadow:0 1px 6px rgba(0,0,0,.85),0 0 2px rgba(0,0,0,.9)}
 .footer-inner{max-width:1240px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
 .downloads{display:flex;gap:8px;flex-wrap:wrap}
 .dl{border:1px solid rgba(169,198,232,.38);background:rgba(255,255,255,.03);color:var(--text);padding:9px 12px;border-radius:999px;font-size:12px;font-weight:600;transition:border-color .3s ease,background .3s ease}
