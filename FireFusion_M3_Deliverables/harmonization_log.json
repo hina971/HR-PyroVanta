@@ -1,0 +1,54 @@
+{
+  "version": "1.2.0",
+  "run_at_utc": "2026-11-14T07:51:52.732276+00:00",
+  "config": {
+    "max_distance_km": 1.0,
+    "max_time_diff_hours": 4,
+    "modis_min_confidence": 30,
+    "spatial_sensitivity_km": [
+      0.5,
+      1.0,
+      2.0
+    ],
+    "temporal_sensitivity_hours": [
+      1,
+      4,
+      6
+    ],
+    "viirs_eligible_confidence": [
+      "nominal",
+      "high"
+    ]
+  },
+  "inputs": {
+    "modis_terra.csv": {
+      "rows": 1966,
+      "path": "data/processed/modis_terra.csv"
+    },
+    "modis_aqua.csv": {
+      "rows": 1755,
+      "path": "data/processed/modis_aqua.csv"
+    },
+    "viirs_noaa20.csv": {
+      "rows": 18399,
+      "path": "data/processed/viirs_noaa20.csv"
+    },
+    "viirs_snpp.csv": {
+      "rows": 17779,
+      "path": "data/processed/viirs_snpp.csv"
+    },
+    "total_rows": 39899
+  },
+  "outputs": {
+    "harmonized_parquet": "out/harmonized.parquet",
+    "comparison_json": "out/comparison.json",
+    "periods_json": "out/periods.json",
+    "rows": 39899,
+    "matched_pairs": 98,
+    "ambiguous_groups": 954,
+    "unmatched": 23559
+  },
+  "invalid_coordinates": 0,
+  "invalid_timestamps": 0,
+  "exact_duplicates": 0
+}
