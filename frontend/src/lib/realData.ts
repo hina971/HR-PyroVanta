@@ -1,0 +1,270 @@
+// Real-data loader — reads the precomputed M2/M3 contract files that ship
+// as static assets in frontend/public/data/ (copied from the repo's
+// frontend_data/) and reshapes them into the shapes the frontend's API
+// client (src/lib/api.ts) already expects.
+//
+// Why this file exists: the contract files are nested / named differently
+// from the API contract (summary.json nests counts under `counts`, the
+// comparison uses window_hours / satellite_pair / pearson_r, detections
+// only exist as per-day GeoJSON, daily.json is one row per sensor). The
+// backend that was supposed to do this reshaping does not exist yet, so
+// the frontend does it here, from static files — no backend needed.
+// When a real backend is deployed and VITE_API_URL is set, api.ts tries
+// it first and only falls back to these loaders.
+import type {
+  Comparison,
+  DailyRow,
+  Detection,
+  DetectionsResponse,
+  FiraResponse,
+  Meta,
+  Summary,
+} from './api'
+
+const DATA = '/data'
+
+async function fetchJson<T>(path: string): Promise<T> {
+  const res = await fetch(`${DATA}${path}`)
+  if (!res.ok) throw new Error(`Missing static data file: ${path}`)
+  return (await res.json()) as T
+}
+
+// ---------------------------------------------------------------------------
+// summary.json (nested) -> Summary (flat, what KpiStrip / Hero read)
+// ---------------------------------------------------------------------------
+interface RawSummary {
+  counts: {
+    modis: number
+    viirs: number
+    matched_pairs: number
+    ambiguous_groups: number
+    unmatched: number
+    exact_duplicates: number
+  }
+  by_sensor: {
+    MODIS: { mean_frp_mw: number }
+    VIIRS: { mean_frp_mw: number }
+  }
+  peak_day: { date: string; modis: number; viirs: number; total: number }
+  match_coverage: {
+    MODIS: { match_coverage_pct: number }
+    VIIRS: { match_coverage_pct: number }
+  }
+}
+
+export async function loadSummary(): Promise<Summary> {
+  const raw = await fetchJson<RawSummary>('/summary.json')
+  const c = raw.counts
+  return {
+    modis: c.modis,
+    viirs: c.viirs,
+    matched: c.matched_pairs,
+    ambiguous: c.ambiguous_groups,
+    unmatched: c.unmatched,
+    exact_duplicates: c.exact_duplicates,
+    coverage_modis: raw.match_coverage.MODIS.match_coverage_pct,
+    coverage_viirs: raw.match_coverage.VIIRS.match_coverage_pct,
+    mean_frp_modis: raw.by_sensor.MODIS.mean_frp_mw,
+    mean_frp_viirs: raw.by_sensor.VIIRS.mean_frp_mw,
+    peak_day: raw.peak_day.date,
+    summary_line: `Across Jul–Sep 2023, MODIS recorded ${c.modis.toLocaleString()} detections and VIIRS recorded ${c.viirs.toLocaleString()}. FireFusion confirmed ${c.matched_pairs.toLocaleString()} one-to-one matched pairs (${raw.match_coverage.MODIS.match_coverage_pct.toFixed(2)}% of MODIS) and kept ${c.ambiguous_groups.toLocaleString()} candidate groups ambiguous. Peak day ${raw.peak_day.date} (${raw.peak_day.total.toLocaleString()} detections).`,
+  }
+}
+
+// ---------------------------------------------------------------------------
+// daily.json (184 rows, one per sensor per day) -> DailyRow[] (92 rows,
+// one per date with both sensors in it)
+// ---------------------------------------------------------------------------
+interface RawDailyRow {
+  date: string
+  sensor: 'MODIS' | 'VIIRS'
+  detections: number
+  matched_records: number
+  ambiguous_records: number
+  unmatched_records: number
+  robust_z: number | null
+  flagged: boolean
+}
+
+export async function loadDaily(): Promise<DailyRow[]> {
+  const raw = await fetchJson<RawDailyRow[]>('/daily.json')
+  const byDate = new Map<string, DailyRow>()
+  for (const r of raw) {
+    let row = byDate.get(r.date)
+    if (!row) {
+      row = {
+        date: r.date,
+        modis: 0,
+        viirs: 0,
+        matched: 0,
+        ambiguous: 0,
+        unmatched: 0,
+        robust_z_modis: 0,
+        robust_z_viirs: 0,
+        anomaly: false,
+      }
+      byDate.set(r.date, row)
+    }
+    if (r.sensor === 'MODIS') {
+      row.modis = r.detections
+      row.robust_z_modis = r.robust_z ?? 0
+    } else {
+      row.viirs = r.detections
+      row.robust_z_viirs = r.robust_z ?? 0
+    }
+    // matched / ambiguous / unmatched are per-sensor records of the same
+    // day's groups — take the larger of the two sensors' values so the
+    // day total is not double-counted.
+    row.matched = Math.max(row.matched, r.matched_records)
+    row.ambiguous = Math.max(row.ambiguous, r.ambiguous_records)
+    row.unmatched = Math.max(row.unmatched, r.unmatched_records)
+    row.anomaly = row.anomaly || r.flagged
+  }
+  return Array.from(byDate.values()).sort((a, b) => (a.date < b.date ? -1 : 1))
+}
+
+// ---------------------------------------------------------------------------
+// comparison.json -> Comparison (exact API shape; renames every key)
+// ---------------------------------------------------------------------------
+interface RawComparison {
+  sensitivity: Array<{
+    radius_km: number
+    window_hours: number
+    satellite_pair: string
+    match_coverage_pct: number
+    matched_pairs: number
+    denominator_modis: number
+  }>
+  frp_correlation: {
+    pearson_r: number
+    spearman_rho: number
+    by_satellite_pair?: Record<string, { pearson_r: number; spearman_rho: number; n_matched_pairs: number }>
+  }
+  confidence_distribution: Record<string, number[]>
+  day_night_split: Record<string, { day: number; night: number }>
+}
+
+export async function loadComparison(): Promise<Comparison> {
+  const raw = await fetchJson<RawComparison>('/comparison.json')
+  return {
+    sensitivity: raw.sensitivity.map((r) => ({
+      radius_km: r.radius_km,
+      window_h: r.window_hours,
+      pair: r.satellite_pair.replace('-', '–'),
+      coverage_pct: r.match_coverage_pct,
+      numerator: r.matched_pairs,
+      denominator: r.denominator_modis,
+    })),
+    frp_correlation: {
+      pearson: raw.frp_correlation.pearson_r,
+      spearman: raw.frp_correlation.spearman_rho,
+    },
+    confidence: raw.confidence_distribution,
+    day_night: raw.day_night_split,
+  }
+}
+
+// ---------------------------------------------------------------------------
+// fira_narration.json -> FiraResponse { text, source }
+// Season text when no date is selected, that day's text otherwise.
+// ---------------------------------------------------------------------------
+interface RawFira {
+  season: string
+  days: Record<string, string>
+}
+
+export async function loadFira(date?: string): Promise<FiraResponse> {
+  const raw = await fetchJson<RawFira>('/fira_narration.json')
+  const text = (date && raw.days[date]) || raw.season
+  return { text, source: 'NASA FIRMS harmonization (MODIS C6.1 / VIIRS 375 m)' }
+}
+
+// ---------------------------------------------------------------------------
+// config.json -> Meta
+// ---------------------------------------------------------------------------
+interface RawConfig {
+  region_name: string
+  bbox: { lat_min: number; lat_max: number; lon_min: number; lon_max: number }
+  date_range: { from: string; to: string }
+  products: string[]
+  retrieval_date: string
+  matching: { max_distance_km: number; max_time_diff_hours: number }
+  attribution: string
+}
+
+export async function loadMeta(): Promise<Meta> {
+  const raw = await fetchJson<RawConfig>('/config.json')
+  return {
+    region: raw.region_name,
+    bbox: raw.bbox,
+    date_range: raw.date_range,
+    products: raw.products,
+    retrieval_date: raw.retrieval_date,
+    matching: { spatial_km: raw.matching.max_distance_km, temporal_h: raw.matching.max_time_diff_hours },
+    provenance: raw.attribution,
+  }
+}
+
+// ---------------------------------------------------------------------------
+// points/<date>.geojson -> DetectionsResponse
+// The map is a season overview and the app asks for one season sample
+// (limit 200), so we load the peak day (2023-08-19, 2,111 detections —
+// the most representative day) and take a strided sample across the
+// whole state so the dots spread like the demo's clusters. Every dot
+// is a real detection: real lat/lon, FRP, confidence, match status,
+// and (for matched pairs) the real partner distance / time gap.
+// ---------------------------------------------------------------------------
+const PEAK_DAY = '2023-08-19'
+const SEASON_TOTAL = 39899
+
+interface GeoFeature {
+  type: string
+  geometry: { type: string; coordinates: [number, number] }
+  properties: {
+    record_id: string
+    sensor: 'MODIS' | 'VIIRS'
+    satellite: string
+    timestamp_utc: string
+    frp_mw: number
+    confidence_raw: string
+    match_status: 'matched' | 'ambiguous' | 'unmatched'
+    match_group_id: string | null
+    distance_km: number | null
+    time_diff_hours: number | null
+  }
+}
+
+interface GeoCollection {
+  type: string
+  features: GeoFeature[]
+}
+
+function toDetection(f: GeoFeature): Detection {
+  const p = f.properties
+  return {
+    id: p.record_id,
+    sensor: p.sensor,
+    satellite: p.satellite,
+    lat: f.geometry.coordinates[1],
+    lon: f.geometry.coordinates[0],
+    timestamp: p.timestamp_utc,
+    confidence: Number(p.confidence_raw) || 0,
+    frp: p.frp_mw,
+    match_status: p.match_status,
+    match_group_id: p.match_group_id,
+    // Real partner evidence for matched pairs (carried through to the
+    // Inspector via apiPoint in App.tsx).
+    distance_km: p.distance_km,
+    time_diff_hours: p.time_diff_hours,
+  } as Detection & { distance_km: number | null; time_diff_hours: number | null }
+}
+
+export async function loadDetections(limit = 200): Promise<DetectionsResponse> {
+  const geo = await fetchJson<GeoCollection>(`/points/${PEAK_DAY}.geojson`)
+  const all = geo.features.map(toDetection)
+  // Strided sample so the dots spread across California, not clumped.
+  const step = Math.max(1, Math.floor(all.length / limit))
+  const items: Detection[] = []
+  for (let i = 0; i < all.length && items.length < limit; i += step) items.push(all[i])
+  return { items, total: SEASON_TOTAL, sampled: true, limit }
+}

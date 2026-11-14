@@ -59,6 +59,9 @@ export interface Detection {
   frp: number
   match_status: 'matched' | 'ambiguous' | 'unmatched'
   match_group_id?: string | null
+  // Real partner evidence (from the static GeoJSON; absent from the API).
+  distance_km?: number | null
+  time_diff_hours?: number | null
 }
 
 export interface DetectionsResponse {
@@ -119,6 +122,8 @@ export interface Health {
   data_ready: boolean
 }
 
+import { loadComparison, loadDaily, loadDetections, loadFira, loadMeta, loadSummary } from './realData'
+
 async function get<T>(path: string, params?: Record<string, string>): Promise<T> {
   // No backend configured on a deployed site — do not fire a request at
   // localhost:8000 (it would fail with ERR_CONNECTION_REFUSED and log in
@@ -133,18 +138,58 @@ async function get<T>(path: string, params?: Record<string, string>): Promise<T>
   return (await res.json()) as T
 }
 
+// Every method tries the FastAPI backend first; when it is unreachable
+// (no backend yet — the placeholder Backendapp has no /api/v1 endpoints)
+// it falls back to the precomputed real data in frontend/public/data/
+// via src/lib/realData.ts. So the app shows REAL FIRMS numbers, not the
+// embedded demo sample, with no backend deployed. When VITE_API_URL is
+// set to a real backend, the backend wins and the static files are only
+// a fallback.
 export const api = {
-  meta: () => get<Meta>('/meta'),
-  summary: (from?: string, to?: string) =>
-    get<Summary>('/summary', { ...(from ? { from } : {}), ...(to ? { to } : {}) }),
-  detections: (params?: Record<string, string>) => get<DetectionsResponse>('/detections', params),
+  meta: async () => {
+    try {
+      return await get<Meta>('/meta')
+    } catch {
+      return loadMeta()
+    }
+  },
+  summary: async (from?: string, to?: string) => {
+    try {
+      return await get<Summary>('/summary', { ...(from ? { from } : {}), ...(to ? { to } : {}) })
+    } catch {
+      return loadSummary()
+    }
+  },
+  detections: async (params?: Record<string, string>) => {
+    try {
+      return await get<DetectionsResponse>('/detections', params)
+    } catch {
+      return loadDetections(Number(params?.limit ?? 200))
+    }
+  },
   detection: (id: string | number) => get<DetectionDetail>(`/detections/${id}`),
-  daily: (from?: string, to?: string) =>
-    get<DailyRow[]>('/daily', { ...(from ? { from } : {}), ...(to ? { to } : {}) }),
-  comparison: () => get<Comparison>('/comparison'),
+  daily: async (from?: string, to?: string) => {
+    try {
+      return await get<DailyRow[]>('/daily', { ...(from ? { from } : {}), ...(to ? { to } : {}) })
+    } catch {
+      return loadDaily()
+    }
+  },
+  comparison: async () => {
+    try {
+      return await get<Comparison>('/comparison')
+    } catch {
+      return loadComparison()
+    }
+  },
   anomalies: () => get<Anomaly[]>('/anomalies'),
-  fira: (date?: string, groupId?: string) =>
-    get<FiraResponse>('/fira', { ...(date ? { date } : {}), ...(groupId ? { group_id: groupId } : {}) }),
+  fira: async (date?: string, groupId?: string) => {
+    try {
+      return await get<FiraResponse>('/fira', { ...(date ? { date } : {}), ...(groupId ? { group_id: groupId } : {}) })
+    } catch {
+      return loadFira(date)
+    }
+  },
   health: () => get<Health>('/health'),
   downloadUrl: (file: 'harmonized.csv' | 'comparison.csv') =>
     `${API_BASE}/api/v1/download/${file}`,
