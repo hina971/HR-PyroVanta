@@ -1,14 +1,24 @@
+import { useQuery } from '@tanstack/react-query'
 import { useFireStore } from '../store'
 import { SEASON, dayData, matchCoverage } from '../data/sample'
 import { useCountUp } from '../hooks/useCountUp'
+import { api } from '../lib/api'
 import type { SeasonNumbers } from './Hero'
 
 // KPI strip (demo ids kModis/kViirs/kCoverage/kDay + subs).
 // Full season → SEASON numbers (or the API summary when the backend is
-// up); a selected day → that day's demo dayData numbers. Count-up on
-// load and on every date change, exactly like the demo.
+// up); a selected day → that day's real daily row (api.daily(), which
+// reads the static daily.json when the backend is down). Falls back to
+// the demo dayData formula only if the real row is missing.
 export default function KpiStrip({ season }: { season: SeasonNumbers }) {
   const selectedDate = useFireStore((s) => s.selectedDate)
+
+  const { data: daily } = useQuery({
+    queryKey: ['daily'],
+    queryFn: () => api.daily('2023-07-01', '2023-09-30'),
+    retry: false,
+    staleTime: 60_000,
+  })
 
   let modis = season.modis
   let viirs = season.viirs
@@ -18,15 +28,31 @@ export default function KpiStrip({ season }: { season: SeasonNumbers }) {
   let dayAnomaly = false
   if (selectedDate) {
     const [, m, d] = selectedDate.split('-').map(Number)
-    const dd = dayData(m, d)
-    modis = dd.modis
-    viirs = dd.viirs
-    matched = dd.matched
-    dayLabel = dd.label
-    daySub = dd.anomaly
-      ? '⚠ Anomaly flagged (robust z > 3.5)'
-      : 'Single-day filter active'
-    dayAnomaly = dd.anomaly
+    const row = daily?.find((r) => r.date === selectedDate)
+    if (row) {
+      modis = row.modis
+      viirs = row.viirs
+      matched = row.matched
+      dayLabel = new Date(`${selectedDate}T00:00:00`).toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric',
+      })
+      daySub = row.anomaly
+        ? '⚠ Anomaly flagged (robust z > 3.5)'
+        : 'Single-day filter active'
+      dayAnomaly = row.anomaly
+    } else {
+      const dd = dayData(m, d)
+      modis = dd.modis
+      viirs = dd.viirs
+      matched = dd.matched
+      dayLabel = dd.label
+      daySub = dd.anomaly
+        ? '⚠ Anomaly flagged (robust z > 3.5)'
+        : 'Single-day filter active'
+      dayAnomaly = dd.anomaly
+    }
   }
 
   const kModis = useCountUp(modis, 700)

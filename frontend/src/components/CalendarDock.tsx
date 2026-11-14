@@ -1,19 +1,56 @@
+import { useQuery } from '@tanstack/react-query'
 import { useFireStore } from '../store'
-import { dayData } from '../data/sample'
+import { dayData, type DayDatum } from '../data/sample'
+import { api, type DailyRow } from '../lib/api'
 
 // Burning Activity Calendar (demo's #calendar): daily heatmap for
 // Jul / Aug / Sep 2023. Click a day → everything filters (dashboard,
 // map, FIRA). Hotter = more detections; red outline = anomaly flag
 // (robust z > 3.5) — a statistical deviation, not a prediction.
 // Never adds the two sensors' raw counts together as unique fires.
+//
+// Real data: the calendar now reads the precomputed daily rows
+// (frontend/public/data/daily.json via api.daily(), which falls back
+// to the static files when the backend is down) instead of the demo
+// dayData formula. It only falls back to the demo formula if the real
+// rows fail to load entirely.
+function rowToDay(row: DailyRow): DayDatum {
+  const total = row.modis + row.viirs
+  return {
+    modis: row.modis,
+    viirs: row.viirs,
+    matched: row.matched,
+    anomaly: row.anomaly,
+    heat: Math.min(1, total / 2111),
+    date: row.date,
+    label: new Date(`${row.date}T00:00:00`).toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+    }),
+  }
+}
+
 export default function CalendarDock() {
   const currentMonth = useFireStore((s) => s.currentMonth)
   const setMonth = useFireStore((s) => s.setMonth)
   const selectedDate = useFireStore((s) => s.selectedDate)
   const selectDay = useFireStore((s) => s.selectDay)
 
+  const { data: daily } = useQuery({
+    queryKey: ['daily'],
+    queryFn: () => api.daily('2023-07-01', '2023-09-30'),
+    retry: false,
+    staleTime: 60_000,
+  })
+
   const daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][currentMonth - 1]
-  const days = Array.from({ length: daysInMonth }, (_, i) => dayData(currentMonth, i + 1))
+  const days: DayDatum[] = Array.from({ length: daysInMonth }, (_, i) => {
+    const d = i + 1
+    const date = `2023-${String(currentMonth).padStart(2, '0')}-${String(d).padStart(2, '0')}`
+    const row = daily?.find((r) => r.date === date)
+    return row ? rowToDay(row) : dayData(currentMonth, d)
+  })
 
   return (
     <>

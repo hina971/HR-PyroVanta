@@ -58,7 +58,7 @@ export default function FiraPanel() {
     <div className="card" style={{ borderColor: 'rgba(255,107,26,.35)' }}>
       <div className="card-h">
         <b>✦ FIRA — Storyteller</b>
-        <span style={{ color: 'var(--ember)' }}>Template • Demo sample</span>
+        <span style={{ color: 'var(--ember)' }}>Template • {apiFira ? 'Real data' : 'Demo sample'}</span>
       </div>
       <div className="card-b">
         <div className="fira-text" id="firaText">
@@ -72,7 +72,7 @@ export default function FiraPanel() {
           {streaming && text.length > 0 && <span className="cursor-blink"></span>}
         </div>
         <div style={{ marginTop: 12 }}>
-          <span className="chip">Demo sample data</span>
+          <span className="chip">{apiFira ? 'Real data' : 'Demo sample data'}</span>
           <span className="chip">MODIS C6.1</span>
           <span className="chip">VIIRS 375 m</span>
         </div>

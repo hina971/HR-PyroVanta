@@ -94,11 +94,19 @@ export default function Inspector({ points }: { points: FirePoint[] }) {
                 </div>
                 <div className="inspector-row">
                   <span>MODIS obs</span>
-                  <b>Terra • FRP 58.4 MW</b>
+                  <b>
+                    {p.sat === 'Terra' || p.sat === 'Aqua'
+                      ? `${p.sat} • FRP ${p.frp} MW`
+                      : 'Partner record — in dataset'}
+                  </b>
                 </div>
                 <div className="inspector-row">
                   <span>VIIRS obs</span>
-                  <b>NOAA-20 • FRP {p.frp} MW</b>
+                  <b>
+                    {p.sat === 'NOAA-20' || p.sat === 'S-NPP'
+                      ? `${p.sat} • FRP ${p.frp} MW`
+                      : 'Partner record — in dataset'}
+                  </b>
                 </div>
               </>
             )}

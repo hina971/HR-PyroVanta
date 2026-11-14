@@ -6,7 +6,7 @@ import { FireDot } from './Hero'
 // with grid cells — the offline fallback IS the map (framework §5.2).
 // No Leaflet, no tiles: the demo's custom div-based map, ported as-is.
 // Layer toggles filter which point types render.
-export default function FireMap({ points }: { points: FirePoint[] }) {
+export default function FireMap({ points, isSample }: { points: FirePoint[]; isSample: boolean }) {
   const layers = useFireStore((s) => s.layers)
   const selectedDate = useFireStore((s) => s.selectedDate)
   const visible = points.filter((p) => layers[p.type as keyof Layers])
@@ -27,7 +27,7 @@ export default function FireMap({ points }: { points: FirePoint[] }) {
           }}
           className="mono"
         >
-          GRID AGGREGATED • {visible.length} SAMPLE POINTS SHOWN
+          GRID AGGREGATED • {visible.length} {isSample ? 'SAMPLE' : 'REAL'} POINTS SHOWN
         </div>
         <div
           style={{

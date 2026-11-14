@@ -132,7 +132,7 @@ export default function ComparisonLab() {
           {live
             ? `${activePair} pair, ${windowH} h window${
                 denom ? ` • ${denom.toLocaleString()} eligible MODIS` : ''
-              } • real data from the API.`
+              } • real data from NASA FIRMS.`
             : 'Terra–VIIRS and Aqua–VIIRS pairs, 4 h window. Every % shows its denominator in the full app.'}
         </p>
 

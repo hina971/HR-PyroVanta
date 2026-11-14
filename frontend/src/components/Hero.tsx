@@ -199,16 +199,17 @@ export default function Hero({
               style={{ fontSize: 11, color: 'var(--muted)', marginTop: 12 }}
               className="mono demo-note"
             >
-              DEMO VALUES — REPRESENTATIVE SAMPLE FOR UI PREVIEW • FORMAT: NASA FIRMS •
-              MODIS C6.1 • VIIRS 375m (NOAA-20)
+              {isSample
+                ? 'DEMO VALUES — REPRESENTATIVE SAMPLE FOR UI PREVIEW • FORMAT: NASA FIRMS • MODIS C6.1 • VIIRS 375m (NOAA-20)'
+                : 'REAL DATA — NASA FIRMS • MODIS C6.1 • VIIRS 375m (NOAA-20 + S-NPP) • JUL–SEP 2023'}
             </p>
           </div>
 
           <div className="map-card">
             <div className="map-head">
-              <b>CALIFORNIA — SAMPLE PREVIEW</b>
+              <b>{isSample ? 'CALIFORNIA — SAMPLE PREVIEW' : 'CALIFORNIA — REAL DETECTIONS'}</b>
               <span>
-                August 2023 • Demo data •{' '}
+                August 2023 • {isSample ? 'Demo data' : 'Real data'} •{' '}
                 <span style={{ color: 'var(--match)' }}>● Matched glow = agreement</span>
               </span>
             </div>
