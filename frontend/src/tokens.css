@@ -421,10 +421,10 @@ footer{position:relative;z-index:1}
 .map-stage::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);background-size:36px 36px}
 .ca-shape{position:absolute;left:8%;top:8%;width:62%;height:84%;opacity:.18}
 .fire-dot{position:absolute;width:9px;height:9px;border-radius:50%;transform:translate(-50%,-50%);cursor:pointer;border:1px solid rgba(0,0,0,.4)}
-.fire-dot.modis{background:var(--amber);box-shadow:0 0 10px var(--amber)}
-.fire-dot.viirs{background:var(--cyan);box-shadow:0 0 10px var(--cyan);width:7px;height:7px}
-.fire-dot.matched{background:var(--match);box-shadow:0 0 16px var(--match);width:11px;height:11px;z-index:2}
-.fire-dot.amb{background:var(--amb);box-shadow:0 0 12px var(--amb)}
+.fire-dot.modis{background:var(--amber);box-shadow:0 0 5px var(--amber)}
+.fire-dot.viirs{background:var(--cyan);box-shadow:0 0 5px var(--cyan);width:7px;height:7px}
+.fire-dot.matched{background:var(--match);box-shadow:0 0 8px var(--match);width:11px;height:11px;z-index:2}
+.fire-dot.amb{background:var(--amb);box-shadow:0 0 6px var(--amb)}
 .fire-dot:hover{transform:translate(-50%,-50%) scale(1.5)}
 .map-foot{display:flex;gap:14px;flex-wrap:wrap;padding:10px 14px;border-top:1px solid var(--line);font-size:11px;color:var(--muted)}
 
