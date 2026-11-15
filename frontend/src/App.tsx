@@ -45,11 +45,11 @@ function apiPoint(d: Detection, i: number): FirePoint {
   }
 }
 
-function DownloadButton({ file, label }: { file: 'harmonized.csv' | 'comparison.csv'; label: string }) {
+function DownloadButton({ file, label, year }: { file: 'harmonized.csv' | 'comparison.csv'; label: string; year: number }) {
   const [note, setNote] = useState(label)
   const onClick = async () => {
     try {
-      const res = await fetch(api.downloadUrl(file))
+      const res = await fetch(api.downloadUrl(year, file))
       if (!res.ok) throw new Error('no file')
       const blob = await res.blob()
       const url = URL.createObjectURL(blob)
@@ -74,17 +74,20 @@ function DownloadButton({ file, label }: { file: 'harmonized.csv' | 'comparison.
 function Shell() {
   const view = useFireStore((s) => s.view)
   const setView = useFireStore((s) => s.setView)
+  const year = useFireStore((s) => s.year)
 
   // Server state (TanStack Query). Every query fails fast (retry: false)
   // when the backend is down, and the app falls back to the embedded
   // sample data — the offline rule. Nothing here invents data.
+  // The year is part of every query key, so switching 2023 <-> 2026
+  // refetches that year's real data.
   const { data: summary } = useQuery({
-    queryKey: ['summary'],
-    queryFn: () => api.summary('2023-07-01', '2023-09-30'),
+    queryKey: ['summary', year],
+    queryFn: () => api.summary(year, `${year}-07-01`, `${year}-09-30`),
   })
   const { data: detections } = useQuery({
-    queryKey: ['detections'],
-    queryFn: () => api.detections({ from: '2023-07-01', to: '2023-09-30', limit: '700' }),
+    queryKey: ['detections', year],
+    queryFn: () => api.detections(year, { from: `${year}-07-01`, to: `${year}-09-30`, limit: '700' }),
   })
 
   const season = summary
@@ -144,7 +147,7 @@ function Shell() {
         <h2>One selection. Every view updates.</h2>
 
         <div style={{ fontSize: 11, color: 'var(--text)', marginTop: 10, background: 'rgba(4,5,13,.52)', padding: '6px 10px', borderRadius: 8, display: 'inline-block', fontWeight: 600, textShadow: '0 1px 6px rgba(0,0,0,.85), 0 0 2px rgba(0,0,0,.9)' }} className="mono">
-          ▸ ALL NUMBERS BELOW ARE {isSample ? 'DEMO / SAMPLE VALUES FOR UI PREVIEW' : 'REAL DATA — NASA FIRMS, JUL–SEP 2023'}
+          ▸ ALL NUMBERS BELOW ARE {isSample ? 'DEMO / SAMPLE VALUES FOR UI PREVIEW' : `REAL DATA — NASA FIRMS, JUL–SEP ${year}`}
         </div>
 
         <KpiStrip season={season} />
@@ -232,8 +235,8 @@ function Shell() {
               </span>
             </div>
             <div className="downloads">
-              <DownloadButton file="harmonized.csv" label="↓ harmonized.csv" />
-              <DownloadButton file="comparison.csv" label="↓ comparison.csv" />
+              <DownloadButton file="harmonized.csv" label="↓ harmonized.csv" year={year} />
+              <DownloadButton file="comparison.csv" label="↓ comparison.csv" year={year} />
             </div>
           </div>
         </div>

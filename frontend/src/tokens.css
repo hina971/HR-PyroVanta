@@ -525,3 +525,10 @@ footer{border-top:1px solid var(--line);margin-top:28px;padding:20px 16px 30px;c
    still layers. The pause is invisible in practice — the content is what
    moves during a scroll — and everything resumes the moment it settles. */
 .space-bg.is-scrolling *, .space-bg.is-scrolling *::before, .space-bg.is-scrolling *::after{animation-play-state:paused!important}
+
+/* Year selector (Dataset — fire season), Control Rail. Segmented 2023/2026
+   control; the active year uses the same pill treatment as .tab.active. */
+.year-seg{display:flex;gap:6px}
+.year-seg button{flex:1;border:1px solid var(--line);background:var(--surface2);color:var(--muted);padding:9px 0;border-radius:999px;font-weight:700;font-size:13px;cursor:pointer;transition:background .2s ease,color .2s ease}
+.year-seg button.active{background:linear-gradient(120deg,#22344E,#2C4A73);color:#EAF1FA;box-shadow:inset 0 1px 0 rgba(255,255,255,.14), 0 4px 14px rgba(10,20,40,.35)}
+.year-seg button:hover{color:#C7D8EE}
