@@ -86,6 +86,11 @@ export async function loadSummary(year: number): Promise<Summary> {
     // matched/all-MODIS, e.g. 2.6%; the eligible figure is 2.83%).
     coverage_modis_denominator: raw.match_coverage.MODIS.eligible_records,
     coverage_viirs_denominator: raw.match_coverage.VIIRS.eligible_records,
+    // Per-sensor records sitting in ambiguous groups (the Match
+    // Explainer's MODIS stacked bar needs the MODIS share: 2023 has
+    // 2,698 MODIS records in ambiguous groups, 13,446 VIIRS).
+    ambiguous_records_modis: raw.match_coverage.MODIS.ambiguous_records,
+    ambiguous_records_viirs: raw.match_coverage.VIIRS.ambiguous_records,
     // Critical periods as "start → end" strings for the Ask AI context.
     critical_periods: (raw.critical_periods ?? []).map((p) => `${p.start} → ${p.end}`),
     mean_frp_modis: raw.by_sensor.MODIS.mean_frp_mw,
@@ -119,6 +124,8 @@ interface RawDailyRow {
   unmatched_records: number
   robust_z: number | null
   flagged: boolean
+  mean_frp_mw: number | null
+  max_frp_mw: number | null
 }
 
 export async function loadDaily(year: number): Promise<DailyRow[]> {
@@ -137,6 +144,7 @@ export async function loadDaily(year: number): Promise<DailyRow[]> {
         robust_z_modis: 0,
         robust_z_viirs: 0,
         anomaly: false,
+        max_frp: 0,
       }
       byDate.set(r.date, row)
     }
@@ -154,6 +162,10 @@ export async function loadDaily(year: number): Promise<DailyRow[]> {
     row.ambiguous = Math.max(row.ambiguous, r.ambiguous_records)
     row.unmatched = Math.max(row.unmatched, r.unmatched_records)
     row.anomaly = row.anomaly || r.flagged
+    // Strongest single detection that day (either sensor) — the Anomaly
+    // Explainer quotes it per flagged day. Null in the file means no
+    // measurement for that sensor-day.
+    if (r.max_frp_mw != null) row.max_frp = Math.max(row.max_frp, r.max_frp_mw)
   }
   return Array.from(byDate.values()).sort((a, b) => (a.date < b.date ? -1 : 1))
 }
@@ -223,7 +235,8 @@ interface RawConfig {
   date_range: { from: string; to: string }
   products: string[]
   retrieval_date: string
-  matching: { max_distance_km: number; max_time_diff_hours: number }
+  matching: { max_distance_km: number; max_time_diff_hours: number; modis_min_confidence?: number; viirs_eligible_confidence?: string[] }
+  anomaly?: { min_period_days?: number; robust_z_threshold?: number }
   attribution: string
 }
 
@@ -235,7 +248,18 @@ export async function loadMeta(year: number): Promise<Meta> {
     date_range: raw.date_range,
     products: raw.products,
     retrieval_date: raw.retrieval_date,
-    matching: { spatial_km: raw.matching.max_distance_km, temporal_h: raw.matching.max_time_diff_hours },
+    matching: {
+      spatial_km: raw.matching.max_distance_km,
+      temporal_h: raw.matching.max_time_diff_hours,
+      // Rule parameters the Match Explainer quotes (MODIS ≥ 30 confidence,
+      // VIIRS nominal/high only) — read from the config, never hardcoded.
+      modis_min_confidence: raw.matching.modis_min_confidence,
+      viirs_confidence: raw.matching.viirs_eligible_confidence,
+    },
+    // Anomaly flag threshold the Anomaly Explainer quotes.
+    anomaly: raw.anomaly
+      ? { robust_z_threshold: raw.anomaly.robust_z_threshold }
+      : undefined,
     provenance: raw.attribution,
   }
 }

@@ -29,7 +29,18 @@ export interface Meta {
   date_range: { from: string; to: string }
   products: string[]
   retrieval_date: string
-  matching: { spatial_km: number; temporal_h: number }
+  matching: {
+    spatial_km: number
+    temporal_h: number
+    // Rule parameters from the config (static-data path only): the MODIS
+    // minimum confidence and the VIIRS confidence levels that count.
+    // The Match Explainer quotes these instead of hardcoding them.
+    modis_min_confidence?: number
+    viirs_confidence?: string[]
+  }
+  // Anomaly flag threshold from the config (static-data path only).
+  // The Anomaly Explainer quotes it instead of hardcoding 3.5.
+  anomaly?: { robust_z_threshold?: number }
   provenance: string
 }
 
@@ -47,6 +58,10 @@ export interface Summary {
   // matched / all MODIS (2.6% in 2023); the eligible figure is 2.83%.
   coverage_modis_denominator?: number
   coverage_viirs_denominator?: number
+  // Per-sensor records in ambiguous groups (static-data path only).
+  // The Match Explainer's MODIS bar needs the MODIS share.
+  ambiguous_records_modis?: number
+  ambiguous_records_viirs?: number
   // Critical periods as "start → end" strings (static-data path only).
   critical_periods?: string[]
   mean_frp_modis: number
@@ -94,6 +109,9 @@ export interface DailyRow {
   robust_z_modis: number
   robust_z_viirs: number
   anomaly: boolean
+  // Strongest single detection that day, MW (max of both sensors'
+  // max_frp_mw). The Anomaly Explainer quotes it per flagged day.
+  max_frp: number
 }
 
 export interface Comparison {
