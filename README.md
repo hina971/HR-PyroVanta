@@ -12,7 +12,7 @@
 
 *Challenge: Harmonization of MODIS and VIIRS Hot Spots*
 
-### 🚀 [Live Demo](https://hr-pyro-vanta.vercel.app)
+### 🚀 [Live Demo](https://hr-pyro-vanta-hwgq.vercel.app/)
 
 </div>
 
@@ -136,7 +136,7 @@ Refer to `docs/M2_DATA_EXPORT.md` for exports/narration and the `README` in `Fir
 
 ## 📜 Data Attribution
 
-**NASA FIRMS (Fire Information for Resource Management System):** MODIS Collection 6.1 and VIIRS 375 m active-fire data (NOAA-20 and Suomi NPP), retrieved 10 November 2026. 
+**NASA FIRMS (Fire Information for Resource Management System):** MODIS Collection 6.1 and VIIRS 375 m active-fire data (NOAA-20 and Suomi NPP). 
 🔗 [https://firms.modaps.eosdis.nasa.gov/](https://firms.modaps.eosdis.nasa.gov/)
 
 ---
@@ -153,5 +153,5 @@ Refer to `docs/M2_DATA_EXPORT.md` for exports/narration and the `README` in `Fir
 
 <div align="center">
   <br>
-  <i>Built with ❤️ for the NASA Space Apps Challenge</i>
+  <i>Built for the NASA Space Apps Challenge</i>
 </div>
