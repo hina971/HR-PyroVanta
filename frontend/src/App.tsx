@@ -181,7 +181,12 @@ function Shell() {
           {isLive && liveError ? ' · LIVE FETCH FAILED — ARCHIVE SEASONS STILL WORK' : ''}
         </div>
 
-        <KpiStrip season={season} live={isLive ? liveData ?? null : null} liveLoading={isLive && liveLoading} />
+        <KpiStrip
+          season={season}
+          summary={isLive ? null : summary ?? null}
+          live={isLive ? liveData ?? null : null}
+          liveLoading={isLive && liveLoading}
+        />
 
         <div className="tabs reveal" role="tablist">
           <button

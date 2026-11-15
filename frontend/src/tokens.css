@@ -566,3 +566,63 @@ footer{border-top:1px solid var(--line);margin-top:28px;padding:20px 16px 30px;c
 .ask-send:disabled{opacity:.5;cursor:default}
 .ask-note{font-size:10px;color:var(--muted2);text-align:center;padding:0 14px 12px}
 @media(max-width:640px){.ask-fab{right:12px;bottom:12px}.ask-panel{right:12px;bottom:66px}}
+
+/* MATCH EXPLAINER (v25, feature 2) — "Why is the match rate only X%?"
+   Static, data-grounded, no AI/key. The "Why so low?" button sits on the
+   Match Coverage KPI card; the panel is a fixed modal (z-index 150 —
+   above the Ask panel at 90, below the tour overlay at 200). */
+.match-why{display:inline-flex;margin-top:8px;background:rgba(255,176,32,.08);border:1px solid rgba(255,176,32,.45);color:#FFE1A8;border-radius:999px;padding:6px 11px;font-size:11px;font-weight:700;cursor:pointer;min-height:30px}
+.match-why:hover{background:rgba(255,176,32,.18)}
+.match-explainer-overlay{position:fixed;inset:0;z-index:150;background:rgba(5,5,8,.72);display:flex;align-items:center;justify-content:center;padding:20px}
+.match-explainer{width:min(640px,calc(100vw - 40px));max-height:min(88vh,820px);overflow-y:auto;background:var(--surface);border:1px solid rgba(255,122,34,.45);border-radius:18px;box-shadow:0 24px 60px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.05);padding:18px}
+.match-explainer-h{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.match-explainer-h b{font-size:15px;display:block}
+.match-explainer-h span{font-size:11px;color:var(--muted);display:block;margin-top:3px}
+.match-explainer-close{background:none;border:1px solid var(--line);color:var(--muted);border-radius:999px;width:32px;height:32px;min-height:32px;padding:0;font-size:13px;line-height:1;cursor:pointer;flex:none}
+.match-explainer-close:hover{color:var(--text);border-color:var(--amber)}
+.match-cov{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.match-cov>div{background:var(--surface2);border:1px solid var(--line);border-radius:12px;padding:12px}
+.match-cov strong{font-family:"Unbounded";font-weight:600;font-size:24px;display:block}
+.match-cov span{font-size:12px;color:var(--muted);line-height:1.5;display:block;margin-top:4px}
+.match-cov small{font-size:11px;color:var(--muted2)}
+.match-sub{font-size:13px;margin:16px 0 8px}
+.match-bar{display:flex;height:14px;border-radius:999px;overflow:hidden;background:var(--surface2);border:1px solid var(--line)}
+.match-bar>div{height:100%}
+.match-bar-legend{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:8px;font-size:11px;color:var(--muted)}
+.match-bar-legend i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px}
+.match-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.match-chip{background:var(--surface2);border:1px solid var(--line);border-radius:999px;padding:6px 10px;font-size:11px;color:var(--muted)}
+.match-chip b{color:var(--text)}
+.match-reasons{margin:8px 0 0;padding-left:20px;font-size:13px;line-height:1.6;color:var(--text)}
+.match-reasons li{margin-bottom:10px}
+.match-reasons li::marker{color:var(--amber);font-weight:700}
+.match-takeaway{border-left:3px solid var(--match);padding-left:12px;font-weight:600;font-size:13.5px;line-height:1.6;margin:16px 0 0}
+.match-note{font-size:11px;color:var(--muted2);line-height:1.6;margin:10px 0 0}
+@media(max-width:640px){.match-cov{grid-template-columns:1fr}.match-explainer{padding:14px}}
+
+/* ANOMALY EXPLAINER (v25, feature 3) — "Anomalous days".
+   Same fixed-modal pattern as the Match Explainer (z-index 150), rose
+   accent — anomalies are flagged in red on the calendar. The button
+   lives in the Comparison Lab card header. */
+.anom-btn{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.55);color:#FECACA;border-radius:999px;padding:6px 11px;font-size:11px;font-weight:700;cursor:pointer;min-height:30px;white-space:nowrap}
+.anom-btn:hover{background:rgba(239,68,68,.2)}
+.anom-overlay{position:fixed;inset:0;z-index:150;background:rgba(5,5,8,.72);display:flex;align-items:center;justify-content:center;padding:20px}
+.anom-panel{width:min(640px,calc(100vw - 40px));max-height:min(88vh,820px);overflow-y:auto;background:var(--surface);border:1px solid rgba(239,68,68,.5);border-radius:18px;box-shadow:0 24px 60px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.05);padding:18px}
+.anom-h{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.anom-h b{font-size:15px;display:block}
+.anom-h span{font-size:11px;color:var(--muted);display:block;margin-top:3px}
+.anom-close{background:none;border:1px solid var(--line);color:var(--muted);border-radius:999px;width:32px;height:32px;min-height:32px;padding:0;font-size:13px;line-height:1;cursor:pointer;flex:none}
+.anom-close:hover{color:var(--text);border-color:var(--danger)}
+.anom-def{font-size:13px;line-height:1.65;color:var(--muted);margin:12px 0 0}
+.anom-def b{color:var(--text)}
+.anom-list{list-style:none;margin:12px 0 0;padding:0;display:flex;flex-direction:column;gap:8px}
+.anom-row{display:block;width:100%;text-align:left;background:var(--surface2);border:1px solid var(--line);border-radius:12px;padding:11px 12px;cursor:pointer;color:var(--text);min-height:0}
+.anom-row:hover{border-color:rgba(239,68,68,.6)}
+li .anom-row{border:1px solid var(--line)}
+.anom-row-main{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+.anom-row-main b{font-size:13px}
+.anom-row-main span{font-size:12px;color:var(--muted)}
+.anom-row-sub{display:block;font-size:11px;color:var(--muted2);line-height:1.5;margin-top:4px}
+.anom-note{font-size:11px;color:var(--muted2);line-height:1.6;margin:12px 0 0}
+.anom-note b{color:var(--muted)}
+@media(max-width:640px){.anom-panel{padding:14px}.anom-row-main span{font-size:11px}}
