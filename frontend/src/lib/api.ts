@@ -42,6 +42,13 @@ export interface Summary {
   exact_duplicates: number
   coverage_modis: number // % of MODIS matched 1-to-1
   coverage_viirs: number // % of VIIRS matched 1-to-1
+  // Eligible denominators behind the coverage % (static-data path only;
+  // the FastAPI backend does not return these yet). The KPI strip shows
+  // matched / all MODIS (2.6% in 2023); the eligible figure is 2.83%.
+  coverage_modis_denominator?: number
+  coverage_viirs_denominator?: number
+  // Critical periods as "start → end" strings (static-data path only).
+  critical_periods?: string[]
   mean_frp_modis: number
   mean_frp_viirs: number
   peak_day: string

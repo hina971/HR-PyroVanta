@@ -33,6 +33,12 @@ export function dataBase(year: number): string {
 }
 
 async function fetchJson<T>(path: string, year: number): Promise<T> {
+  // Fail LOUDLY for 'live': archive loaders only serve 2023 and 2026.
+  // Silently returning the 2023 files for a live request would present
+  // old numbers as live data — the worst possible bug for this app.
+  if (year !== 2023 && year !== 2026) {
+    throw new Error(`No static data for dataset "${year}" — archive loaders only serve 2023 and 2026`)
+  }
   const res = await fetch(`${dataBase(year)}${path}`)
   if (!res.ok) throw new Error(`Missing static data file: ${path} (year ${year})`)
   return (await res.json()) as T
@@ -56,9 +62,12 @@ interface RawSummary {
   }
   peak_day: { date: string; modis: number; viirs: number; total: number }
   match_coverage: {
-    MODIS: { match_coverage_pct: number }
-    VIIRS: { match_coverage_pct: number }
+    MODIS: { match_coverage_pct: number; eligible_records: number; confirmed_matched_records: number; ambiguous_records: number }
+    VIIRS: { match_coverage_pct: number; eligible_records: number; confirmed_matched_records: number; ambiguous_records: number }
   }
+  // Critical periods (runs of flagged days) — used by the Ask AI context
+  // so the model can name them instead of inventing dates.
+  critical_periods: Array<{ start: string; end: string; days: string[] }>
 }
 
 export async function loadSummary(year: number): Promise<Summary> {
@@ -73,6 +82,12 @@ export async function loadSummary(year: number): Promise<Summary> {
     exact_duplicates: c.exact_duplicates,
     coverage_modis: raw.match_coverage.MODIS.match_coverage_pct,
     coverage_viirs: raw.match_coverage.VIIRS.match_coverage_pct,
+    // Eligible denominators behind the coverage % (the KPI strip shows
+    // matched/all-MODIS, e.g. 2.6%; the eligible figure is 2.83%).
+    coverage_modis_denominator: raw.match_coverage.MODIS.eligible_records,
+    coverage_viirs_denominator: raw.match_coverage.VIIRS.eligible_records,
+    // Critical periods as "start → end" strings for the Ask AI context.
+    critical_periods: (raw.critical_periods ?? []).map((p) => `${p.start} → ${p.end}`),
     mean_frp_modis: raw.by_sensor.MODIS.mean_frp_mw,
     mean_frp_viirs: raw.by_sensor.VIIRS.mean_frp_mw,
     peak_day: raw.peak_day.date,
