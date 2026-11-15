@@ -135,11 +135,10 @@ Refer to `docs/M2_DATA_EXPORT.md` for exports/narration and the `README` in `Fir
 | Name | Role | Responsibilities |
 | :--- | :--- | :--- |
 | **[Hina Ramzan](https://www.linkedin.com/in/hina-ramzan/)** | 👑 Team Leader / Owner | Integration, deployment, README, demo video, submission |
-| **[Hasnain Ahmad](https://www.linkedin.com/in/hasnain-ahmad-047210349/)** | 💾 Data Engineer | Data download, readiness gate, audit, provenance, exports, FIRA narration |
-| **[Sharjeel Sarwar](https://www.linkedin.com/in/sharjeel-sarwar-a18414327/)** | 🔬 Science Lead | Harmonization, sensitivity analysis, FRP correlation, anomaly detection, tests |
-| **[Muhammad Ihsan](https://www.linkedin.com/in/muhammad-ihsan-445350320/)** | 💻 Frontend Developer | App shell, dashboard, map, calendar, comparison lab, FIRA panel, downloads |
+| **[Muhammad Ihsan](https://www.linkedin.com/in/muhammad-ihsan-445350320/)** | 💾 Data Engineer | Data download, readiness gate, audit, provenance, exports, FIRA narration |
+| **[Hasnain Ahmad](https://www.linkedin.com/in/hasnain-ahmad-047210349/)** | 🔬 Science Lead | Harmonization, sensitivity analysis, FRP correlation, anomaly detection, tests |
+| **[Sharjeel Sarwar](https://www.linkedin.com/in/sharjeel-sarwar-a18414327/)** | 💻 Frontend Developer | App shell, dashboard, map, calendar, comparison lab, FIRA panel, downloads |
 | **[Zukhraf Maryam](https://www.linkedin.com/in/zukhraf-maryam-275321293/)** | 🎨 Presentation | Slide deck creation, visual storytelling, pitch preparation, formatting |
-
 <div align="center">
   <br>
   <i>Built for the NASA Space Apps Challenge</i>
