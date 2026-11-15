@@ -100,7 +100,7 @@ The data files must be in `frontend/public/data/` (copy them from `frontend_data
 
 ## Data attribution
 
-NASA FIRMS (Fire Information for Resource Management System): MODIS Collection 6.1 and VIIRS 375 m active-fire data (NOAA-20 and Suomi NPP), retrieved 10 November 2026. https://firms.modaps.eosdis.nasa.gov/
+NASA FIRMS (Fire Information for Resource Management System): MODIS Collection 6.1 and VIIRS 375 m active-fire data (NOAA-20 and Suomi NPP)
 
 ## Team
 
