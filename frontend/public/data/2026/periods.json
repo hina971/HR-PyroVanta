@@ -1,0 +1,157 @@
+{
+  "flagged_days": [
+    {
+      "date": "2026-07-26",
+      "sensor": "MODIS",
+      "count": 136,
+      "median": 23.0,
+      "mad": 14.0,
+      "robust_z": 5.44
+    },
+    {
+      "date": "2026-07-29",
+      "sensor": "MODIS",
+      "count": 141,
+      "median": 23.0,
+      "mad": 14.0,
+      "robust_z": 5.69
+    },
+    {
+      "date": "2026-08-02",
+      "sensor": "MODIS",
+      "count": 138,
+      "median": 23.0,
+      "mad": 14.0,
+      "robust_z": 5.54
+    },
+    {
+      "date": "2026-08-11",
+      "sensor": "MODIS",
+      "count": 199,
+      "median": 23.0,
+      "mad": 14.0,
+      "robust_z": 8.48
+    },
+    {
+      "date": "2026-08-26",
+      "sensor": "MODIS",
+      "count": 132,
+      "median": 23.0,
+      "mad": 14.0,
+      "robust_z": 5.25
+    },
+    {
+      "date": "2026-08-27",
+      "sensor": "MODIS",
+      "count": 162,
+      "median": 23.0,
+      "mad": 14.0,
+      "robust_z": 6.7
+    },
+    {
+      "date": "2026-07-26",
+      "sensor": "VIIRS",
+      "count": 1028,
+      "median": 225.0,
+      "mad": 114.5,
+      "robust_z": 4.73
+    },
+    {
+      "date": "2026-07-27",
+      "sensor": "VIIRS",
+      "count": 836,
+      "median": 225.0,
+      "mad": 114.5,
+      "robust_z": 3.6
+    },
+    {
+      "date": "2026-07-29",
+      "sensor": "VIIRS",
+      "count": 849,
+      "median": 225.0,
+      "mad": 114.5,
+      "robust_z": 3.68
+    },
+    {
+      "date": "2026-07-30",
+      "sensor": "VIIRS",
+      "count": 847,
+      "median": 225.0,
+      "mad": 114.5,
+      "robust_z": 3.66
+    },
+    {
+      "date": "2026-07-31",
+      "sensor": "VIIRS",
+      "count": 930,
+      "median": 225.0,
+      "mad": 114.5,
+      "robust_z": 4.15
+    },
+    {
+      "date": "2026-08-11",
+      "sensor": "VIIRS",
+      "count": 1215,
+      "median": 225.0,
+      "mad": 114.5,
+      "robust_z": 5.83
+    },
+    {
+      "date": "2026-08-26",
+      "sensor": "VIIRS",
+      "count": 1261,
+      "median": 225.0,
+      "mad": 114.5,
+      "robust_z": 6.1
+    },
+    {
+      "date": "2026-08-27",
+      "sensor": "VIIRS",
+      "count": 1131,
+      "median": 225.0,
+      "mad": 114.5,
+      "robust_z": 5.34
+    }
+  ],
+  "critical_periods": [
+    {
+      "start": "2026-07-26",
+      "end": "2026-07-27",
+      "days": [
+        "2026-07-26",
+        "2026-07-27"
+      ]
+    },
+    {
+      "start": "2026-07-29",
+      "end": "2026-07-31",
+      "days": [
+        "2026-07-29",
+        "2026-07-30",
+        "2026-07-31"
+      ]
+    },
+    {
+      "start": "2026-08-26",
+      "end": "2026-08-27",
+      "days": [
+        "2026-08-26",
+        "2026-08-27"
+      ]
+    }
+  ],
+  "daily_baseline_stats": {
+    "MODIS": {
+      "median": 23.0,
+      "mad": 14.0,
+      "method": "MAD",
+      "baseline": "2026-07-01 to 2026-09-30"
+    },
+    "VIIRS": {
+      "median": 225.0,
+      "mad": 114.5,
+      "method": "MAD",
+      "baseline": "2026-07-01 to 2026-09-30"
+    }
+  }
+}

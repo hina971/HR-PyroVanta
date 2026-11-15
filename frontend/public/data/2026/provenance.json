@@ -1,0 +1,130 @@
+{
+  "team": "NASA Space Apps Challenge 2026, team #786",
+  "challenge": "Harmonization of MODIS and VIIRS Hot Spots",
+  "source": "NASA FIRMS",
+  "products": [
+    "MODIS Collection 6.1 (Terra/Aqua)",
+    "VIIRS 375 m NOAA-20 Collection 2",
+    "VIIRS 375 m S-NPP Collection 2"
+  ],
+  "region": "California, USA",
+  "date_range": {
+    "from": "2026-07-01",
+    "to": "2026-09-30"
+  },
+  "inputs": {
+    "modis_terra.csv": {
+      "rows": 1680,
+      "path": "/home/hatch/workspace/nasa-space-apps/firefusion-ai/data-2026/processed/modis_terra.csv"
+    },
+    "modis_aqua.csv": {
+      "rows": 1638,
+      "path": "/home/hatch/workspace/nasa-space-apps/firefusion-ai/data-2026/processed/modis_aqua.csv"
+    },
+    "viirs_noaa20.csv": {
+      "rows": 15382,
+      "path": "/home/hatch/workspace/nasa-space-apps/firefusion-ai/data-2026/processed/viirs_noaa20.csv"
+    },
+    "viirs_snpp.csv": {
+      "rows": 14327,
+      "path": "/home/hatch/workspace/nasa-space-apps/firefusion-ai/data-2026/processed/viirs_snpp.csv"
+    },
+    "total_rows": 33027
+  },
+  "harmonization": {
+    "script": "harmonize.py",
+    "version": "1.2.0",
+    "run_at_utc": "2026-11-15T05:07:39.484716+00:00",
+    "config": {
+      "max_distance_km": 1.0,
+      "max_time_diff_hours": 4,
+      "modis_min_confidence": 30,
+      "spatial_sensitivity_km": [
+        0.5,
+        1.0,
+        2.0
+      ],
+      "temporal_sensitivity_hours": [
+        1,
+        4,
+        6
+      ],
+      "viirs_eligible_confidence": [
+        "nominal",
+        "high"
+      ]
+    },
+    "counts": {
+      "harmonized_parquet": "data-2026/processed/out_2026/harmonized.parquet",
+      "comparison_json": "data-2026/processed/out_2026/comparison.json",
+      "periods_json": "data-2026/processed/out_2026/periods.json",
+      "rows": 33027,
+      "matched_pairs": 64,
+      "ambiguous_groups": 418,
+      "unmatched": 22274
+    }
+  },
+  "exports": [
+    "summary.json",
+    "daily_report.csv",
+    "points.csv",
+    "grid.csv",
+    "audit.json",
+    "provenance.json"
+  ],
+  "note": "Raw FIRMS files are kept untouched in data-2026/raw/. S-NPP is included alongside NOAA-20 (team-approved scope extension; PRD lists extra VIIRS satellites as P2).",
+  "data_sources": {
+    "method": "FIRMS archive + NRT combined per sensor (the FIRMS archive lags for recent months, so archive alone is incomplete). No date overlap between archive and NRT for any sensor.",
+    "raw_files": [
+      {
+        "file": "fire_archive_M-C61_850438.csv",
+        "sensor": "MODIS",
+        "kind": "archive",
+        "rows": 2715,
+        "dates": "2026-07-01 to 2026-08-31"
+      },
+      {
+        "file": "fire_nrt_M-C61_850438.csv",
+        "sensor": "MODIS",
+        "kind": "NRT",
+        "rows": 603,
+        "dates": "2026-09-01 to 2026-09-30"
+      },
+      {
+        "file": "fire_archive_J1V-C2_850439.csv",
+        "sensor": "VIIRS NOAA-20",
+        "kind": "archive",
+        "rows": 4359,
+        "dates": "2026-07-01 to 2026-07-31"
+      },
+      {
+        "file": "fire_nrt_J1V-C2_850439.csv",
+        "sensor": "VIIRS NOAA-20",
+        "kind": "NRT",
+        "rows": 11023,
+        "dates": "2026-08-01 to 2026-09-30"
+      },
+      {
+        "file": "fire_archive_SV-C2_850440.csv",
+        "sensor": "VIIRS S-NPP",
+        "kind": "archive",
+        "rows": 4138,
+        "dates": "2026-07-01 to 2026-07-31"
+      },
+      {
+        "file": "fire_nrt_SV-C2_850440.csv",
+        "sensor": "VIIRS S-NPP",
+        "kind": "NRT",
+        "rows": 10189,
+        "dates": "2026-08-01 to 2026-09-30"
+      }
+    ],
+    "combined_totals": {
+      "MODIS": 3318,
+      "VIIRS NOAA-20": 15382,
+      "VIIRS S-NPP": 14327,
+      "total": 33027
+    },
+    "nrt_note": "NRT files have no type column; NRT rows were assigned type=0 (presumed vegetation fire, the dominant class)."
+  }
+}

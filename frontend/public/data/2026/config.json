@@ -1,0 +1,50 @@
+{
+  "region_name": "California, USA",
+  "bbox": {
+    "lat_max": 42.0,
+    "lat_min": 32.5,
+    "lon_max": -114.1,
+    "lon_min": -124.4
+  },
+  "date_range": {
+    "from": "2026-07-01",
+    "to": "2026-09-30"
+  },
+  "matching": {
+    "max_distance_km": 1.0,
+    "max_time_diff_hours": 4,
+    "modis_min_confidence": 30,
+    "spatial_sensitivity_km": [
+      0.5,
+      1.0,
+      2.0
+    ],
+    "temporal_sensitivity_hours": [
+      1,
+      4,
+      6
+    ],
+    "viirs_eligible_confidence": [
+      "nominal",
+      "high"
+    ]
+  },
+  "anomaly": {
+    "min_period_days": 2,
+    "robust_z_threshold": 3.5
+  },
+  "grid_km": 1.0,
+  "products": [
+    "MODIS Collection 6.1 (Terra/Aqua)",
+    "VIIRS 375 m NOAA-20 Collection 2",
+    "VIIRS 375 m S-NPP Collection 2 (team-approved scope extension; PRD P2)"
+  ],
+  "retrieval_date": "2026-11-15",
+  "satellites": [
+    "Terra",
+    "Aqua",
+    "NOAA-20",
+    "S-NPP"
+  ],
+  "attribution": "NASA FIRMS (MODIS C6.1 and VIIRS 375 m active fire), archive + NRT combined, retrieved 2026-11-15"
+}

@@ -1,0 +1,3291 @@
+[
+  {
+    "date": "2026-07-01",
+    "sensor": "MODIS",
+    "detections": 15,
+    "by_satellite": {
+      "Aqua": 9,
+      "Terra": 6
+    },
+    "matched_records": 1,
+    "ambiguous_records": 0,
+    "ambiguous_groups": 0,
+    "unmatched_records": 14,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 49.1,
+    "max_frp_mw": 111.9,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-07-01",
+    "sensor": "VIIRS",
+    "detections": 56,
+    "by_satellite": {
+      "NOAA-20": 33,
+      "S-NPP": 23
+    },
+    "matched_records": 1,
+    "ambiguous_records": 0,
+    "ambiguous_groups": 0,
+    "unmatched_records": 55,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 3.6,
+    "max_frp_mw": 22.7,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-07-02",
+    "sensor": "MODIS",
+    "detections": 4,
+    "by_satellite": {
+      "Terra": 4
+    },
+    "matched_records": 0,
+    "ambiguous_records": 0,
+    "ambiguous_groups": 0,
+    "unmatched_records": 4,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 19.6,
+    "max_frp_mw": 47.9,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-07-02",
+    "sensor": "VIIRS",
+    "detections": 111,
+    "by_satellite": {
+      "S-NPP": 65,
+      "NOAA-20": 46
+    },
+    "matched_records": 0,
+    "ambiguous_records": 0,
+    "ambiguous_groups": 0,
+    "unmatched_records": 111,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 12.4,
+    "max_frp_mw": 135.2,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-07-03",
+    "sensor": "MODIS",
+    "detections": 14,
+    "by_satellite": {
+      "Terra": 10,
+      "Aqua": 4
+    },
+    "matched_records": 0,
+    "ambiguous_records": 5,
+    "ambiguous_groups": 3,
+    "unmatched_records": 9,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 21.7,
+    "max_frp_mw": 65.2,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-07-03",
+    "sensor": "VIIRS",
+    "detections": 104,
+    "by_satellite": {
+      "S-NPP": 55,
+      "NOAA-20": 49
+    },
+    "matched_records": 0,
+    "ambiguous_records": 21,
+    "ambiguous_groups": 3,
+    "unmatched_records": 83,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 4.8,
+    "max_frp_mw": 77.8,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-07-04",
+    "sensor": "MODIS",
+    "detections": 2,
+    "by_satellite": {
+      "Terra": 1,
+      "Aqua": 1
+    },
+    "matched_records": 0,
+    "ambiguous_records": 0,
+    "ambiguous_groups": 0,
+    "unmatched_records": 2,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 20.1,
+    "max_frp_mw": 29.4,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-07-04",
+    "sensor": "VIIRS",
+    "detections": 49,
+    "by_satellite": {
+      "NOAA-20": 25,
+      "S-NPP": 24
+    },
+    "matched_records": 0,
+    "ambiguous_records": 0,
+    "ambiguous_groups": 0,
+    "unmatched_records": 49,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 1.8,
+    "max_frp_mw": 14.9,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-07-05",
+    "sensor": "MODIS",
+    "detections": 3,
+    "by_satellite": {
+      "Terra": 3
+    },
+    "matched_records": 0,
+    "ambiguous_records": 0,
+    "ambiguous_groups": 0,
+    "unmatched_records": 3,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 11.0,
+    "max_frp_mw": 15.0,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-07-05",
+    "sensor": "VIIRS",
+    "detections": 44,
+    "by_satellite": {
+      "S-NPP": 28,
+      "NOAA-20": 16
+    },
+    "matched_records": 0,
+    "ambiguous_records": 0,
+    "ambiguous_groups": 0,
+    "unmatched_records": 44,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 4.9,
+    "max_frp_mw": 33.8,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-07-06",
+    "sensor": "MODIS",
+    "detections": 11,
+    "by_satellite": {
+      "Aqua": 10,
+      "Terra": 1
+    },
+    "matched_records": 0,
+    "ambiguous_records": 3,
+    "ambiguous_groups": 1,
+    "unmatched_records": 8,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 222.2,
+    "max_frp_mw": 981.6,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-07-06",
+    "sensor": "VIIRS",
+    "detections": 102,
+    "by_satellite": {
+      "NOAA-20": 62,
+      "S-NPP": 40
+    },
+    "matched_records": 0,
+    "ambiguous_records": 3,
+    "ambiguous_groups": 1,
+    "unmatched_records": 99,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 4.0,
+    "max_frp_mw": 47.7,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-07-07",
+    "sensor": "MODIS",
+    "detections": 12,
+    "by_satellite": {
+      "Terra": 7,
+      "Aqua": 5
+    },
+    "matched_records": 2,
+    "ambiguous_records": 2,
+    "ambiguous_groups": 1,
+    "unmatched_records": 8,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 72.6,
+    "max_frp_mw": 406.5,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-07-07",
+    "sensor": "VIIRS",
+    "detections": 103,
+    "by_satellite": {
+      "S-NPP": 65,
+      "NOAA-20": 38
+    },
+    "matched_records": 2,
+    "ambiguous_records": 2,
+    "ambiguous_groups": 1,
+    "unmatched_records": 99,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 9.6,
+    "max_frp_mw": 262.3,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-07-08",
+    "sensor": "MODIS",
+    "detections": 12,
+    "by_satellite": {
+      "Terra": 10,
+      "Aqua": 2
+    },
+    "matched_records": 0,
+    "ambiguous_records": 4,
+    "ambiguous_groups": 3,
+    "unmatched_records": 8,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 26.9,
+    "max_frp_mw": 96.5,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-07-08",
+    "sensor": "VIIRS",
+    "detections": 189,
+    "by_satellite": {
+      "S-NPP": 102,
+      "NOAA-20": 87
+    },
+    "matched_records": 0,
+    "ambiguous_records": 10,
+    "ambiguous_groups": 3,
+    "unmatched_records": 179,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 5.9,
+    "max_frp_mw": 37.7,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-07-09",
+    "sensor": "MODIS",
+    "detections": 8,
+    "by_satellite": {
+      "Aqua": 6,
+      "Terra": 2
+    },
+    "matched_records": 0,
+    "ambiguous_records": 5,
+    "ambiguous_groups": 3,
+    "unmatched_records": 3,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 49.6,
+    "max_frp_mw": 149.8,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-07-09",
+    "sensor": "VIIRS",
+    "detections": 149,
+    "by_satellite": {
+      "NOAA-20": 75,
+      "S-NPP": 74
+    },
+    "matched_records": 0,
+    "ambiguous_records": 23,
+    "ambiguous_groups": 3,
+    "unmatched_records": 126,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 9.4,
+    "max_frp_mw": 65.9,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-07-10",
+    "sensor": "MODIS",
+    "detections": 21,
+    "by_satellite": {
+      "Aqua": 17,
+      "Terra": 4
+    },
+    "matched_records": 3,
+    "ambiguous_records": 3,
+    "ambiguous_groups": 3,
+    "unmatched_records": 15,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 735.1,
+    "max_frp_mw": 5087.2,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-07-10",
+    "sensor": "VIIRS",
+    "detections": 146,
+    "by_satellite": {
+      "NOAA-20": 113,
+      "S-NPP": 33
+    },
+    "matched_records": 3,
+    "ambiguous_records": 13,
+    "ambiguous_groups": 3,
+    "unmatched_records": 130,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 41.2,
+    "max_frp_mw": 356.1,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-07-11",
+    "sensor": "MODIS",
+    "detections": 30,
+    "by_satellite": {
+      "Aqua": 24,
+      "Terra": 6
+    },
+    "matched_records": 0,
+    "ambiguous_records": 8,
+    "ambiguous_groups": 3,
+    "unmatched_records": 22,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 126.0,
+    "max_frp_mw": 516.8,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-07-11",
+    "sensor": "VIIRS",
+    "detections": 81,
+    "by_satellite": {
+      "NOAA-20": 81
+    },
+    "matched_records": 0,
+    "ambiguous_records": 12,
+    "ambiguous_groups": 3,
+    "unmatched_records": 69,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 20.8,
+    "max_frp_mw": 239.9,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-07-12",
+    "sensor": "MODIS",
+    "detections": 0,
+    "by_satellite": {},
+    "matched_records": 0,
+    "ambiguous_records": 0,
+    "ambiguous_groups": 0,
+    "unmatched_records": 0,
+    "exact_duplicates": 0,
+    "mean_frp_mw": null,
+    "max_frp_mw": null,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-07-12",
+    "sensor": "VIIRS",
+    "detections": 43,
+    "by_satellite": {
+      "NOAA-20": 43
+    },
+    "matched_records": 0,
+    "ambiguous_records": 0,
+    "ambiguous_groups": 0,
+    "unmatched_records": 43,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 5.0,
+    "max_frp_mw": 18.9,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-07-13",
+    "sensor": "MODIS",
+    "detections": 12,
+    "by_satellite": {
+      "Terra": 10,
+      "Aqua": 2
+    },
+    "matched_records": 0,
+    "ambiguous_records": 0,
+    "ambiguous_groups": 0,
+    "unmatched_records": 12,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 31.2,
+    "max_frp_mw": 90.7,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-07-13",
+    "sensor": "VIIRS",
+    "detections": 41,
+    "by_satellite": {
+      "NOAA-20": 41
+    },
+    "matched_records": 0,
+    "ambiguous_records": 0,
+    "ambiguous_groups": 0,
+    "unmatched_records": 41,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 2.3,
+    "max_frp_mw": 15.2,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-07-14",
+    "sensor": "MODIS",
+    "detections": 6,
+    "by_satellite": {
+      "Aqua": 5,
+      "Terra": 1
+    },
+    "matched_records": 0,
+    "ambiguous_records": 2,
+    "ambiguous_groups": 2,
+    "unmatched_records": 4,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 40.5,
+    "max_frp_mw": 81.2,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-07-14",
+    "sensor": "VIIRS",
+    "detections": 55,
+    "by_satellite": {
+      "NOAA-20": 55
+    },
+    "matched_records": 0,
+    "ambiguous_records": 11,
+    "ambiguous_groups": 2,
+    "unmatched_records": 44,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 7.2,
+    "max_frp_mw": 56.0,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-07-15",
+    "sensor": "MODIS",
+    "detections": 2,
+    "by_satellite": {
+      "Aqua": 1,
+      "Terra": 1
+    },
+    "matched_records": 0,
+    "ambiguous_records": 0,
+    "ambiguous_groups": 0,
+    "unmatched_records": 2,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 8.9,
+    "max_frp_mw": 9.8,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-07-15",
+    "sensor": "VIIRS",
+    "detections": 57,
+    "by_satellite": {
+      "NOAA-20": 57
+    },
+    "matched_records": 0,
+    "ambiguous_records": 0,
+    "ambiguous_groups": 0,
+    "unmatched_records": 57,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 8.8,
+    "max_frp_mw": 145.3,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-07-16",
+    "sensor": "MODIS",
+    "detections": 3,
+    "by_satellite": {
+      "Aqua": 3
+    },
+    "matched_records": 0,
+    "ambiguous_records": 2,
+    "ambiguous_groups": 1,
+    "unmatched_records": 1,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 31.2,
+    "max_frp_mw": 65.8,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-07-16",
+    "sensor": "VIIRS",
+    "detections": 42,
+    "by_satellite": {
+      "NOAA-20": 42
+    },
+    "matched_records": 0,
+    "ambiguous_records": 2,
+    "ambiguous_groups": 1,
+    "unmatched_records": 40,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 4.4,
+    "max_frp_mw": 27.7,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-07-17",
+    "sensor": "MODIS",
+    "detections": 23,
+    "by_satellite": {
+      "Terra": 13,
+      "Aqua": 10
+    },
+    "matched_records": 1,
+    "ambiguous_records": 3,
+    "ambiguous_groups": 2,
+    "unmatched_records": 19,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 41.9,
+    "max_frp_mw": 117.2,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-07-17",
+    "sensor": "VIIRS",
+    "detections": 177,
+    "by_satellite": {
+      "NOAA-20": 100,
+      "S-NPP": 77
+    },
+    "matched_records": 1,
+    "ambiguous_records": 23,
+    "ambiguous_groups": 2,
+    "unmatched_records": 153,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 5.5,
+    "max_frp_mw": 89.5,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-07-18",
+    "sensor": "MODIS",
+    "detections": 23,
+    "by_satellite": {
+      "Terra": 12,
+      "Aqua": 11
+    },
+    "matched_records": 2,
+    "ambiguous_records": 7,
+    "ambiguous_groups": 1,
+    "unmatched_records": 14,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 209.0,
+    "max_frp_mw": 1304.4,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-07-18",
+    "sensor": "VIIRS",
+    "detections": 112,
+    "by_satellite": {
+      "S-NPP": 67,
+      "NOAA-20": 45
+    },
+    "matched_records": 2,
+    "ambiguous_records": 16,
+    "ambiguous_groups": 1,
+    "unmatched_records": 94,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 23.2,
+    "max_frp_mw": 231.1,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-07-19",
+    "sensor": "MODIS",
+    "detections": 30,
+    "by_satellite": {
+      "Terra": 22,
+      "Aqua": 8
+    },
+    "matched_records": 0,
+    "ambiguous_records": 2,
+    "ambiguous_groups": 2,
+    "unmatched_records": 28,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 104.4,
+    "max_frp_mw": 531.8,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-07-19",
+    "sensor": "VIIRS",
+    "detections": 227,
+    "by_satellite": {
+      "NOAA-20": 138,
+      "S-NPP": 89
+    },
+    "matched_records": 0,
+    "ambiguous_records": 8,
+    "ambiguous_groups": 2,
+    "unmatched_records": 219,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 9.0,
+    "max_frp_mw": 86.9,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-07-20",
+    "sensor": "MODIS",
+    "detections": 16,
+    "by_satellite": {
+      "Aqua": 9,
+      "Terra": 7
+    },
+    "matched_records": 1,
+    "ambiguous_records": 8,
+    "ambiguous_groups": 4,
+    "unmatched_records": 7,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 71.0,
+    "max_frp_mw": 187.5,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-07-20",
+    "sensor": "VIIRS",
+    "detections": 399,
+    "by_satellite": {
+      "NOAA-20": 240,
+      "S-NPP": 159
+    },
+    "matched_records": 1,
+    "ambiguous_records": 102,
+    "ambiguous_groups": 4,
+    "unmatched_records": 296,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 17.2,
+    "max_frp_mw": 90.5,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-07-21",
+    "sensor": "MODIS",
+    "detections": 19,
+    "by_satellite": {
+      "Terra": 10,
+      "Aqua": 9
+    },
+    "matched_records": 1,
+    "ambiguous_records": 7,
+    "ambiguous_groups": 5,
+    "unmatched_records": 11,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 62.4,
+    "max_frp_mw": 383.0,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-07-21",
+    "sensor": "VIIRS",
+    "detections": 201,
+    "by_satellite": {
+      "NOAA-20": 102,
+      "S-NPP": 99
+    },
+    "matched_records": 1,
+    "ambiguous_records": 32,
+    "ambiguous_groups": 5,
+    "unmatched_records": 168,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 29.9,
+    "max_frp_mw": 495.0,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-07-22",
+    "sensor": "MODIS",
+    "detections": 8,
+    "by_satellite": {
+      "Terra": 8
+    },
+    "matched_records": 1,
+    "ambiguous_records": 0,
+    "ambiguous_groups": 0,
+    "unmatched_records": 7,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 87.8,
+    "max_frp_mw": 273.6,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-07-22",
+    "sensor": "VIIRS",
+    "detections": 183,
+    "by_satellite": {
+      "NOAA-20": 96,
+      "S-NPP": 87
+    },
+    "matched_records": 1,
+    "ambiguous_records": 0,
+    "ambiguous_groups": 0,
+    "unmatched_records": 182,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 3.9,
+    "max_frp_mw": 80.0,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-07-23",
+    "sensor": "MODIS",
+    "detections": 24,
+    "by_satellite": {
+      "Aqua": 15,
+      "Terra": 9
+    },
+    "matched_records": 1,
+    "ambiguous_records": 8,
+    "ambiguous_groups": 2,
+    "unmatched_records": 15,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 134.0,
+    "max_frp_mw": 622.1,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-07-23",
+    "sensor": "VIIRS",
+    "detections": 176,
+    "by_satellite": {
+      "S-NPP": 95,
+      "NOAA-20": 81
+    },
+    "matched_records": 1,
+    "ambiguous_records": 41,
+    "ambiguous_groups": 2,
+    "unmatched_records": 134,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 13.1,
+    "max_frp_mw": 186.2,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-07-24",
+    "sensor": "MODIS",
+    "detections": 13,
+    "by_satellite": {
+      "Aqua": 9,
+      "Terra": 4
+    },
+    "matched_records": 0,
+    "ambiguous_records": 9,
+    "ambiguous_groups": 4,
+    "unmatched_records": 4,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 20.1,
+    "max_frp_mw": 37.6,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-07-24",
+    "sensor": "VIIRS",
+    "detections": 203,
+    "by_satellite": {
+      "S-NPP": 120,
+      "NOAA-20": 83
+    },
+    "matched_records": 0,
+    "ambiguous_records": 59,
+    "ambiguous_groups": 4,
+    "unmatched_records": 144,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 6.8,
+    "max_frp_mw": 113.6,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-07-25",
+    "sensor": "MODIS",
+    "detections": 27,
+    "by_satellite": {
+      "Terra": 20,
+      "Aqua": 7
+    },
+    "matched_records": 1,
+    "ambiguous_records": 8,
+    "ambiguous_groups": 4,
+    "unmatched_records": 18,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 59.1,
+    "max_frp_mw": 211.7,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-07-25",
+    "sensor": "VIIRS",
+    "detections": 235,
+    "by_satellite": {
+      "NOAA-20": 122,
+      "S-NPP": 113
+    },
+    "matched_records": 1,
+    "ambiguous_records": 59,
+    "ambiguous_groups": 4,
+    "unmatched_records": 175,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 13.6,
+    "max_frp_mw": 285.6,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-07-26",
+    "sensor": "MODIS",
+    "detections": 136,
+    "by_satellite": {
+      "Aqua": 113,
+      "Terra": 23
+    },
+    "matched_records": 1,
+    "ambiguous_records": 90,
+    "ambiguous_groups": 13,
+    "unmatched_records": 45,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 134.8,
+    "max_frp_mw": 1469.2,
+    "robust_z": 5.44,
+    "flagged": true
+  },
+  {
+    "date": "2026-07-26",
+    "sensor": "VIIRS",
+    "detections": 1028,
+    "by_satellite": {
+      "NOAA-20": 515,
+      "S-NPP": 513
+    },
+    "matched_records": 1,
+    "ambiguous_records": 548,
+    "ambiguous_groups": 13,
+    "unmatched_records": 479,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 46.1,
+    "max_frp_mw": 684.1,
+    "robust_z": 4.73,
+    "flagged": true
+  },
+  {
+    "date": "2026-07-27",
+    "sensor": "MODIS",
+    "detections": 73,
+    "by_satellite": {
+      "Aqua": 38,
+      "Terra": 35
+    },
+    "matched_records": 0,
+    "ambiguous_records": 37,
+    "ambiguous_groups": 12,
+    "unmatched_records": 36,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 64.8,
+    "max_frp_mw": 375.9,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-07-27",
+    "sensor": "VIIRS",
+    "detections": 836,
+    "by_satellite": {
+      "NOAA-20": 467,
+      "S-NPP": 369
+    },
+    "matched_records": 0,
+    "ambiguous_records": 150,
+    "ambiguous_groups": 12,
+    "unmatched_records": 686,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 31.5,
+    "max_frp_mw": 528.3,
+    "robust_z": 3.6,
+    "flagged": true
+  },
+  {
+    "date": "2026-07-28",
+    "sensor": "MODIS",
+    "detections": 73,
+    "by_satellite": {
+      "Terra": 43,
+      "Aqua": 30
+    },
+    "matched_records": 8,
+    "ambiguous_records": 16,
+    "ambiguous_groups": 6,
+    "unmatched_records": 49,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 113.8,
+    "max_frp_mw": 833.2,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-07-28",
+    "sensor": "VIIRS",
+    "detections": 722,
+    "by_satellite": {
+      "S-NPP": 399,
+      "NOAA-20": 323
+    },
+    "matched_records": 8,
+    "ambiguous_records": 180,
+    "ambiguous_groups": 6,
+    "unmatched_records": 534,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 24.5,
+    "max_frp_mw": 456.1,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-07-29",
+    "sensor": "MODIS",
+    "detections": 141,
+    "by_satellite": {
+      "Aqua": 96,
+      "Terra": 45
+    },
+    "matched_records": 2,
+    "ambiguous_records": 87,
+    "ambiguous_groups": 15,
+    "unmatched_records": 52,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 130.9,
+    "max_frp_mw": 2354.1,
+    "robust_z": 5.69,
+    "flagged": true
+  },
+  {
+    "date": "2026-07-29",
+    "sensor": "VIIRS",
+    "detections": 849,
+    "by_satellite": {
+      "S-NPP": 529,
+      "NOAA-20": 320
+    },
+    "matched_records": 2,
+    "ambiguous_records": 351,
+    "ambiguous_groups": 15,
+    "unmatched_records": 496,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 31.1,
+    "max_frp_mw": 548.8,
+    "robust_z": 3.68,
+    "flagged": true
+  },
+  {
+    "date": "2026-07-30",
+    "sensor": "MODIS",
+    "detections": 92,
+    "by_satellite": {
+      "Terra": 72,
+      "Aqua": 20
+    },
+    "matched_records": 1,
+    "ambiguous_records": 25,
+    "ambiguous_groups": 7,
+    "unmatched_records": 66,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 148.2,
+    "max_frp_mw": 1937.0,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-07-30",
+    "sensor": "VIIRS",
+    "detections": 847,
+    "by_satellite": {
+      "S-NPP": 528,
+      "NOAA-20": 319
+    },
+    "matched_records": 1,
+    "ambiguous_records": 127,
+    "ambiguous_groups": 7,
+    "unmatched_records": 719,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 25.1,
+    "max_frp_mw": 494.2,
+    "robust_z": 3.66,
+    "flagged": true
+  },
+  {
+    "date": "2026-07-31",
+    "sensor": "MODIS",
+    "detections": 95,
+    "by_satellite": {
+      "Aqua": 61,
+      "Terra": 34
+    },
+    "matched_records": 0,
+    "ambiguous_records": 63,
+    "ambiguous_groups": 10,
+    "unmatched_records": 32,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 160.0,
+    "max_frp_mw": 1072.3,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-07-31",
+    "sensor": "VIIRS",
+    "detections": 930,
+    "by_satellite": {
+      "NOAA-20": 545,
+      "S-NPP": 385
+    },
+    "matched_records": 0,
+    "ambiguous_records": 461,
+    "ambiguous_groups": 10,
+    "unmatched_records": 469,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 60.2,
+    "max_frp_mw": 439.8,
+    "robust_z": 4.15,
+    "flagged": true
+  },
+  {
+    "date": "2026-08-01",
+    "sensor": "MODIS",
+    "detections": 51,
+    "by_satellite": {
+      "Aqua": 27,
+      "Terra": 24
+    },
+    "matched_records": 0,
+    "ambiguous_records": 28,
+    "ambiguous_groups": 7,
+    "unmatched_records": 23,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 209.3,
+    "max_frp_mw": 1304.6,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-08-01",
+    "sensor": "VIIRS",
+    "detections": 562,
+    "by_satellite": {
+      "NOAA-20": 308,
+      "S-NPP": 254
+    },
+    "matched_records": 0,
+    "ambiguous_records": 216,
+    "ambiguous_groups": 7,
+    "unmatched_records": 346,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 38.7,
+    "max_frp_mw": 278.8,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-08-02",
+    "sensor": "MODIS",
+    "detections": 138,
+    "by_satellite": {
+      "Terra": 93,
+      "Aqua": 45
+    },
+    "matched_records": 2,
+    "ambiguous_records": 32,
+    "ambiguous_groups": 10,
+    "unmatched_records": 104,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 194.0,
+    "max_frp_mw": 1866.4,
+    "robust_z": 5.54,
+    "flagged": true
+  },
+  {
+    "date": "2026-08-02",
+    "sensor": "VIIRS",
+    "detections": 760,
+    "by_satellite": {
+      "NOAA-20": 386,
+      "S-NPP": 374
+    },
+    "matched_records": 2,
+    "ambiguous_records": 233,
+    "ambiguous_groups": 10,
+    "unmatched_records": 525,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 30.6,
+    "max_frp_mw": 303.5,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-08-03",
+    "sensor": "MODIS",
+    "detections": 65,
+    "by_satellite": {
+      "Terra": 35,
+      "Aqua": 30
+    },
+    "matched_records": 1,
+    "ambiguous_records": 14,
+    "ambiguous_groups": 6,
+    "unmatched_records": 50,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 182.9,
+    "max_frp_mw": 1413.2,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-08-03",
+    "sensor": "VIIRS",
+    "detections": 214,
+    "by_satellite": {
+      "NOAA-20": 214
+    },
+    "matched_records": 1,
+    "ambiguous_records": 26,
+    "ambiguous_groups": 6,
+    "unmatched_records": 187,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 10.3,
+    "max_frp_mw": 273.2,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-08-04",
+    "sensor": "MODIS",
+    "detections": 80,
+    "by_satellite": {
+      "Terra": 51,
+      "Aqua": 29
+    },
+    "matched_records": 0,
+    "ambiguous_records": 42,
+    "ambiguous_groups": 6,
+    "unmatched_records": 38,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 161.8,
+    "max_frp_mw": 2830.1,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-08-04",
+    "sensor": "VIIRS",
+    "detections": 591,
+    "by_satellite": {
+      "NOAA-20": 370,
+      "S-NPP": 221
+    },
+    "matched_records": 0,
+    "ambiguous_records": 279,
+    "ambiguous_groups": 6,
+    "unmatched_records": 312,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 35.9,
+    "max_frp_mw": 655.4,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-08-05",
+    "sensor": "MODIS",
+    "detections": 36,
+    "by_satellite": {
+      "Terra": 18,
+      "Aqua": 18
+    },
+    "matched_records": 1,
+    "ambiguous_records": 13,
+    "ambiguous_groups": 7,
+    "unmatched_records": 22,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 91.1,
+    "max_frp_mw": 464.3,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-08-05",
+    "sensor": "VIIRS",
+    "detections": 508,
+    "by_satellite": {
+      "NOAA-20": 327,
+      "S-NPP": 181
+    },
+    "matched_records": 1,
+    "ambiguous_records": 88,
+    "ambiguous_groups": 7,
+    "unmatched_records": 419,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 52.7,
+    "max_frp_mw": 521.2,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-08-06",
+    "sensor": "MODIS",
+    "detections": 15,
+    "by_satellite": {
+      "Aqua": 11,
+      "Terra": 4
+    },
+    "matched_records": 1,
+    "ambiguous_records": 3,
+    "ambiguous_groups": 1,
+    "unmatched_records": 11,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 113.8,
+    "max_frp_mw": 452.8,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-08-06",
+    "sensor": "VIIRS",
+    "detections": 144,
+    "by_satellite": {
+      "NOAA-20": 82,
+      "S-NPP": 62
+    },
+    "matched_records": 1,
+    "ambiguous_records": 17,
+    "ambiguous_groups": 1,
+    "unmatched_records": 126,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 18.1,
+    "max_frp_mw": 227.3,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-08-07",
+    "sensor": "MODIS",
+    "detections": 10,
+    "by_satellite": {
+      "Aqua": 6,
+      "Terra": 4
+    },
+    "matched_records": 0,
+    "ambiguous_records": 0,
+    "ambiguous_groups": 0,
+    "unmatched_records": 10,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 144.2,
+    "max_frp_mw": 380.5,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-08-07",
+    "sensor": "VIIRS",
+    "detections": 79,
+    "by_satellite": {
+      "NOAA-20": 41,
+      "S-NPP": 38
+    },
+    "matched_records": 0,
+    "ambiguous_records": 0,
+    "ambiguous_groups": 0,
+    "unmatched_records": 79,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 2.8,
+    "max_frp_mw": 87.6,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-08-08",
+    "sensor": "MODIS",
+    "detections": 29,
+    "by_satellite": {
+      "Aqua": 18,
+      "Terra": 11
+    },
+    "matched_records": 0,
+    "ambiguous_records": 15,
+    "ambiguous_groups": 4,
+    "unmatched_records": 14,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 77.8,
+    "max_frp_mw": 335.7,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-08-08",
+    "sensor": "VIIRS",
+    "detections": 285,
+    "by_satellite": {
+      "S-NPP": 148,
+      "NOAA-20": 137
+    },
+    "matched_records": 0,
+    "ambiguous_records": 83,
+    "ambiguous_groups": 4,
+    "unmatched_records": 202,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 14.2,
+    "max_frp_mw": 192.2,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-08-09",
+    "sensor": "MODIS",
+    "detections": 81,
+    "by_satellite": {
+      "Aqua": 48,
+      "Terra": 33
+    },
+    "matched_records": 1,
+    "ambiguous_records": 48,
+    "ambiguous_groups": 13,
+    "unmatched_records": 32,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 107.7,
+    "max_frp_mw": 876.2,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-08-09",
+    "sensor": "VIIRS",
+    "detections": 399,
+    "by_satellite": {
+      "S-NPP": 228,
+      "NOAA-20": 171
+    },
+    "matched_records": 1,
+    "ambiguous_records": 208,
+    "ambiguous_groups": 13,
+    "unmatched_records": 190,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 19.7,
+    "max_frp_mw": 370.3,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-08-10",
+    "sensor": "MODIS",
+    "detections": 70,
+    "by_satellite": {
+      "Terra": 47,
+      "Aqua": 23
+    },
+    "matched_records": 3,
+    "ambiguous_records": 21,
+    "ambiguous_groups": 9,
+    "unmatched_records": 46,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 160.1,
+    "max_frp_mw": 1187.2,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-08-10",
+    "sensor": "VIIRS",
+    "detections": 792,
+    "by_satellite": {
+      "NOAA-20": 425,
+      "S-NPP": 367
+    },
+    "matched_records": 3,
+    "ambiguous_records": 263,
+    "ambiguous_groups": 9,
+    "unmatched_records": 526,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 17.3,
+    "max_frp_mw": 392.0,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-08-11",
+    "sensor": "MODIS",
+    "detections": 199,
+    "by_satellite": {
+      "Aqua": 105,
+      "Terra": 94
+    },
+    "matched_records": 2,
+    "ambiguous_records": 101,
+    "ambiguous_groups": 31,
+    "unmatched_records": 96,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 153.7,
+    "max_frp_mw": 1085.5,
+    "robust_z": 8.48,
+    "flagged": true
+  },
+  {
+    "date": "2026-08-11",
+    "sensor": "VIIRS",
+    "detections": 1215,
+    "by_satellite": {
+      "NOAA-20": 679,
+      "S-NPP": 536
+    },
+    "matched_records": 2,
+    "ambiguous_records": 538,
+    "ambiguous_groups": 31,
+    "unmatched_records": 675,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 15.3,
+    "max_frp_mw": 380.3,
+    "robust_z": 5.83,
+    "flagged": true
+  },
+  {
+    "date": "2026-08-12",
+    "sensor": "MODIS",
+    "detections": 83,
+    "by_satellite": {
+      "Terra": 56,
+      "Aqua": 27
+    },
+    "matched_records": 0,
+    "ambiguous_records": 23,
+    "ambiguous_groups": 8,
+    "unmatched_records": 60,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 57.5,
+    "max_frp_mw": 533.1,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-08-12",
+    "sensor": "VIIRS",
+    "detections": 643,
+    "by_satellite": {
+      "S-NPP": 331,
+      "NOAA-20": 312
+    },
+    "matched_records": 0,
+    "ambiguous_records": 211,
+    "ambiguous_groups": 8,
+    "unmatched_records": 432,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 6.8,
+    "max_frp_mw": 179.4,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-08-13",
+    "sensor": "MODIS",
+    "detections": 19,
+    "by_satellite": {
+      "Terra": 19
+    },
+    "matched_records": 0,
+    "ambiguous_records": 0,
+    "ambiguous_groups": 0,
+    "unmatched_records": 19,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 36.4,
+    "max_frp_mw": 90.9,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-08-13",
+    "sensor": "VIIRS",
+    "detections": 284,
+    "by_satellite": {
+      "S-NPP": 174,
+      "NOAA-20": 110
+    },
+    "matched_records": 0,
+    "ambiguous_records": 0,
+    "ambiguous_groups": 0,
+    "unmatched_records": 284,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 4.2,
+    "max_frp_mw": 65.8,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-08-14",
+    "sensor": "MODIS",
+    "detections": 13,
+    "by_satellite": {
+      "Aqua": 10,
+      "Terra": 3
+    },
+    "matched_records": 1,
+    "ambiguous_records": 6,
+    "ambiguous_groups": 6,
+    "unmatched_records": 6,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 17.6,
+    "max_frp_mw": 34.0,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-08-14",
+    "sensor": "VIIRS",
+    "detections": 112,
+    "by_satellite": {
+      "S-NPP": 62,
+      "NOAA-20": 50
+    },
+    "matched_records": 1,
+    "ambiguous_records": 26,
+    "ambiguous_groups": 6,
+    "unmatched_records": 85,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 11.9,
+    "max_frp_mw": 158.3,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-08-15",
+    "sensor": "MODIS",
+    "detections": 13,
+    "by_satellite": {
+      "Terra": 9,
+      "Aqua": 4
+    },
+    "matched_records": 0,
+    "ambiguous_records": 2,
+    "ambiguous_groups": 1,
+    "unmatched_records": 11,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 74.9,
+    "max_frp_mw": 362.9,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-08-15",
+    "sensor": "VIIRS",
+    "detections": 133,
+    "by_satellite": {
+      "S-NPP": 74,
+      "NOAA-20": 59
+    },
+    "matched_records": 0,
+    "ambiguous_records": 3,
+    "ambiguous_groups": 1,
+    "unmatched_records": 130,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 4.9,
+    "max_frp_mw": 79.5,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-08-16",
+    "sensor": "MODIS",
+    "detections": 26,
+    "by_satellite": {
+      "Terra": 15,
+      "Aqua": 11
+    },
+    "matched_records": 0,
+    "ambiguous_records": 10,
+    "ambiguous_groups": 5,
+    "unmatched_records": 16,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 66.3,
+    "max_frp_mw": 425.6,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-08-16",
+    "sensor": "VIIRS",
+    "detections": 223,
+    "by_satellite": {
+      "S-NPP": 120,
+      "NOAA-20": 103
+    },
+    "matched_records": 0,
+    "ambiguous_records": 25,
+    "ambiguous_groups": 5,
+    "unmatched_records": 198,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 4.0,
+    "max_frp_mw": 113.9,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-08-17",
+    "sensor": "MODIS",
+    "detections": 33,
+    "by_satellite": {
+      "Terra": 24,
+      "Aqua": 9
+    },
+    "matched_records": 0,
+    "ambiguous_records": 9,
+    "ambiguous_groups": 4,
+    "unmatched_records": 24,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 111.3,
+    "max_frp_mw": 513.0,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-08-17",
+    "sensor": "VIIRS",
+    "detections": 227,
+    "by_satellite": {
+      "S-NPP": 115,
+      "NOAA-20": 112
+    },
+    "matched_records": 0,
+    "ambiguous_records": 21,
+    "ambiguous_groups": 4,
+    "unmatched_records": 206,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 11.7,
+    "max_frp_mw": 280.9,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-08-18",
+    "sensor": "MODIS",
+    "detections": 11,
+    "by_satellite": {
+      "Aqua": 7,
+      "Terra": 4
+    },
+    "matched_records": 0,
+    "ambiguous_records": 2,
+    "ambiguous_groups": 1,
+    "unmatched_records": 9,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 34.5,
+    "max_frp_mw": 150.0,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-08-18",
+    "sensor": "VIIRS",
+    "detections": 207,
+    "by_satellite": {
+      "NOAA-20": 117,
+      "S-NPP": 90
+    },
+    "matched_records": 0,
+    "ambiguous_records": 8,
+    "ambiguous_groups": 1,
+    "unmatched_records": 199,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 8.9,
+    "max_frp_mw": 274.6,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-08-19",
+    "sensor": "MODIS",
+    "detections": 58,
+    "by_satellite": {
+      "Aqua": 44,
+      "Terra": 14
+    },
+    "matched_records": 0,
+    "ambiguous_records": 35,
+    "ambiguous_groups": 13,
+    "unmatched_records": 23,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 57.0,
+    "max_frp_mw": 550.2,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-08-19",
+    "sensor": "VIIRS",
+    "detections": 230,
+    "by_satellite": {
+      "S-NPP": 139,
+      "NOAA-20": 91
+    },
+    "matched_records": 0,
+    "ambiguous_records": 121,
+    "ambiguous_groups": 13,
+    "unmatched_records": 109,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 16.3,
+    "max_frp_mw": 111.6,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-08-20",
+    "sensor": "MODIS",
+    "detections": 25,
+    "by_satellite": {
+      "Terra": 13,
+      "Aqua": 12
+    },
+    "matched_records": 2,
+    "ambiguous_records": 4,
+    "ambiguous_groups": 4,
+    "unmatched_records": 19,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 78.3,
+    "max_frp_mw": 378.7,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-08-20",
+    "sensor": "VIIRS",
+    "detections": 249,
+    "by_satellite": {
+      "S-NPP": 130,
+      "NOAA-20": 119
+    },
+    "matched_records": 2,
+    "ambiguous_records": 46,
+    "ambiguous_groups": 4,
+    "unmatched_records": 201,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 10.3,
+    "max_frp_mw": 147.1,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-08-21",
+    "sensor": "MODIS",
+    "detections": 28,
+    "by_satellite": {
+      "Terra": 25,
+      "Aqua": 3
+    },
+    "matched_records": 2,
+    "ambiguous_records": 5,
+    "ambiguous_groups": 3,
+    "unmatched_records": 21,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 114.6,
+    "max_frp_mw": 332.0,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-08-21",
+    "sensor": "VIIRS",
+    "detections": 215,
+    "by_satellite": {
+      "NOAA-20": 113,
+      "S-NPP": 102
+    },
+    "matched_records": 2,
+    "ambiguous_records": 34,
+    "ambiguous_groups": 3,
+    "unmatched_records": 179,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 8.9,
+    "max_frp_mw": 68.4,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-08-22",
+    "sensor": "MODIS",
+    "detections": 73,
+    "by_satellite": {
+      "Aqua": 62,
+      "Terra": 11
+    },
+    "matched_records": 0,
+    "ambiguous_records": 51,
+    "ambiguous_groups": 5,
+    "unmatched_records": 22,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 170.1,
+    "max_frp_mw": 2030.0,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-08-22",
+    "sensor": "VIIRS",
+    "detections": 473,
+    "by_satellite": {
+      "NOAA-20": 263,
+      "S-NPP": 210
+    },
+    "matched_records": 0,
+    "ambiguous_records": 230,
+    "ambiguous_groups": 5,
+    "unmatched_records": 243,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 50.6,
+    "max_frp_mw": 413.0,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-08-23",
+    "sensor": "MODIS",
+    "detections": 26,
+    "by_satellite": {
+      "Terra": 19,
+      "Aqua": 7
+    },
+    "matched_records": 1,
+    "ambiguous_records": 5,
+    "ambiguous_groups": 2,
+    "unmatched_records": 20,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 55.6,
+    "max_frp_mw": 279.5,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-08-23",
+    "sensor": "VIIRS",
+    "detections": 586,
+    "by_satellite": {
+      "NOAA-20": 307,
+      "S-NPP": 279
+    },
+    "matched_records": 1,
+    "ambiguous_records": 48,
+    "ambiguous_groups": 2,
+    "unmatched_records": 537,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 12.7,
+    "max_frp_mw": 153.0,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-08-24",
+    "sensor": "MODIS",
+    "detections": 44,
+    "by_satellite": {
+      "Aqua": 27,
+      "Terra": 17
+    },
+    "matched_records": 0,
+    "ambiguous_records": 33,
+    "ambiguous_groups": 9,
+    "unmatched_records": 11,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 122.8,
+    "max_frp_mw": 929.1,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-08-24",
+    "sensor": "VIIRS",
+    "detections": 314,
+    "by_satellite": {
+      "S-NPP": 199,
+      "NOAA-20": 115
+    },
+    "matched_records": 0,
+    "ambiguous_records": 139,
+    "ambiguous_groups": 9,
+    "unmatched_records": 175,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 16.2,
+    "max_frp_mw": 243.1,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-08-25",
+    "sensor": "MODIS",
+    "detections": 70,
+    "by_satellite": {
+      "Terra": 54,
+      "Aqua": 16
+    },
+    "matched_records": 2,
+    "ambiguous_records": 13,
+    "ambiguous_groups": 7,
+    "unmatched_records": 55,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 79.0,
+    "max_frp_mw": 1008.2,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-08-25",
+    "sensor": "VIIRS",
+    "detections": 816,
+    "by_satellite": {
+      "NOAA-20": 456,
+      "S-NPP": 360
+    },
+    "matched_records": 2,
+    "ambiguous_records": 49,
+    "ambiguous_groups": 7,
+    "unmatched_records": 765,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 20.6,
+    "max_frp_mw": 702.6,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-08-26",
+    "sensor": "MODIS",
+    "detections": 132,
+    "by_satellite": {
+      "Aqua": 76,
+      "Terra": 56
+    },
+    "matched_records": 2,
+    "ambiguous_records": 91,
+    "ambiguous_groups": 20,
+    "unmatched_records": 39,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 135.3,
+    "max_frp_mw": 1893.6,
+    "robust_z": 5.25,
+    "flagged": true
+  },
+  {
+    "date": "2026-08-26",
+    "sensor": "VIIRS",
+    "detections": 1261,
+    "by_satellite": {
+      "NOAA-20": 697,
+      "S-NPP": 564
+    },
+    "matched_records": 2,
+    "ambiguous_records": 632,
+    "ambiguous_groups": 20,
+    "unmatched_records": 627,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 26.3,
+    "max_frp_mw": 607.7,
+    "robust_z": 6.1,
+    "flagged": true
+  },
+  {
+    "date": "2026-08-27",
+    "sensor": "MODIS",
+    "detections": 162,
+    "by_satellite": {
+      "Terra": 88,
+      "Aqua": 74
+    },
+    "matched_records": 2,
+    "ambiguous_records": 92,
+    "ambiguous_groups": 18,
+    "unmatched_records": 68,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 115.2,
+    "max_frp_mw": 1587.4,
+    "robust_z": 6.7,
+    "flagged": true
+  },
+  {
+    "date": "2026-08-27",
+    "sensor": "VIIRS",
+    "detections": 1131,
+    "by_satellite": {
+      "NOAA-20": 646,
+      "S-NPP": 485
+    },
+    "matched_records": 2,
+    "ambiguous_records": 569,
+    "ambiguous_groups": 18,
+    "unmatched_records": 560,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 28.8,
+    "max_frp_mw": 507.6,
+    "robust_z": 5.34,
+    "flagged": true
+  },
+  {
+    "date": "2026-08-28",
+    "sensor": "MODIS",
+    "detections": 1,
+    "by_satellite": {
+      "Terra": 1
+    },
+    "matched_records": 0,
+    "ambiguous_records": 0,
+    "ambiguous_groups": 0,
+    "unmatched_records": 1,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 13.2,
+    "max_frp_mw": 13.2,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-08-28",
+    "sensor": "VIIRS",
+    "detections": 60,
+    "by_satellite": {
+      "NOAA-20": 34,
+      "S-NPP": 26
+    },
+    "matched_records": 0,
+    "ambiguous_records": 0,
+    "ambiguous_groups": 0,
+    "unmatched_records": 60,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 10.4,
+    "max_frp_mw": 48.9,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-08-29",
+    "sensor": "MODIS",
+    "detections": 45,
+    "by_satellite": {
+      "Aqua": 30,
+      "Terra": 15
+    },
+    "matched_records": 2,
+    "ambiguous_records": 29,
+    "ambiguous_groups": 9,
+    "unmatched_records": 14,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 230.8,
+    "max_frp_mw": 1780.8,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-08-29",
+    "sensor": "VIIRS",
+    "detections": 499,
+    "by_satellite": {
+      "S-NPP": 313,
+      "NOAA-20": 186
+    },
+    "matched_records": 2,
+    "ambiguous_records": 245,
+    "ambiguous_groups": 9,
+    "unmatched_records": 252,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 31.5,
+    "max_frp_mw": 474.1,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-08-30",
+    "sensor": "MODIS",
+    "detections": 85,
+    "by_satellite": {
+      "Terra": 44,
+      "Aqua": 41
+    },
+    "matched_records": 1,
+    "ambiguous_records": 42,
+    "ambiguous_groups": 10,
+    "unmatched_records": 42,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 177.4,
+    "max_frp_mw": 1780.0,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-08-30",
+    "sensor": "VIIRS",
+    "detections": 685,
+    "by_satellite": {
+      "S-NPP": 403,
+      "NOAA-20": 282
+    },
+    "matched_records": 1,
+    "ambiguous_records": 300,
+    "ambiguous_groups": 10,
+    "unmatched_records": 384,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 23.1,
+    "max_frp_mw": 286.7,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-08-31",
+    "sensor": "MODIS",
+    "detections": 46,
+    "by_satellite": {
+      "Terra": 36,
+      "Aqua": 10
+    },
+    "matched_records": 1,
+    "ambiguous_records": 10,
+    "ambiguous_groups": 9,
+    "unmatched_records": 35,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 96.5,
+    "max_frp_mw": 366.4,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-08-31",
+    "sensor": "VIIRS",
+    "detections": 507,
+    "by_satellite": {
+      "NOAA-20": 269,
+      "S-NPP": 238
+    },
+    "matched_records": 1,
+    "ambiguous_records": 73,
+    "ambiguous_groups": 9,
+    "unmatched_records": 433,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 8.6,
+    "max_frp_mw": 180.9,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-09-01",
+    "sensor": "MODIS",
+    "detections": 38,
+    "by_satellite": {
+      "Aqua": 27,
+      "Terra": 11
+    },
+    "matched_records": 0,
+    "ambiguous_records": 25,
+    "ambiguous_groups": 9,
+    "unmatched_records": 13,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 32.0,
+    "max_frp_mw": 145.9,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-09-01",
+    "sensor": "VIIRS",
+    "detections": 362,
+    "by_satellite": {
+      "S-NPP": 191,
+      "NOAA-20": 171
+    },
+    "matched_records": 0,
+    "ambiguous_records": 185,
+    "ambiguous_groups": 9,
+    "unmatched_records": 177,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 18.5,
+    "max_frp_mw": 385.0,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-09-02",
+    "sensor": "MODIS",
+    "detections": 10,
+    "by_satellite": {
+      "Terra": 6,
+      "Aqua": 4
+    },
+    "matched_records": 0,
+    "ambiguous_records": 1,
+    "ambiguous_groups": 1,
+    "unmatched_records": 9,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 37.0,
+    "max_frp_mw": 87.4,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-09-02",
+    "sensor": "VIIRS",
+    "detections": 196,
+    "by_satellite": {
+      "NOAA-20": 113,
+      "S-NPP": 83
+    },
+    "matched_records": 0,
+    "ambiguous_records": 3,
+    "ambiguous_groups": 1,
+    "unmatched_records": 193,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 13.4,
+    "max_frp_mw": 223.2,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-09-03",
+    "sensor": "MODIS",
+    "detections": 10,
+    "by_satellite": {
+      "Aqua": 6,
+      "Terra": 4
+    },
+    "matched_records": 0,
+    "ambiguous_records": 5,
+    "ambiguous_groups": 2,
+    "unmatched_records": 5,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 22.6,
+    "max_frp_mw": 59.1,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-09-03",
+    "sensor": "VIIRS",
+    "detections": 135,
+    "by_satellite": {
+      "NOAA-20": 80,
+      "S-NPP": 55
+    },
+    "matched_records": 0,
+    "ambiguous_records": 23,
+    "ambiguous_groups": 2,
+    "unmatched_records": 112,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 2.7,
+    "max_frp_mw": 27.2,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-09-04",
+    "sensor": "MODIS",
+    "detections": 9,
+    "by_satellite": {
+      "Terra": 7,
+      "Aqua": 2
+    },
+    "matched_records": 2,
+    "ambiguous_records": 0,
+    "ambiguous_groups": 0,
+    "unmatched_records": 7,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 25.4,
+    "max_frp_mw": 50.2,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-09-04",
+    "sensor": "VIIRS",
+    "detections": 110,
+    "by_satellite": {
+      "S-NPP": 58,
+      "NOAA-20": 52
+    },
+    "matched_records": 2,
+    "ambiguous_records": 0,
+    "ambiguous_groups": 0,
+    "unmatched_records": 108,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 2.3,
+    "max_frp_mw": 15.9,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-09-05",
+    "sensor": "MODIS",
+    "detections": 2,
+    "by_satellite": {
+      "Aqua": 2
+    },
+    "matched_records": 0,
+    "ambiguous_records": 0,
+    "ambiguous_groups": 0,
+    "unmatched_records": 2,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 22.3,
+    "max_frp_mw": 25.3,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-09-05",
+    "sensor": "VIIRS",
+    "detections": 122,
+    "by_satellite": {
+      "NOAA-20": 64,
+      "S-NPP": 58
+    },
+    "matched_records": 0,
+    "ambiguous_records": 0,
+    "ambiguous_groups": 0,
+    "unmatched_records": 122,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 3.6,
+    "max_frp_mw": 29.0,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-09-06",
+    "sensor": "MODIS",
+    "detections": 9,
+    "by_satellite": {
+      "Terra": 7,
+      "Aqua": 2
+    },
+    "matched_records": 0,
+    "ambiguous_records": 2,
+    "ambiguous_groups": 1,
+    "unmatched_records": 7,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 11.6,
+    "max_frp_mw": 20.8,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-09-06",
+    "sensor": "VIIRS",
+    "detections": 66,
+    "by_satellite": {
+      "NOAA-20": 34,
+      "S-NPP": 32
+    },
+    "matched_records": 0,
+    "ambiguous_records": 2,
+    "ambiguous_groups": 1,
+    "unmatched_records": 64,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 2.4,
+    "max_frp_mw": 21.7,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-09-07",
+    "sensor": "MODIS",
+    "detections": 3,
+    "by_satellite": {
+      "Terra": 3
+    },
+    "matched_records": 0,
+    "ambiguous_records": 0,
+    "ambiguous_groups": 0,
+    "unmatched_records": 3,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 14.9,
+    "max_frp_mw": 20.4,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-09-07",
+    "sensor": "VIIRS",
+    "detections": 82,
+    "by_satellite": {
+      "S-NPP": 50,
+      "NOAA-20": 32
+    },
+    "matched_records": 0,
+    "ambiguous_records": 0,
+    "ambiguous_groups": 0,
+    "unmatched_records": 82,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 3.3,
+    "max_frp_mw": 23.9,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-09-08",
+    "sensor": "MODIS",
+    "detections": 2,
+    "by_satellite": {
+      "Terra": 1,
+      "Aqua": 1
+    },
+    "matched_records": 1,
+    "ambiguous_records": 0,
+    "ambiguous_groups": 0,
+    "unmatched_records": 1,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 15.5,
+    "max_frp_mw": 22.5,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-09-08",
+    "sensor": "VIIRS",
+    "detections": 120,
+    "by_satellite": {
+      "NOAA-20": 67,
+      "S-NPP": 53
+    },
+    "matched_records": 1,
+    "ambiguous_records": 0,
+    "ambiguous_groups": 0,
+    "unmatched_records": 119,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 6.5,
+    "max_frp_mw": 48.5,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-09-09",
+    "sensor": "MODIS",
+    "detections": 10,
+    "by_satellite": {
+      "Terra": 5,
+      "Aqua": 5
+    },
+    "matched_records": 0,
+    "ambiguous_records": 8,
+    "ambiguous_groups": 4,
+    "unmatched_records": 2,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 46.6,
+    "max_frp_mw": 123.2,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-09-09",
+    "sensor": "VIIRS",
+    "detections": 99,
+    "by_satellite": {
+      "NOAA-20": 70,
+      "S-NPP": 29
+    },
+    "matched_records": 0,
+    "ambiguous_records": 14,
+    "ambiguous_groups": 4,
+    "unmatched_records": 85,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 10.2,
+    "max_frp_mw": 97.9,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-09-10",
+    "sensor": "MODIS",
+    "detections": 0,
+    "by_satellite": {},
+    "matched_records": 0,
+    "ambiguous_records": 0,
+    "ambiguous_groups": 0,
+    "unmatched_records": 0,
+    "exact_duplicates": 0,
+    "mean_frp_mw": null,
+    "max_frp_mw": null,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-09-10",
+    "sensor": "VIIRS",
+    "detections": 124,
+    "by_satellite": {
+      "S-NPP": 89,
+      "NOAA-20": 35
+    },
+    "matched_records": 0,
+    "ambiguous_records": 0,
+    "ambiguous_groups": 0,
+    "unmatched_records": 124,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 31.8,
+    "max_frp_mw": 349.4,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-09-11",
+    "sensor": "MODIS",
+    "detections": 46,
+    "by_satellite": {
+      "Terra": 27,
+      "Aqua": 19
+    },
+    "matched_records": 1,
+    "ambiguous_records": 27,
+    "ambiguous_groups": 3,
+    "unmatched_records": 18,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 263.8,
+    "max_frp_mw": 4969.5,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-09-11",
+    "sensor": "VIIRS",
+    "detections": 374,
+    "by_satellite": {
+      "NOAA-20": 211,
+      "S-NPP": 163
+    },
+    "matched_records": 1,
+    "ambiguous_records": 245,
+    "ambiguous_groups": 3,
+    "unmatched_records": 128,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 11.2,
+    "max_frp_mw": 109.2,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-09-12",
+    "sensor": "MODIS",
+    "detections": 23,
+    "by_satellite": {
+      "Aqua": 13,
+      "Terra": 10
+    },
+    "matched_records": 0,
+    "ambiguous_records": 14,
+    "ambiguous_groups": 4,
+    "unmatched_records": 9,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 58.4,
+    "max_frp_mw": 314.6,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-09-12",
+    "sensor": "VIIRS",
+    "detections": 222,
+    "by_satellite": {
+      "S-NPP": 114,
+      "NOAA-20": 108
+    },
+    "matched_records": 0,
+    "ambiguous_records": 98,
+    "ambiguous_groups": 4,
+    "unmatched_records": 124,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 11.9,
+    "max_frp_mw": 140.9,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-09-13",
+    "sensor": "MODIS",
+    "detections": 15,
+    "by_satellite": {
+      "Terra": 11,
+      "Aqua": 4
+    },
+    "matched_records": 0,
+    "ambiguous_records": 6,
+    "ambiguous_groups": 4,
+    "unmatched_records": 9,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 44.7,
+    "max_frp_mw": 155.4,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-09-13",
+    "sensor": "VIIRS",
+    "detections": 213,
+    "by_satellite": {
+      "S-NPP": 121,
+      "NOAA-20": 92
+    },
+    "matched_records": 0,
+    "ambiguous_records": 12,
+    "ambiguous_groups": 4,
+    "unmatched_records": 201,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 4.4,
+    "max_frp_mw": 49.8,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-09-14",
+    "sensor": "MODIS",
+    "detections": 15,
+    "by_satellite": {
+      "Terra": 9,
+      "Aqua": 6
+    },
+    "matched_records": 0,
+    "ambiguous_records": 4,
+    "ambiguous_groups": 2,
+    "unmatched_records": 11,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 27.2,
+    "max_frp_mw": 71.4,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-09-14",
+    "sensor": "VIIRS",
+    "detections": 120,
+    "by_satellite": {
+      "NOAA-20": 64,
+      "S-NPP": 56
+    },
+    "matched_records": 0,
+    "ambiguous_records": 20,
+    "ambiguous_groups": 2,
+    "unmatched_records": 100,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 8.4,
+    "max_frp_mw": 73.1,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-09-15",
+    "sensor": "MODIS",
+    "detections": 3,
+    "by_satellite": {
+      "Terra": 3
+    },
+    "matched_records": 0,
+    "ambiguous_records": 2,
+    "ambiguous_groups": 2,
+    "unmatched_records": 1,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 14.3,
+    "max_frp_mw": 26.2,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-09-15",
+    "sensor": "VIIRS",
+    "detections": 175,
+    "by_satellite": {
+      "S-NPP": 109,
+      "NOAA-20": 66
+    },
+    "matched_records": 0,
+    "ambiguous_records": 4,
+    "ambiguous_groups": 2,
+    "unmatched_records": 171,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 16.4,
+    "max_frp_mw": 410.3,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-09-16",
+    "sensor": "MODIS",
+    "detections": 57,
+    "by_satellite": {
+      "Aqua": 29,
+      "Terra": 28
+    },
+    "matched_records": 0,
+    "ambiguous_records": 33,
+    "ambiguous_groups": 6,
+    "unmatched_records": 24,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 121.0,
+    "max_frp_mw": 746.0,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-09-16",
+    "sensor": "VIIRS",
+    "detections": 325,
+    "by_satellite": {
+      "NOAA-20": 182,
+      "S-NPP": 143
+    },
+    "matched_records": 0,
+    "ambiguous_records": 195,
+    "ambiguous_groups": 6,
+    "unmatched_records": 130,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 36.9,
+    "max_frp_mw": 405.3,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-09-17",
+    "sensor": "MODIS",
+    "detections": 36,
+    "by_satellite": {
+      "Terra": 20,
+      "Aqua": 16
+    },
+    "matched_records": 2,
+    "ambiguous_records": 18,
+    "ambiguous_groups": 4,
+    "unmatched_records": 16,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 91.0,
+    "max_frp_mw": 467.4,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-09-17",
+    "sensor": "VIIRS",
+    "detections": 375,
+    "by_satellite": {
+      "NOAA-20": 207,
+      "S-NPP": 168
+    },
+    "matched_records": 2,
+    "ambiguous_records": 223,
+    "ambiguous_groups": 4,
+    "unmatched_records": 150,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 10.0,
+    "max_frp_mw": 80.0,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-09-18",
+    "sensor": "MODIS",
+    "detections": 23,
+    "by_satellite": {
+      "Terra": 17,
+      "Aqua": 6
+    },
+    "matched_records": 0,
+    "ambiguous_records": 5,
+    "ambiguous_groups": 3,
+    "unmatched_records": 18,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 118.6,
+    "max_frp_mw": 623.5,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-09-18",
+    "sensor": "VIIRS",
+    "detections": 305,
+    "by_satellite": {
+      "S-NPP": 169,
+      "NOAA-20": 136
+    },
+    "matched_records": 0,
+    "ambiguous_records": 41,
+    "ambiguous_groups": 3,
+    "unmatched_records": 264,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 13.1,
+    "max_frp_mw": 197.0,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-09-19",
+    "sensor": "MODIS",
+    "detections": 39,
+    "by_satellite": {
+      "Aqua": 24,
+      "Terra": 15
+    },
+    "matched_records": 0,
+    "ambiguous_records": 24,
+    "ambiguous_groups": 3,
+    "unmatched_records": 15,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 112.9,
+    "max_frp_mw": 1203.9,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-09-19",
+    "sensor": "VIIRS",
+    "detections": 326,
+    "by_satellite": {
+      "NOAA-20": 176,
+      "S-NPP": 150
+    },
+    "matched_records": 0,
+    "ambiguous_records": 171,
+    "ambiguous_groups": 3,
+    "unmatched_records": 155,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 9.8,
+    "max_frp_mw": 110.8,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-09-20",
+    "sensor": "MODIS",
+    "detections": 15,
+    "by_satellite": {
+      "Terra": 13,
+      "Aqua": 2
+    },
+    "matched_records": 0,
+    "ambiguous_records": 2,
+    "ambiguous_groups": 1,
+    "unmatched_records": 13,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 114.6,
+    "max_frp_mw": 261.2,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-09-20",
+    "sensor": "VIIRS",
+    "detections": 244,
+    "by_satellite": {
+      "S-NPP": 154,
+      "NOAA-20": 90
+    },
+    "matched_records": 0,
+    "ambiguous_records": 38,
+    "ambiguous_groups": 1,
+    "unmatched_records": 206,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 6.6,
+    "max_frp_mw": 54.5,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-09-21",
+    "sensor": "MODIS",
+    "detections": 12,
+    "by_satellite": {
+      "Aqua": 11,
+      "Terra": 1
+    },
+    "matched_records": 0,
+    "ambiguous_records": 11,
+    "ambiguous_groups": 2,
+    "unmatched_records": 1,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 91.9,
+    "max_frp_mw": 656.3,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-09-21",
+    "sensor": "VIIRS",
+    "detections": 212,
+    "by_satellite": {
+      "NOAA-20": 112,
+      "S-NPP": 100
+    },
+    "matched_records": 0,
+    "ambiguous_records": 111,
+    "ambiguous_groups": 2,
+    "unmatched_records": 101,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 9.7,
+    "max_frp_mw": 85.2,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-09-22",
+    "sensor": "MODIS",
+    "detections": 46,
+    "by_satellite": {
+      "Aqua": 27,
+      "Terra": 19
+    },
+    "matched_records": 0,
+    "ambiguous_records": 30,
+    "ambiguous_groups": 6,
+    "unmatched_records": 16,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 56.4,
+    "max_frp_mw": 314.3,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-09-22",
+    "sensor": "VIIRS",
+    "detections": 347,
+    "by_satellite": {
+      "NOAA-20": 208,
+      "S-NPP": 139
+    },
+    "matched_records": 0,
+    "ambiguous_records": 223,
+    "ambiguous_groups": 6,
+    "unmatched_records": 124,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 10.7,
+    "max_frp_mw": 97.6,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-09-23",
+    "sensor": "MODIS",
+    "detections": 21,
+    "by_satellite": {
+      "Terra": 14,
+      "Aqua": 7
+    },
+    "matched_records": 2,
+    "ambiguous_records": 7,
+    "ambiguous_groups": 3,
+    "unmatched_records": 12,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 69.3,
+    "max_frp_mw": 235.8,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-09-23",
+    "sensor": "VIIRS",
+    "detections": 383,
+    "by_satellite": {
+      "S-NPP": 209,
+      "NOAA-20": 174
+    },
+    "matched_records": 2,
+    "ambiguous_records": 40,
+    "ambiguous_groups": 3,
+    "unmatched_records": 341,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 11.3,
+    "max_frp_mw": 98.5,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-09-24",
+    "sensor": "MODIS",
+    "detections": 39,
+    "by_satellite": {
+      "Terra": 20,
+      "Aqua": 19
+    },
+    "matched_records": 0,
+    "ambiguous_records": 23,
+    "ambiguous_groups": 6,
+    "unmatched_records": 16,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 39.3,
+    "max_frp_mw": 170.9,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-09-24",
+    "sensor": "VIIRS",
+    "detections": 313,
+    "by_satellite": {
+      "NOAA-20": 171,
+      "S-NPP": 142
+    },
+    "matched_records": 0,
+    "ambiguous_records": 137,
+    "ambiguous_groups": 6,
+    "unmatched_records": 176,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 8.0,
+    "max_frp_mw": 92.3,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-09-25",
+    "sensor": "MODIS",
+    "detections": 16,
+    "by_satellite": {
+      "Terra": 8,
+      "Aqua": 8
+    },
+    "matched_records": 1,
+    "ambiguous_records": 10,
+    "ambiguous_groups": 4,
+    "unmatched_records": 5,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 88.7,
+    "max_frp_mw": 388.4,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-09-25",
+    "sensor": "VIIRS",
+    "detections": 271,
+    "by_satellite": {
+      "S-NPP": 137,
+      "NOAA-20": 134
+    },
+    "matched_records": 1,
+    "ambiguous_records": 70,
+    "ambiguous_groups": 4,
+    "unmatched_records": 200,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 11.5,
+    "max_frp_mw": 125.9,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-09-26",
+    "sensor": "MODIS",
+    "detections": 18,
+    "by_satellite": {
+      "Terra": 10,
+      "Aqua": 8
+    },
+    "matched_records": 0,
+    "ambiguous_records": 8,
+    "ambiguous_groups": 3,
+    "unmatched_records": 10,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 152.4,
+    "max_frp_mw": 970.5,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-09-26",
+    "sensor": "VIIRS",
+    "detections": 266,
+    "by_satellite": {
+      "S-NPP": 153,
+      "NOAA-20": 113
+    },
+    "matched_records": 0,
+    "ambiguous_records": 91,
+    "ambiguous_groups": 3,
+    "unmatched_records": 175,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 14.6,
+    "max_frp_mw": 93.2,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-09-27",
+    "sensor": "MODIS",
+    "detections": 22,
+    "by_satellite": {
+      "Terra": 14,
+      "Aqua": 8
+    },
+    "matched_records": 0,
+    "ambiguous_records": 6,
+    "ambiguous_groups": 1,
+    "unmatched_records": 16,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 102.9,
+    "max_frp_mw": 643.0,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-09-27",
+    "sensor": "VIIRS",
+    "detections": 169,
+    "by_satellite": {
+      "NOAA-20": 91,
+      "S-NPP": 78
+    },
+    "matched_records": 0,
+    "ambiguous_records": 73,
+    "ambiguous_groups": 1,
+    "unmatched_records": 96,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 14.5,
+    "max_frp_mw": 92.5,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-09-28",
+    "sensor": "MODIS",
+    "detections": 8,
+    "by_satellite": {
+      "Terra": 8
+    },
+    "matched_records": 0,
+    "ambiguous_records": 4,
+    "ambiguous_groups": 2,
+    "unmatched_records": 4,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 33.6,
+    "max_frp_mw": 90.9,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-09-28",
+    "sensor": "VIIRS",
+    "detections": 237,
+    "by_satellite": {
+      "NOAA-20": 121,
+      "S-NPP": 116
+    },
+    "matched_records": 0,
+    "ambiguous_records": 12,
+    "ambiguous_groups": 2,
+    "unmatched_records": 225,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 6.2,
+    "max_frp_mw": 39.5,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-09-29",
+    "sensor": "MODIS",
+    "detections": 27,
+    "by_satellite": {
+      "Terra": 16,
+      "Aqua": 11
+    },
+    "matched_records": 1,
+    "ambiguous_records": 10,
+    "ambiguous_groups": 3,
+    "unmatched_records": 16,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 37.6,
+    "max_frp_mw": 219.3,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-09-29",
+    "sensor": "VIIRS",
+    "detections": 235,
+    "by_satellite": {
+      "NOAA-20": 118,
+      "S-NPP": 117
+    },
+    "matched_records": 1,
+    "ambiguous_records": 41,
+    "ambiguous_groups": 3,
+    "unmatched_records": 193,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 6.8,
+    "max_frp_mw": 254.5,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-09-30",
+    "sensor": "MODIS",
+    "detections": 29,
+    "by_satellite": {
+      "Aqua": 16,
+      "Terra": 13
+    },
+    "matched_records": 1,
+    "ambiguous_records": 18,
+    "ambiguous_groups": 4,
+    "unmatched_records": 10,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 65.7,
+    "max_frp_mw": 248.2,
+    "robust_z": null,
+    "flagged": false
+  },
+  {
+    "date": "2026-09-30",
+    "sensor": "VIIRS",
+    "detections": 280,
+    "by_satellite": {
+      "NOAA-20": 150,
+      "S-NPP": 130
+    },
+    "matched_records": 1,
+    "ambiguous_records": 82,
+    "ambiguous_groups": 4,
+    "unmatched_records": 197,
+    "exact_duplicates": 0,
+    "mean_frp_mw": 15.9,
+    "max_frp_mw": 274.5,
+    "robust_z": null,
+    "flagged": false
+  }
+]
