@@ -4,7 +4,7 @@
 
 **Two satellites see fire differently. FireFusion AI shows how they differ, where they agree, and what it means.**
 
-[![NASA Space Apps](https://img.shields.io/badge/NASA_Space_Apps-2026 -0B3D91?style=for-the-badge&logo=nasa&logoColor=white)](#)
+[![NASA Space Apps](https://img.shields.io/badge/NASA_Space_Apps-2026-0B3D91?style=for-the-badge&logo=nasa&logoColor=white)](#)
 [![Team](https://img.shields.io/badge/Team-HR_Pyrovanta_(%23786)-FF0000?style=for-the-badge)](#)
 [![Python](https://img.shields.io/badge/Python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)](#)
 [![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](#)
@@ -158,5 +158,5 @@ npm run preview      # Serve the production build locally
 
 <div align="center">
   <br>
-  <i>Built for the NASA Space Apps Challenge 2026 (Faisalabad)</i>
+  <i>Built for the NASA Space Apps Challenge 2026 </i>
 </div>
