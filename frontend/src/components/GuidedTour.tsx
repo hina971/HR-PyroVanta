@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState, type CSSProperties } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useFireStore, type View } from '../store'
 
@@ -20,7 +20,7 @@ const STEPS: Step[] = [
   {
     target: '.topbar',
     title: 'Welcome to FireFusion AI',
-    text: 'This dashboard harmonizes NASA MODIS and VIIRS fire detections for California, July to September 2023. FIRA narrates what the data shows — this tour walks you through every feature.',
+    text: 'This dashboard harmonizes NASA MODIS and VIIRS fire detections for California — the July–September seasons of 2023 and 2026, plus live detections from the last 5 days. FIRA narrates what the data shows — this tour walks you through every feature.',
     view: 'dashboard',
   },
   {
@@ -127,6 +127,19 @@ export default function GuidedTour() {
   const startView = useRef<View>('dashboard')
   const timer = useRef<number | null>(null)
   const retryTimer = useRef<number | null>(null)
+  const tooltipRef = useRef<HTMLDivElement | null>(null)
+  const [tipSize, setTipSize] = useState<{ w: number; h: number } | null>(null)
+
+  // Measure the tooltip's REAL size after every step/target change.
+  // The card is far taller than any fixed guess on narrow viewports
+  // (long text wraps), so placement must use the measured height —
+  // never a hardcoded constant — or the buttons slide off the bottom
+  // of the screen on low targets (reported on steps 7/8).
+  useLayoutEffect(() => {
+    if (!tourOpen || !tooltipRef.current) return
+    const el = tooltipRef.current
+    setTipSize({ w: el.offsetWidth, h: el.offsetHeight })
+  }, [tourOpen, step, rect])
 
   // Measure a target, retrying for up to ~1s when it isn't found yet
   // (the view may still be rendering after a switch). If it is never
@@ -255,7 +268,37 @@ export default function GuidedTour() {
     padding: 16,
     pointerEvents: 'auto',
     boxShadow: '0 18px 48px rgba(0,0,0,.55)',
+    // Backstop for very short viewports: the card scrolls internally
+    // instead of ever pushing its buttons off-screen.
+    maxHeight: 'calc(100vh - 24px)',
+    overflowY: 'auto',
   }
+
+  // Tooltip placement — computed from the MEASURED card height so the
+  // whole card, Next/Skip buttons included, always stays in view:
+  // below the target when it fits, flipped above the target when it
+  // doesn't, and pinned to the viewport top (scrolling internally)
+  // when it fits neither way. Left is clamped to the viewport too.
+  const vw = window.innerWidth
+  const vh = window.innerHeight
+  const tipW = Math.min(360, vw - 24)
+  // Conservative estimate until the first real measurement lands.
+  const tipH = tipSize?.h ?? 360
+  let tipTop = 12
+  let tipMaxH: number | undefined
+  if (rect) {
+    const belowTop = rect.top + rect.height + 12
+    const aboveTop = rect.top - 12 - tipH
+    if (tipH <= vh - belowTop - 12) {
+      tipTop = belowTop
+    } else if (tipH <= rect.top - 12) {
+      tipTop = aboveTop
+    } else {
+      tipTop = 12
+      tipMaxH = vh - 24
+    }
+  }
+  const tipLeft = rect ? Math.max(12, Math.min(rect.left, vw - tipW - 12)) : 12
 
   return (
     <AnimatePresence>
@@ -298,26 +341,24 @@ export default function GuidedTour() {
             />
           )}
           {/* Tooltip card — ALWAYS rendered, so a missing target can never
-              blank the tour. Under the highlight when the target is found;
+              blank the tour. Under the highlight when the target is found
+              (flipped above it when there is no room below, so the Next /
+              Skip buttons can never slide off the bottom of the screen);
               centred on screen when it isn't. Only the ring is gated on
               rect. */}
           {rect ? (
             <motion.div
               key={step}
+              ref={tooltipRef}
               initial={{ opacity: 0, y: 6 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.2 }}
               style={{
                 ...tooltipStyle,
                 position: 'fixed',
-                left: Math.max(
-                  12,
-                  Math.min(rect.left, window.innerWidth - 372),
-                ),
-                top: Math.min(
-                  rect.top + rect.height + 20,
-                  window.innerHeight - 210,
-                ),
+                left: tipLeft,
+                top: tipTop,
+                ...(tipMaxH ? { maxHeight: tipMaxH } : {}),
               }}
             >
               {tooltipBody}
@@ -334,6 +375,7 @@ export default function GuidedTour() {
             >
               <motion.div
                 key={`center-${step}`}
+                ref={tooltipRef}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.2 }}
