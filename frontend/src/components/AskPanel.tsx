@@ -189,19 +189,19 @@ export default function AskPanel() {
               </div>
             ))}
             {sending && <div className="ask-msg ask-msg-ai ask-thinking">Thinking…</div>}
-          </div>
-
-          <div className="ask-chips">
-            {chips.map((c) => (
-              <button
-                key={c.label}
-                className="ask-chip"
-                disabled={sending}
-                onClick={() => ask(c.question)}
-              >
-                {c.label}
-              </button>
-            ))}
+            {/* Suggestion chips live at the END of the chat, inside the
+                scrollable list — below the latest answer, never in a fixed
+                strip over the text. Hidden while an answer is loading;
+                they reappear under it once it arrives. */}
+            {!sending && (
+              <div className="ask-chips">
+                {chips.map((c) => (
+                  <button key={c.label} className="ask-chip" onClick={() => ask(c.question)}>
+                    {c.label}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
 
           <form
