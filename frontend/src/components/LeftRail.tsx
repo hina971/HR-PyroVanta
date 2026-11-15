@@ -6,6 +6,8 @@ export default function LeftRail() {
   const layers = useFireStore((s) => s.layers)
   const toggleLayer = useFireStore((s) => s.toggleLayer)
   const resetDemo = useFireStore((s) => s.resetDemo)
+  const year = useFireStore((s) => s.year)
+  const setYear = useFireStore((s) => s.setYear)
 
   return (
     <aside className="card reveal" id="tour-rail">
@@ -14,6 +16,30 @@ export default function LeftRail() {
         <span>Always visible</span>
       </div>
       <div className="card-b">
+        <div className="rail-group">
+          <h4>Dataset — fire season</h4>
+          <div className="year-seg" role="tablist" aria-label="Dataset year">
+            <button
+              type="button"
+              className={year === 2023 ? 'active' : ''}
+              onClick={() => setYear(2023)}
+            >
+              2023
+            </button>
+            <button
+              type="button"
+              className={year === 2026 ? 'active' : ''}
+              onClick={() => setYear(2026)}
+            >
+              2026
+            </button>
+          </div>
+          <div style={{ fontSize: 11, color: 'var(--muted)', marginTop: 6, lineHeight: 1.5 }}>
+            {year === 2023
+              ? 'Original season — full archive, Jul–Sep 2023.'
+              : 'Second season — archive + near-real-time, Jul–Sep 2026.'}
+          </div>
+        </div>
         <div className="rail-group">
           <h4>Region</h4>
           <div style={{ fontWeight: 700 }}>California, USA</div>

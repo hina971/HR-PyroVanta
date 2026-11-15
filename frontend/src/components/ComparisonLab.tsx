@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { LAB } from '../data/sample'
 import { api, type Comparison } from '../lib/api'
+import { useFireStore } from '../store'
 
 // Sensor Comparison Lab (demo's #view-lab): match coverage vs. spatial
 // radius, and why VIIRS sees more. FRP is never summed across sensors.
@@ -70,15 +71,16 @@ export default function ComparisonLab() {
   const [windowH, setWindowH] = useState(4)
   const [pair, setPair] = useState(DEFAULT_PAIR)
 
+  const year = useFireStore((s) => s.year)
   const { data: comparison } = useQuery({
-    queryKey: ['comparison'],
-    queryFn: () => api.comparison(),
+    queryKey: ['comparison', year],
+    queryFn: () => api.comparison(year),
     retry: false,
     staleTime: 60_000,
   })
   const { data: summary } = useQuery({
-    queryKey: ['summary'],
-    queryFn: () => api.summary('2023-07-01', '2023-09-30'),
+    queryKey: ['summary', year],
+    queryFn: () => api.summary(year, `${year}-07-01`, `${year}-09-30`),
     retry: false,
     staleTime: 60_000,
   })

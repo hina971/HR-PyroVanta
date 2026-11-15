@@ -4,7 +4,7 @@ import { dayData, type DayDatum } from '../data/sample'
 import { api, type DailyRow } from '../lib/api'
 
 // Burning Activity Calendar (demo's #calendar): daily heatmap for
-// Jul / Aug / Sep 2023. Click a day → everything filters (dashboard,
+// Jul / Aug / Sep (2023 or 2026). Click a day → everything filters (dashboard,
 // map, FIRA). Hotter = more detections; red outline = anomaly flag
 // (robust z > 3.5) — a statistical deviation, not a prediction.
 // Never adds the two sensors' raw counts together as unique fires.
@@ -14,14 +14,14 @@ import { api, type DailyRow } from '../lib/api'
 // to the static files when the backend is down) instead of the demo
 // dayData formula. It only falls back to the demo formula if the real
 // rows fail to load entirely.
-function rowToDay(row: DailyRow): DayDatum {
+function rowToDay(row: DailyRow, peakTotal = 2111): DayDatum {
   const total = row.modis + row.viirs
   return {
     modis: row.modis,
     viirs: row.viirs,
     matched: row.matched,
     anomaly: row.anomaly,
-    heat: Math.min(1, total / 2111),
+    heat: Math.min(1, total / peakTotal),
     date: row.date,
     label: new Date(`${row.date}T00:00:00`).toLocaleDateString('en-US', {
       month: 'short',
@@ -32,37 +32,48 @@ function rowToDay(row: DailyRow): DayDatum {
 }
 
 export default function CalendarDock() {
+  const year = useFireStore((s) => s.year)
   const currentMonth = useFireStore((s) => s.currentMonth)
   const setMonth = useFireStore((s) => s.setMonth)
   const selectedDate = useFireStore((s) => s.selectedDate)
   const selectDay = useFireStore((s) => s.selectDay)
 
   const { data: daily } = useQuery({
-    queryKey: ['daily'],
-    queryFn: () => api.daily('2023-07-01', '2023-09-30'),
+    queryKey: ['daily', year],
+    queryFn: () => api.daily(year, `${year}-07-01`, `${year}-09-30`),
     retry: false,
     staleTime: 60_000,
   })
 
+  // Peak-day total for the year, so the heat scale (0–1) is relative to
+  // this season's busiest day, not hardcoded to the 2023 peak (2,111).
+  const { data: seasonInfo } = useQuery({
+    queryKey: ['seasonInfo', year],
+    queryFn: () => api.seasonInfo(year),
+    retry: false,
+    staleTime: 60_000,
+  })
+  const peakTotal = seasonInfo?.peakTotal ?? 2111
+
   const daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][currentMonth - 1]
   const days: DayDatum[] = Array.from({ length: daysInMonth }, (_, i) => {
     const d = i + 1
-    const date = `2023-${String(currentMonth).padStart(2, '0')}-${String(d).padStart(2, '0')}`
+    const date = `${year}-${String(currentMonth).padStart(2, '0')}-${String(d).padStart(2, '0')}`
     const row = daily?.find((r) => r.date === date)
-    return row ? rowToDay(row) : dayData(currentMonth, d)
+    return row ? rowToDay(row, peakTotal) : dayData(currentMonth, d)
   })
 
   return (
     <>
       <div className="cal-months">
         <button className={currentMonth === 7 ? 'active' : ''} onClick={() => setMonth(7)}>
-          July 2023
+          July {year}
         </button>
         <button className={currentMonth === 8 ? 'active' : ''} onClick={() => setMonth(8)}>
-          August 2023 ★
+          August {year} ★
         </button>
         <button className={currentMonth === 9 ? 'active' : ''} onClick={() => setMonth(9)}>
-          September 2023
+          September {year}
         </button>
       </div>
       <div className="cal" id="calendar">

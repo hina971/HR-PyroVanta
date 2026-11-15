@@ -104,6 +104,7 @@ export default function Hero({
 }) {
   const selectDay = useFireStore((s) => s.selectDay)
   const setTourOpen = useFireStore((s) => s.setTourOpen)
+  const year = useFireStore((s) => s.year)
   const heroModis = useCountUp(season.modis, 1400)
   const heroViirs = useCountUp(season.viirs, 1400)
   const heroMatch = useCountUp(season.matched, 1400)
@@ -143,7 +144,7 @@ export default function Hero({
               className="pill eyebrow"
               style={{ color: 'var(--amber)', borderColor: 'rgba(255,176,32,.35)' }}
             >
-              "MODIS + VIIRS HARMONIZATION • CALIFORNIA • JUL–SEP 2023"
+              {`"MODIS + VIIRS HARMONIZATION • CALIFORNIA • JUL–SEP ${year}"`}
             </span>
             <h1>
               Two satellites
@@ -204,7 +205,7 @@ export default function Hero({
             >
               {isSample
                 ? 'DEMO VALUES — REPRESENTATIVE SAMPLE FOR UI PREVIEW • FORMAT: NASA FIRMS • MODIS C6.1 • VIIRS 375m (NOAA-20)'
-                : 'REAL DATA — NASA FIRMS • MODIS C6.1 • VIIRS 375m (NOAA-20 + S-NPP) • JUL–SEP 2023'}
+                : 'REAL DATA — NASA FIRMS • MODIS C6.1 • VIIRS 375m (NOAA-20 + S-NPP) • JUL–SEP ' + year}
             </p>
           </div>
 
@@ -212,7 +213,7 @@ export default function Hero({
             <div className="map-head">
               <b>{isSample ? 'CALIFORNIA — SAMPLE PREVIEW' : 'CALIFORNIA — REAL DETECTIONS'}</b>
               <span>
-                August 2023 • {isSample ? 'Demo data' : 'Real data'} •{' '}
+                August {year} • {isSample ? 'Demo data' : 'Real data'} •{' '}
                 <span style={{ color: 'var(--match)' }}>● Matched glow = agreement</span>
               </span>
             </div>

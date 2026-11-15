@@ -23,9 +23,10 @@ export default function FiraPanel() {
 
   // Ask the backend for its narration; fall back silently to the sample
   // text when it is unreachable (offline rule).
+  const year = useFireStore((s) => s.year)
   const { data: apiFira } = useQuery({
-    queryKey: ['fira', selectedDate],
-    queryFn: () => api.fira(selectedDate ?? undefined),
+    queryKey: ['fira', year, selectedDate],
+    queryFn: () => api.fira(year, selectedDate ?? undefined),
     retry: false,
     staleTime: 60_000,
   })

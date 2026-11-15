@@ -9,6 +9,7 @@ import { FireDot } from './Hero'
 export default function FireMap({ points, isSample }: { points: FirePoint[]; isSample: boolean }) {
   const layers = useFireStore((s) => s.layers)
   const selectedDate = useFireStore((s) => s.selectedDate)
+  const year = useFireStore((s) => s.year)
   const visible = points.filter((p) => layers[p.type as keyof Layers])
 
   return (
@@ -42,7 +43,7 @@ export default function FireMap({ points, isSample }: { points: FirePoint[]; isS
           }}
           className="mono"
         >
-          {selectedDate ? selectedDate : 'JUL–SEP 2023'}
+          {selectedDate ? selectedDate : `JUL–SEP ${year}`}
         </div>
       </div>
       <div style={{ padding: '12px 14px' }}>

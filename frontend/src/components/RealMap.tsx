@@ -19,10 +19,12 @@
 // Data: the GeoJSON for the SELECTED DATE (from the app's calendar/store).
 // When a date is picked, the map re-fetches and re-plots that day's real
 // detections — the map follows the calendar. When no date is selected
-// (full season), it shows the peak day, 19 Aug 2023, the same day the
-// app's own `loadDetections()` uses. Files live at `/data/points/YYYY-MM-DD.geojson`
-// (92 daily files, Jul–Sep 2023), already shipped with the app. A strided
-// sample of up to 500 is plotted, exactly like the app's `loadDetections()`.
+// (full season), it shows the year's peak day (from that year's
+// summary.json), the same day the app's own `loadDetections()` uses.
+// Files live at `/data/points/YYYY-MM-DD.geojson` (2023) or
+// `/data/2026/points/YYYY-MM-DD.geojson` (2026) — 92 daily files per
+// season, Jul–Sep. A strided sample of up to 1,000 is plotted, exactly
+// like the app's `loadDetections()`.
 //
 // Colours — the app's own convention (see App.tsx `apiPoint()`), so each
 // category is distinct: matched lime/green, ambiguous rose/red, MODIS amber,
@@ -31,12 +33,16 @@
 import { useEffect, useRef, useState } from 'react'
 import './RealMap.css'
 import { useFireStore, type Layers } from '../store'
+import { api } from '../lib/api'
+import { dataBase } from '../lib/realData'
+import type { FirePoint } from '../data/sample'
 
 const LEAFLET_VERSION = '1.9.4'
 const LEAFLET_CSS = `https://unpkg.com/leaflet@${LEAFLET_VERSION}/dist/leaflet.css`
 const LEAFLET_JS = `https://unpkg.com/leaflet@${LEAFLET_VERSION}/dist/leaflet.js`
 
-const PEAK_DAY = '2023-08-19'
+// Peak day is year-specific — read from that year's summary.json via
+// api.seasonInfo(year) (2023 peak is 19 Aug 2023, 2,111 detections).
 // Plot up to 1,000 dots so dense fire areas merge into solid red patches
 // (the FIRMS "spread" look). The day's file can hold up to 2,111.
 const MAX_POINTS = 1000
@@ -123,6 +129,40 @@ interface GeoFeature {
     frp_mw: number
     confidence_raw: string
     match_status: string
+    match_group_id?: string | null
+    distance_km?: number | null
+    time_diff_hours?: number | null
+  }
+}
+
+// Map a GeoJSON feature onto the app's FirePoint shape — the same mapping
+// App.tsx `apiPoint()` uses for the hero map dots, so the Inspector shows
+// the same fields for a RealMap click as for a hero-map click. The numeric
+// id is the record number (FF-014355 -> 14355), which is what the
+// Inspector displays as "Record #14355".
+function toFirePoint(f: GeoFeature): FirePoint {
+  const pr = f.properties
+  const [lon, lat] = f.geometry.coordinates
+  const type =
+    pr.match_status === 'matched'
+      ? 'matched'
+      : pr.match_status === 'ambiguous'
+        ? 'amb'
+        : pr.sensor === 'MODIS'
+          ? 'modis'
+          : 'viirs'
+  return {
+    id: parseInt(pr.record_id.replace(/\D/g, ''), 10) || 0,
+    x: Math.max(4, Math.min(94, ((lon + 124.4) / 10.3) * 100)),
+    y: Math.max(5, Math.min(92, ((42 - lat) / 9.5) * 100)),
+    type,
+    lat: lat.toFixed(3),
+    lon: lon.toFixed(3),
+    frp: pr.frp_mw.toFixed(1),
+    conf: Math.round(Number(pr.confidence_raw) || 0),
+    dist: pr.distance_km != null ? pr.distance_km.toFixed(2) : '—',
+    dt: pr.time_diff_hours != null ? pr.time_diff_hours.toFixed(1) : '—',
+    sat: pr.satellite,
   }
 }
 
@@ -188,13 +228,20 @@ export default function RealMap() {
   const [error, setError] = useState('')
   const [shown, setShown] = useState(0)
   const [total, setTotal] = useState(0)
-  const [shownDate, setShownDate] = useState(PEAK_DAY)
+  const [shownDate, setShownDate] = useState('')
   const [timeRange, setTimeRange] = useState<TimeRange>('all')
+  const [peakDay, setPeakDay] = useState('')
 
+  // Dataset year — 2023 (/data) or 2026 (/data/2026).
+  const year = useFireStore((s) => s.year)
   // The calendar's selected date — null means "full season" (peak day).
   const selectedDate = useFireStore((s) => s.selectedDate)
   // Control Rail layer toggles — which categories to show.
   const layers = useFireStore((s) => s.layers)
+  // Clicking a dot also fills the Inspector panel on the right (same as a
+  // hero-map dot click). The popup alone is not enough — the panel is
+  // where the match evidence lives.
+  const setInspectorPoint = useFireStore((s) => s.setInspectorPoint)
 
   // Effect 1 (mount only): build the Leaflet map + satellite tiles once.
   useEffect(() => {
@@ -258,8 +305,9 @@ export default function RealMap() {
     }
   }, [])
 
-  // Effect 2: whenever the selected date changes (or the map becomes
-  // ready), re-fetch that day's GeoJSON and re-plot the markers.
+  // Effect 2: whenever the selected date or the year changes (or the map
+  // becomes ready), re-fetch that day's GeoJSON and re-plot the markers.
+  // The year's peak day comes from that year's summary.json.
   useEffect(() => {
     if (!mapReady) return
     let cancelled = false
@@ -269,11 +317,16 @@ export default function RealMap() {
       const layer = layerRef.current
       if (!map || !layer) return
 
-      // Null = full season -> peak day (same convention as realData.ts).
-      const date = selectedDate ?? PEAK_DAY
       setStatus('loading')
       try {
-        const res = await fetch(`/data/points/${date}.geojson`)
+        // Null = full season -> this year's peak day (same convention as
+        // realData.ts loadDetections).
+        const peak = selectedDate ? null : await api.seasonInfo(year)
+        if (cancelled) return
+        if (peak) setPeakDay(peak.peakDay)
+        const date = selectedDate ?? peak?.peakDay ?? ''
+        if (!date) throw new Error('No peak day for this year')
+        const res = await fetch(`${dataBase(year)}/points/${date}.geojson`)
         if (!res.ok) throw new Error(`No data file for ${date}`)
         const geo = (await res.json()) as GeoCollection
         if (cancelled) return
@@ -312,13 +365,22 @@ export default function RealMap() {
             fillColor: color,
             fillOpacity: 0.7,
           })
+          // Popup shows the dot's full record — label, sensor, FRP,
+          // confidence, match, coordinates and time — and the same record
+          // goes to the Inspector panel on the right (see the click
+          // handler below).
+          const [popLon, popLat] = f.geometry.coordinates
           marker.bindPopup(
             `<b>${label}</b> &middot; ${p.record_id}<br>` +
               `Sensor: ${p.sensor} (${p.satellite})<br>` +
+              `Location: ${popLat.toFixed(3)}&deg;, ${popLon.toFixed(3)}&deg;<br>` +
               `FRP: ${p.frp_mw} MW &middot; Confidence: ${p.confidence_raw}<br>` +
               `Match: ${p.match_status}<br>` +
               `<span style="opacity:.75">${p.timestamp_utc}</span>`,
           )
+          // Fill the Inspector panel on the right with this dot's record,
+          // exactly as a hero-map dot click does.
+          marker.on('click', () => setInspectorPoint(toFirePoint(f)))
           marker.addTo(layer)
         }
 
@@ -337,11 +399,13 @@ export default function RealMap() {
     return () => {
       cancelled = true
     }
-  }, [selectedDate, mapReady, timeRange, layers])
+  }, [selectedDate, year, mapReady, timeRange, layers])
 
   const dateLine = selectedDate
     ? `Selected day ${prettyDate(selectedDate)} · NASA FIRMS · MODIS C6.1 + VIIRS 375 m (NOAA-20 + S-NPP)`
-    : `Peak day 19 Aug 2023 · NASA FIRMS · MODIS C6.1 + VIIRS 375 m (NOAA-20 + S-NPP)`
+    : peakDay
+      ? `Peak day ${prettyDate(peakDay)} · NASA FIRMS · MODIS C6.1 + VIIRS 375 m (NOAA-20 + S-NPP)`
+      : `NASA FIRMS · MODIS C6.1 + VIIRS 375 m (NOAA-20 + S-NPP)`
 
   return (
     <div className="realmap-card">

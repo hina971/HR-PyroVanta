@@ -11,11 +11,12 @@ import type { SeasonNumbers } from './Hero'
 // reads the static daily.json when the backend is down). Falls back to
 // the demo dayData formula only if the real row is missing.
 export default function KpiStrip({ season }: { season: SeasonNumbers }) {
+  const year = useFireStore((s) => s.year)
   const selectedDate = useFireStore((s) => s.selectedDate)
 
   const { data: daily } = useQuery({
-    queryKey: ['daily'],
-    queryFn: () => api.daily('2023-07-01', '2023-09-30'),
+    queryKey: ['daily', year],
+    queryFn: () => api.daily(year, `${year}-07-01`, `${year}-09-30`),
     retry: false,
     staleTime: 60_000,
   })
@@ -24,7 +25,7 @@ export default function KpiStrip({ season }: { season: SeasonNumbers }) {
   let viirs = season.viirs
   let matched = season.matched
   let dayLabel = 'All season'
-  let daySub = 'Jul 1 – Sep 30, 2023'
+  let daySub = `Jul 1 – Sep 30, ${year}`
   let dayAnomaly = false
   if (selectedDate) {
     const [, m, d] = selectedDate.split('-').map(Number)

@@ -8,7 +8,12 @@ import type { FirePoint } from '../data/sample'
 // observation line for a matched pair reads "Terra • FRP 58.4 MW".
 export default function Inspector({ points }: { points: FirePoint[] }) {
   const selectedPointId = useFireStore((s) => s.selectedPointId)
-  const p = points.find((x) => x.id === selectedPointId) ?? null
+  const inspectorPoint = useFireStore((s) => s.inspectorPoint)
+  // A RealMap click hands the Inspector the full point directly (its
+  // GeoJSON feature is not in the hero map's 700-dot sample, so an id
+  // lookup would miss). A hero-map click clears inspectorPoint and the
+  // id lookup below takes over.
+  const p = inspectorPoint ?? points.find((x) => x.id === selectedPointId) ?? null
 
   // On narrow screens the demo scrolls the Inspector into view.
   useEffect(() => {
