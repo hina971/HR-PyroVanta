@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query'
 import { LAB } from '../data/sample'
 import { api, type Comparison } from '../lib/api'
 import { useFireStore } from '../store'
+import AnomalyExplainer from './AnomalyExplainer'
 
 // Sensor Comparison Lab (demo's #view-lab): match coverage vs. spatial
 // radius, and why VIIRS sees more. FRP is never summed across sensors.
@@ -130,7 +131,13 @@ export default function ComparisonLab() {
       <div className="card">
         <div className="card-h">
           <b>Sensor Comparison Lab</b>
-          <span>Does the result survive different thresholds?</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+            <span>Does the result survive different thresholds?</span>
+            {/* Anomaly Explainer (v25): button lives in the lab header —
+                the analysis home — so a judge looking at the analysis
+                sees it at once. The modal is a fixed overlay. */}
+            <AnomalyExplainer />
+          </div>
         </div>
         <div className="card-b">
           <p style={{ fontSize: 13, lineHeight: 1.6, margin: 0 }}>
@@ -147,7 +154,10 @@ export default function ComparisonLab() {
     <div className="card">
       <div className="card-h">
         <b>Sensor Comparison Lab</b>
-        <span>Does the result survive different thresholds?</span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <span>Does the result survive different thresholds?</span>
+          <AnomalyExplainer />
+        </div>
       </div>
       <div className="card-b">
         <h4 style={{ margin: '0 0 4px', fontSize: 13 }}>

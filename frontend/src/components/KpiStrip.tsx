@@ -2,9 +2,10 @@ import { useQuery } from '@tanstack/react-query'
 import { useFireStore } from '../store'
 import { SEASON, dayData, matchCoverage } from '../data/sample'
 import { useCountUp } from '../hooks/useCountUp'
-import { api } from '../lib/api'
+import { api, type Summary } from '../lib/api'
 import { formatLiveWindow, type LiveResponse } from '../lib/liveData'
 import type { SeasonNumbers } from './Hero'
+import MatchExplainer from './MatchExplainer'
 
 // KPI strip (demo ids kModis/kViirs/kCoverage/kDay + subs).
 // Full season → SEASON numbers (or the API summary when the backend is
@@ -15,7 +16,7 @@ import type { SeasonNumbers } from './Hero'
 // LIVE MODE (v24): the day card shows the live window instead of a
 // season date, and the archive daily query is disabled (it would throw
 // for 'live' — archive loaders only serve 2023/2026).
-export default function KpiStrip({ season, live, liveLoading }: { season: SeasonNumbers; live?: LiveResponse | null; liveLoading?: boolean }) {
+export default function KpiStrip({ season, summary, live, liveLoading }: { season: SeasonNumbers; summary: Summary | null; live?: LiveResponse | null; liveLoading?: boolean }) {
   const year = useFireStore((s) => s.year)
   const selectedDate = useFireStore((s) => s.selectedDate)
 
@@ -104,6 +105,10 @@ export default function KpiStrip({ season, live, liveLoading }: { season: Season
         <small id="kCoverageSub">
           {matched.toLocaleString()} / {modis.toLocaleString()} MODIS matched 1-to-1
         </small>
+        {/* Match Explainer (v25): static, data-grounded — no AI, no key.
+            The panel always shows the SEASON / live-window numbers from
+            the loaded summary, never the day-filtered numbers above. */}
+        <MatchExplainer summary={summary} live={live} liveLoading={liveLoading} />
       </div>
       <div className="kpi">
         <label>Selected day</label>
