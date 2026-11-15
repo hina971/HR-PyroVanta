@@ -5,7 +5,7 @@
 **Two satellites see fire differently. FireFusion AI shows how they differ, where they agree, and what it means.**
 
 [![NASA Space Apps](https://img.shields.io/badge/NASA_Space_Apps-2026-0B3D91?style=for-the-badge&logo=nasa&logoColor=white)](#)
-[![Team](https://img.shields.io/badge/Team-%23786-FF0000?style=for-the-badge)](#)
+[![Team](https://img.shields.io/badge/Team-HR_Pyrovanta_(%23786)-FF0000?style=for-the-badge)](#)
 [![Python](https://img.shields.io/badge/Python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)](#)
 [![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](#)
 [![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)](#)
@@ -25,7 +25,7 @@ FireFusion AI is a web application that harmonizes NASA **MODIS** and **VIIRS** 
 - 🗺️ **Interactive Map**
 - 📅 **Burning Activity Calendar**
 - 🔬 **Sensor Comparison Lab**
-- 🤖 **FIRA:** A data-grounded storyteller
+- 🤖 **FIRA:** A data-grounded storyteller and chat assistant
 
 > **Note:** FireFusion AI does *not* claim to count real-world fires. It illustrates how the two sensors agree and differ, preserving every original observation.
 
@@ -50,51 +50,47 @@ FireFusion AI is a web application that harmonizes NASA **MODIS** and **VIIRS** 
 
 ## ✨ Key Features
 
-- 📈 **Dashboard:** View detection counts by sensor, alongside matched, ambiguous, and unmatched records with exact numerators/denominators.
+- 📈 **Dashboard & KPIs:** View detection counts by sensor, alongside matched, ambiguous, and unmatched records. Includes a **"Why is the match rate only 2.6%?" Explainer** button on the Match Coverage KPI that breaks down the reasons in plain English.
 - 🗺️ **Interactive Fire Map:** Toggle layers by sensor and matching status. Click points to inspect and view the "How matching works" logic.
 - 🗓️ **Activity Calendar:** Track daily MODIS and VIIRS activity with anomaly outlines. Click any day to filter platform-wide data.
-- 🧪 **Comparison Lab:** Test sensitivity to distance (0.5/1/2 km) and time windows (1/4/6 h) across satellite pairs. Includes FRP correlation, confidence, and day/night splits.
-- 🧠 **FIRA Storyteller:** Template-driven narration powered strictly by computed results. Never hallucinates causes, impacts, or casualties.
+- 🧪 **Comparison Lab & Anomalies:** Test sensitivity to distance and time windows across satellite pairs. Includes an **Anomaly Explainer** ("Anomalous days" button) that lists flagged days—clicking any specific day instantly jumps the map to that date.
+- 🤖 **FIRA Storyteller & Chat:** FIRA (Fire Intelligence & Research Assistant) provides template-driven narration based on computed results. Now upgraded with **Ask FireFusion AI**, a Groq-powered chat panel embedded in the app that answers questions directly from your real data.
 - 📥 **Export Ready:** Downloadable `harmonized.csv` and `comparison.csv` directly from the UI.
 
 ---
 
 ## ⚙️ Architecture & Data Flow
 
-```text
-NASA FIRMS Files ➔ Preprocessing ➔ Harmonization (Python) ➔ Exports ➔ React App
-```
+    NASA FIRMS Files ➔ Preprocessing ➔ Harmonization (Python) ➔ Exports ➔ React App
 
 - **Data Science:** The Python pipeline handles standardization, spatial matching, anomaly scoring, and dynamic narration text generation.
-- **Frontend App:** The UI reads precomputed files from `frontend/public/data/`. **Zero backend required.** No live calls to FIRMS—ensuring rapid load times and offline capability.
+- **Frontend App:** The UI reads precomputed files from `frontend/public/data/`. **Zero backend required.** No live calls to FIRMS—ensuring rapid load times and offline capability. (Groq API handles the FIRA chat).
 
 ### 📐 Matching Rules & Sensitivity
 
 | Rule Parameter | Default Threshold |
 | :--- | :--- |
-| **Distance** | $\le$ 1.0 km *(Haversine, BallTree)* |
-| **Time** | $\le$ 4 hours difference *(UTC)* |
-| **Eligibility** | MODIS confidence $\ge$ 30 · VIIRS nominal/high |
+| **Distance** | 1.0 km or less *(Haversine, BallTree)* |
+| **Time** | 4 hours or less difference *(UTC)* |
+| **Eligibility** | MODIS confidence 30 or higher · VIIRS nominal/high |
 | **Confirmed Match** | Exactly **one** eligible partner |
 | **Ambiguous Match** | Multiple possible partners *(never forced)* |
 | **Unmatched** | No qualifying partner found |
 | **Low-Confidence** | Kept & flagged *(excluded from primary matching)* |
 
-> *Anomaly flags use a robust z-score (median and MAD of daily counts per sensor) > 3.5. These are statistical deviations from the three-month window, not predictive forecasts.*
+> *Anomaly flags use a robust z-score (median and MAD of daily counts per sensor) above 3.5. These are statistical deviations from the three-month window, not predictive forecasts.*
 
 ---
 
 ## 📂 Repository Structure
 
-```text
-├── data/raw/                   # Untouched NASA FIRMS files
-├── data/processed/             # Standardized files, readiness gates, audit reports
-├── export/                     # export.py, fira.py, to_contract.py
-├── frontend_data/              # Data files consumed by the React app
-├── frontend/                   # React + Vite application source code
-├── FireFusion_M3_Deliverables/ # Harmonization scripts, config, results, testing
-└── docs/                       # Handover notes & documentation
-```
+    ├── data/raw/                   # Untouched NASA FIRMS files
+    ├── data/processed/             # Standardized files, readiness gates, audit reports
+    ├── export/                     # export.py, fira.py, to_contract.py
+    ├── frontend_data/              # Data files consumed by the React app
+    ├── frontend/                   # React + Vite application source code
+    ├── FireFusion_M3_Deliverables/ # Harmonization scripts, config, results, testing
+    └── docs/                       # Handover notes & documentation
 
 ---
 
@@ -104,20 +100,13 @@ NASA FIRMS Files ➔ Preprocessing ➔ Harmonization (Python) ➔ Exports ➔ Re
 
 The application uses React and Vite. Ensure you have Node.js installed.
 
-```bash
-cd frontend
-npm install
+    cd frontend
+    npm install
+    npm run dev          # Start development server
+    npm run build        # Build for production
+    npm run preview      # Serve the production build locally (works offline)
 
-# Start development server
-npm run dev        
-
-# Build for production
-npm run build      
-
-# Serve the production build locally (works offline)
-npm run preview    
-```
-*Note: Make sure data files from `frontend_data/` are copied into `frontend/public/data/`.*
+*Note: Make sure data files from `frontend_data/` are copied into `frontend/public/data/`. The Groq API key is required in your environment variables for the "Ask FireFusion AI" feature to function.*
 
 ### Running the Data Pipeline
 Refer to `docs/M2_DATA_EXPORT.md` for exports/narration and the `README` in `FireFusion_M3_Deliverables/` for harmonization tests. Runs entirely on cached files (No FIRMS API key required).
@@ -141,14 +130,14 @@ Refer to `docs/M2_DATA_EXPORT.md` for exports/narration and the `README` in `Fir
 
 ---
 
-## 👥 Team #786
+## 👥 Team HR Pyrovanta (#786)
 
 | Name | Role | Responsibilities |
 | :--- | :--- | :--- |
-| **[Hina Ramzan](https://www.linkedin.com/in/hina-ramzan/)** | 👑 Team Leader | Integration, deployment, README, demo video, submission |
-| **[Muhammad Ihsan](https://www.linkedin.com/in/muhammad-ihsan-445350320/)** | 💾 Data Engineer | Data download, readiness gate, audit, provenance, exports, FIRA narration 
-| **[Hasnain Ahmad](https://www.linkedin.com/in/hasnain-ahmad-047210349/)** | 🔬 Science Lead | Harmonization, sensitivity analysis, FRP correlation, anomaly detection, tests |
-| **[Sharjeel Sarwar](https://www.linkedin.com/in/sharjeel-sarwar-a18414327/)** | 💻 Frontend Developer | App shell, dashboard, map, calendar, comparison lab, FIRA panel, downloads |
+| **[Hina Ramzan](https://www.linkedin.com/in/hina-ramzan/)** | 👑 Team Leader / Owner | Integration, deployment, README, demo video, submission |
+| **[Hasnain Ahmad](https://www.linkedin.com/in/hasnain-ahmad-047210349/)** | 💾 Data Engineer | Data download, readiness gate, audit, provenance, exports, FIRA narration |
+| **[Sharjeel Sarwar](https://www.linkedin.com/in/sharjeel-sarwar-a18414327/)** | 🔬 Science Lead | Harmonization, sensitivity analysis, FRP correlation, anomaly detection, tests |
+| **[Muhammad Ihsan](https://www.linkedin.com/in/muhammad-ihsan-445350320/)** | 💻 Frontend Developer | App shell, dashboard, map, calendar, comparison lab, FIRA panel, downloads |
 | **[Zukhraf Maryam](https://www.linkedin.com/in/zukhraf-maryam-275321293/)** | 🎨 Presentation | Slide deck creation, visual storytelling, pitch preparation, formatting |
 
 <div align="center">
