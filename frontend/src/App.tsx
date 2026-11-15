@@ -12,10 +12,12 @@ import FiraPanel from './components/FiraPanel'
 import Inspector from './components/Inspector'
 import Limitations from './components/Limitations'
 import GuidedTour from './components/GuidedTour'
+import AskPanel from './components/AskPanel'
 import Footer from './components/Footer'
 import { useFireStore } from './store'
 import { POINTS, SEASON, type FirePoint } from './data/sample'
 import { api, type Detection } from './lib/api'
+import { formatLiveWindow, liveToDetections, useLiveData } from './lib/liveData'
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { retry: false, staleTime: 60_000 } },
@@ -81,23 +83,50 @@ function Shell() {
   // sample data — the offline rule. Nothing here invents data.
   // The year is part of every query key, so switching 2023 <-> 2026
   // refetches that year's real data.
+  //
+  // LIVE MODE (v24): archive queries are DISABLED when 'live' is
+  // selected — the live data comes from the shared useLiveData() query
+  // (/api/firms-live), never from the static files. (The archive loaders
+  // would throw for 'live' anyway — see realData.ts fetchJson — but
+  // disabling the queries avoids pointless failed requests.)
+  const isLive = year === 'live'
+  const archiveYear = isLive ? 2023 : year
   const { data: summary } = useQuery({
     queryKey: ['summary', year],
-    queryFn: () => api.summary(year, `${year}-07-01`, `${year}-09-30`),
+    queryFn: () => api.summary(archiveYear, `${archiveYear}-07-01`, `${archiveYear}-09-30`),
+    enabled: !isLive,
   })
   const { data: detections } = useQuery({
     queryKey: ['detections', year],
-    queryFn: () => api.detections(year, { from: `${year}-07-01`, to: `${year}-09-30`, limit: '700' }),
+    queryFn: () => api.detections(archiveYear, { from: `${archiveYear}-07-01`, to: `${archiveYear}-09-30`, limit: '700' }),
+    enabled: !isLive,
   })
+  // One shared live fetch (['live', 5]) — every component that needs
+  // live data reads this same cached query, so selecting Live fetches
+  // once, not once per component.
+  const { data: liveData, isLoading: liveLoading, error: liveError } = useLiveData()
 
-  const season = summary
-    ? { modis: summary.modis, viirs: summary.viirs, matched: summary.matched }
-    : SEASON
-  const points: FirePoint[] =
-    detections && detections.items.length > 0
+  const season = isLive
+    ? liveData
+      ? { modis: liveData.totals.modis, viirs: liveData.totals.viirs, matched: liveData.matched }
+      : { modis: 0, viirs: 0, matched: 0 } // loading: zeros, NEVER the 2023 SEASON fallback
+    : summary
+      ? { modis: summary.modis, viirs: summary.viirs, matched: summary.matched }
+      : SEASON
+  // Live points come only from the live fetch — when it returns zero
+  // detections the hero map is empty (correct), and the app NEVER falls
+  // back to the sample POINTS as if they were live.
+  const points: FirePoint[] = isLive
+    ? liveData
+      ? liveToDetections(liveData).map((d, i) => apiPoint(d, i))
+      : []
+    : detections && detections.items.length > 0
       ? detections.items.map((d, i) => apiPoint(d, i))
       : POINTS
-  const isSample = !summary
+  const isSample = !isLive && !summary
+  const bannerText = isLive
+    ? `🔴 LIVE — REAL DATA, NASA FIRMS NRT, LAST ${liveData?.window.days ?? 5} DAYS${liveData ? ` · ${formatLiveWindow(liveData).toUpperCase()}` : ''}`
+    : `REAL DATA — NASA FIRMS, JUL–SEP ${year}`
 
   const goView = (name: 'dashboard' | 'map' | 'lab') => {
     if (name === 'map') {
@@ -147,10 +176,12 @@ function Shell() {
         <h2>One selection. Every view updates.</h2>
 
         <div style={{ fontSize: 11, color: 'var(--text)', marginTop: 10, background: 'rgba(4,5,13,.52)', padding: '6px 10px', borderRadius: 8, display: 'inline-block', fontWeight: 600, textShadow: '0 1px 6px rgba(0,0,0,.85), 0 0 2px rgba(0,0,0,.9)' }} className="mono">
-          ▸ ALL NUMBERS BELOW ARE {isSample ? 'DEMO / SAMPLE VALUES FOR UI PREVIEW' : `REAL DATA — NASA FIRMS, JUL–SEP ${year}`}
+          ▸ ALL NUMBERS BELOW ARE {isSample ? 'DEMO / SAMPLE VALUES FOR UI PREVIEW' : bannerText}
+          {isLive && liveLoading ? ' · FETCHING…' : ''}
+          {isLive && liveError ? ' · LIVE FETCH FAILED — ARCHIVE SEASONS STILL WORK' : ''}
         </div>
 
-        <KpiStrip season={season} />
+        <KpiStrip season={season} live={isLive ? liveData ?? null : null} liveLoading={isLive && liveLoading} />
 
         <div className="tabs reveal" role="tablist">
           <button
@@ -183,7 +214,9 @@ function Shell() {
               transition={{ duration: 0.25 }}
             >
               <div id="view-dashboard" style={{ display: view === 'lab' ? 'none' : 'block' }}>
-                <div className="card">
+                {/* id="mainMap" — the guided tour's step 4 targets this card
+                    (the dashboard map is RealMap now, not the old FireMap). */}
+                <div className="card" id="mainMap">
                   <div className="card-h">
                     <b>Interactive Fire Map</b>
                     <span id="mapMeta">{isSample ? 'Showing sample • click a red point' : 'Real detections • click a red point'}</span>
@@ -235,8 +268,18 @@ function Shell() {
               </span>
             </div>
             <div className="downloads">
-              <DownloadButton file="harmonized.csv" label="↓ harmonized.csv" year={year} />
-              <DownloadButton file="comparison.csv" label="↓ comparison.csv" year={year} />
+              {isLive ? (
+                // Live detections are fetched fresh and never archived —
+                // there is no CSV file to download for the live window.
+                <span style={{ fontSize: 12, color: 'var(--muted)', maxWidth: 320, lineHeight: 1.5 }}>
+                  CSV downloads are archive-only — live detections aren’t archived yet. Switch to 2023 or 2026 to download a season.
+                </span>
+              ) : (
+                <>
+                  <DownloadButton file="harmonized.csv" label="↓ harmonized.csv" year={archiveYear} />
+                  <DownloadButton file="comparison.csv" label="↓ comparison.csv" year={archiveYear} />
+                </>
+              )}
             </div>
           </div>
         </div>
@@ -249,6 +292,9 @@ function Shell() {
       <Footer />
       {/* Guided tour overlay (M5): fixed overlay, no layout impact. */}
       <GuidedTour />
+      {/* Ask FireFusion (v23): floating Q&A button + chat panel, fixed
+          position — no layout impact. */}
+      <AskPanel />
     </>
   )
 }

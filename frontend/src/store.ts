@@ -7,11 +7,13 @@ import type { FirePoint } from './data/sample'
 
 export type View = 'dashboard' | 'map' | 'lab'
 
-// Dataset year — 2023 (the original season) or 2026 (the second dataset,
-// added 2026-11-15 from FIRMS archive + NRT). Every data loader reads
-// the year to pick /data (2023) or /data/2026. Switching year resets the
+// Dataset year — 2023 (the original season), 2026 (the second dataset,
+// added 2026-11-15 from FIRMS archive + NRT), or 'live' (the live FIRMS
+// near-real-time window, last 5 days, added v24). Every archive loader
+// reads the year to pick /data (2023) or /data/2026 — live data never
+// goes through them (see src/lib/liveData.ts). Switching year resets the
 // selected day/month/point, because dates are year-specific.
-export type DatasetYear = 2023 | 2026
+export type DatasetYear = 2023 | 2026 | 'live'
 
 export interface Layers {
   modis: boolean
