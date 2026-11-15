@@ -1,127 +1,113 @@
-# FireFusion AI — Member 2: Data and Export Handover (team #786)
+# FireFusion AI
 
-**Case study:** California, USA, 1 July – 30 September 2023
-**Leader:** Member 2 (Hina Ramzan) (M2), Data Engineer (Data and Export)
-**Built and verified:** 14 November 2026
-**Data source:** NASA FIRMS
+**Two satellites see fire differently. FireFusion AI shows how they differ, where they agree, and what it means.**
 
----
+NASA Space Apps Challenge 2026 · Team #786 · Challenge: *Harmonization of MODIS and VIIRS Hot Spots*
 
-## 1. What M2 is responsible for
-
-1. **Data collection:** FIRMS archive files for MODIS Terra and Aqua (C6.1) and VIIRS 375 m NOAA-20. VIIRS S-NPP was added on the team's instruction (see section 7).
-2. **Data-readiness gate (PRD §6.1):** checks on dates, columns, timestamps, coordinates and area bounds. Report: `data/processed/DATA_GATE.md`.
-3. **Preprocessing:** the untouched raw files are split into one standardized CSV per satellite.
-4. **Provenance and audit:** `provenance.json`, `audit.json` and `audit_report.md`.
-5. **Export:** `export/export.py` and `export/to_contract.py` turn M3's harmonized results into the files the website reads.
-6. **FIRA narration:** `export/fira.py` writes template-driven narration to `fira_narration.json`.
-
+**Live demo:** https://hr-pyro-vanta.vercel.app
 
 ---
 
-## 2. Folder contents
+## What it is
 
-| Path | Description |
+FireFusion AI is a web app that harmonizes NASA **MODIS** and **VIIRS** active-fire detections into one explorable view for a selected area: an interactive map, a burning activity calendar, a sensor comparison lab, and a data-grounded storyteller called **FIRA**.
+
+It does **not** claim to count real-world fires. It shows how the two sensors agree and differ, and it keeps every original observation.
+
+**Case study:** California, USA, 1 July – 30 September 2023 (August 2023 is the featured month).
+
+## Headline results (real NASA FIRMS data)
+
+| | |
 |---|---|
-| `data/raw/` | Untouched NASA FIRMS archive files: `fire_archive_M-C61_841863.csv` (MODIS Terra + Aqua), `fire_archive_J1V-C2_841864.csv` (VIIRS NOAA-20), `fire_archive_SV-C2_841865.csv` (VIIRS S-NPP) |
-| `data/processed/` | Standardized per-satellite files: `modis_terra.csv`, `modis_aqua.csv`, `viirs_noaa20.csv`, `viirs_snpp.csv` |
-| `data/processed/DATA_GATE.md` | PRD §6.1 data-readiness gate report |
-| `data/processed/audit_report.md` | Full human-readable data audit |
-| `data/processed/export/` | Review exports: `summary.json`, `daily_report.csv`, `points.csv`, `grid.csv`, `audit.json`, `provenance.json`, `fira_narration.json` |
-| `frontend_data/` | **The data contract the website reads (PRD §11.2).** Already copied to `frontend/public/data/` and live on the site — the app reads the real data from there, no backend needed. |
-| `export/export.py` | Builds the summary, daily report, points, grid, audit and provenance |
-| `export/to_contract.py` | Builds `frontend_data/` from the harmonized results |
-| `export/fira.py` | FIRA narration generator |
+| Records | **39,899** (MODIS 3,721 · VIIRS 36,178) |
+| Satellites | Terra, Aqua (MODIS C6.1) · NOAA-20, S-NPP (VIIRS 375 m) |
+| Confirmed one-to-one matched pairs | **98** |
+| Ambiguous candidate groups | **954** |
+| Unmatched records | **23,559** |
+| Match coverage | MODIS 98 of 3,462 eligible (2.83%) · VIIRS 98 of 34,819 eligible (0.28%) |
+| Busiest day | 19 August 2023 (2,111 detections) |
+| Flagged days / critical periods | 36 / 5 |
 
-### What is in `frontend_data/`
+## Features
 
-| File | Contents |
-|---|---|
-| `config.json` | Region, bounding box, date range, matching thresholds, products, retrieval date |
-| `summary.json` | Counts by sensor, matched / ambiguous / unmatched, FRP, peak day, **match coverage with numerators and denominators** |
-| `daily.json` | One row per day and sensor (184 rows): detections, matched / ambiguous / unmatched counts, mean and max FRP, robust z-score, anomaly flag |
-| `periods.json` | Flagged days, critical periods, baseline statistics |
-| `comparison.json` | Sensitivity (0.5 / 1 / 2 km and 1 / 4 / 6 h) for four satellite pairs, FRP correlations, confidence and day/night splits |
-| `grid.json` | 4,143 grid cells of about 1 km for the wide-zoom map view |
-| `points/YYYY-MM-DD.geojson` | One GeoJSON file of harmonized records per day (92 files), loaded on demand |
-| `fira_narration.json` | 92 daily narrations, 5 critical-period narrations, welcome tour, sensor explainer, rules |
-| `provenance.json` | Retrieval date, source files, versions, query parameters, row counts, audit summary |
-| `harmonization_log.json` | M3's run record (counts, thresholds, input and output files) |
+- **Dashboard:** detection counts by sensor, matched, ambiguous and unmatched records, match coverage with numerators and denominators.
+- **Interactive fire map:** layers by sensor and matching status, click a point to inspect it, a "How matching works" explanation.
+- **Burning activity calendar:** daily MODIS and VIIRS activity, anomaly days outlined, click a day to filter everything.
+- **Sensor comparison lab:** sensitivity to distance (0.5 / 1 / 2 km) and time window (1 / 4 / 6 h) for each satellite pair, FRP correlation, confidence and day/night splits.
+- **FIRA storyteller:** template-driven narration. Every number comes from computed results. It never invents causes, impacts or casualties.
+- **Downloads:** `harmonized.csv` and `comparison.csv`.
 
----
+## How it works
 
-## 3. Headline numbers (real FIRMS data)
-
-- **39,899 records:** MODIS 3,721 (Terra 1,966 / Aqua 1,755) and VIIRS 36,178 (NOAA-20 18,399 / S-NPP 17,779).
-- **Validation:** 0 invalid coordinates, 0 invalid timestamps, 0 missing FRP, 0 exact duplicates.
-- **Low-confidence records:** 1,618 (MODIS 259, VIIRS 1,359) are kept and flagged `low_confidence_excluded`; they are excluded only from primary matching.
-- **Matching result (1.0 km, 4 h):** 98 confirmed one-to-one pairs (196 records), 954 ambiguous groups (16,144 records), 23,559 unmatched records. 196 + 16,144 + 23,559 = 39,899.
-- **Match coverage:** MODIS 98 of 3,462 eligible records (2.83%). VIIRS 98 of 34,819 eligible records (0.28%). Ambiguous coverage is reported separately.
-- **Peak day:** 19 August 2023, 2,111 detections (MODIS 154, VIIRS 1,957).
-- **Coverage:** 92 days, 1 July to 30 September 2023.
-- **Known gap:** NOAA-20 has no rows on 30 September 2023 (its file ends 29 September). S-NPP has 36 rows that day. Do not claim NOAA-20 coverage for 30 September.
-
----
-
-## 4. How to run the M2 pipeline
-
-M2's scripts need M3's outputs as input: `harmonized.parquet`, `comparison.json`, `periods.json` and `harmonization_log.json`. They are not part of this folder. In the commands below they sit in `data/processed/out_real_v2/`; if M3 gives you a different location, change `H`.
-
-```bash
-pip install pandas numpy pyarrow scikit-learn
-
-H=data/processed/out_real_v2
-
-# 1. Core exports, audit and provenance
-python export/export.py --harmonized $H/harmonized.parquet --comparison $H/comparison.json \
-    --periods $H/periods.json --log $H/harmonization_log.json \
-    --out-dir data/processed/export
-
-# 2. FIRA narration
-python export/fira.py --harmonized $H/harmonized.parquet --comparison $H/comparison.json \
-    --periods $H/periods.json --out data/processed/export/fira_narration.json
-
-# 3. Frontend data contract
-python export/to_contract.py --harmonized $H/harmonized.parquet --comparison $H/comparison.json \
-    --periods $H/periods.json --log $H/harmonization_log.json \
-    --export-dir data/processed/export --config harmonize/config.json \
-    --processed-dir data/processed --out-dir frontend_data
+```
+NASA FIRMS files → preprocessing → harmonization (Python) → exports → React app
 ```
 
-Run them in this order. After step 3, copy `frontend_data/provenance.json` and `frontend_data/summary.json` over the files of the same name in `data/processed/export/`, so both folders agree.
+- The Python pipeline does all the science: standardizing, matching, anomaly scores and narration text.
+- The website only displays the precomputed files in `frontend/public/data/`. There is **no backend** and no live call to FIRMS, so the app also works offline.
 
-Expected output of step 3: `daily rows=184  point files=92  grid cells=4143`.
+### Matching rules (defaults, with sensitivity analysis)
 
-The FIRMS MAP_KEY is not needed for any of this. The pipeline runs offline from the cached files.
+| Rule | Default |
+|---|---|
+| Distance | 1.0 km or less (haversine, BallTree) |
+| Time | 4 hours or less between UTC timestamps |
+| Eligible records | MODIS confidence 30 or higher · VIIRS nominal or high |
+| Confirmed match | Exactly one eligible partner |
+| Ambiguous | Several possible partners: never forced into a match |
+| Unmatched | No qualifying partner |
+| Low-confidence records | Kept and flagged, excluded only from primary matching |
 
----
+Anomaly flags use a robust z-score (median and MAD of daily counts per sensor) above 3.5. They are statistical deviations from the three-month window, not forecasts.
 
-## 5. How M2 work was checked
+## Repository layout
 
-1. **Raw to processed:** raw files (39,899 rows) and processed files (39,899 rows) have identical content, with no row lost or changed.
-2. **Gate parsing:** non-zero-padded FIRMS times (`554` is 05:54) and VIIRS letter confidences (`l`, `n`, `h`) are standardized with 0 parsing failures.
-3. **Reproducibility:** the three export steps were re-run from scratch on a clean copy and gave the same counts as the delivered files.
-4. **Daily counts:** every day's detection count in `daily.json` is checked against `daily_report.csv` when it is built.
-5. **FIRA:** every narration ends with the source line below, and the counts in the daily narrations match `daily_report.csv`. No causes, impacts, burned area or casualties are stated.
+| Folder | Contents |
+|---|---|
+| `data/raw/` | Untouched NASA FIRMS files |
+| `data/processed/` | Standardized per-satellite files, data-readiness gate, audit report |
+| `export/` | `export.py`, `fira.py`, `to_contract.py` |
+| `frontend_data/` | The data files the website reads |
+| `frontend/` | React + Vite app |
+| `FireFusion_M3_Deliverables/` | Harmonization script, configuration, results and tests |
+| `docs/` | Handover notes (data and export) |
 
-> Source: MODIS C6.1 and VIIRS 375 m (NOAA-20, S-NPP), NASA FIRMS, 1 July - 30 September 2023.
+## Run it
 
----
+**The website**
+```bash
+cd frontend
+npm install
+npm run dev          # development
+npm run build        # production build
+npm run preview      # serve the build locally (works offline)
+```
+The data files must be in `frontend/public/data/` (copy them from `frontend_data/`).
 
-## 6. Rules the numbers follow (PRD §7.3)
+**The data pipeline:** see `docs/M2_DATA_EXPORT.md` (exports and narration) and the README in `FireFusion_M3_Deliverables/` (harmonization and tests). No FIRMS key is needed; the pipeline runs from the cached files.
 
-- Raw counts are **detections, not unique real-world fires**.
-- Ambiguous groups are **not** confirmed matches. The closest partner in a group is a suggestion only.
-- FRP is compared between sensors and **never added** across them.
-- No original record was deleted. Excluded records are flagged, not removed.
-- Anomaly flags are statistical deviations from the three-month window, not forecasts.
+## Limitations
 
----
+- Satellite detections are not ground-confirmed fires, and a missing detection does not prove there was no fire.
+- Cloud, smoke, overpass gaps and small or short-lived fires affect detection.
+- Nearby detections are not assumed to be the same fire. A match group is not a unique real-world fire.
+- FRP is compared between sensors and never added across them. Hotspots do not measure burned area.
+- NOAA-20 has no rows on 30 September 2023 (its file ends 29 September); S-NPP covers that day.
+- S-NPP was added beyond the original NOAA-20-only plan (scope extension).
+- The anomaly baseline is three months, not long-term climatology.
+- This is not an early-warning or emergency system, and it does not predict wildfires.
 
-## 7. Notes for the team
+## Data attribution
 
-- **S-NPP scope extension:** the PRD covers VIIRS NOAA-20 only and lists extra VIIRS satellites as P2. S-NPP was added on the team's instruction on 14 November 2026. It competes with NOAA-20 for MODIS partners, which moved confirmed pairs from 125 (NOAA-20 only) to 98. The PRD text, app footer and FIRA source line should say "NOAA-20, S-NPP".
-- **Sample numbers in the demo are not real.** Do not quote MODIS 18,432, VIIRS 42,891 or matched 11,928. Use the numbers in this README or in `frontend_data/summary.json`.
-- **Frontend:** read only from `frontend_data/`. Do not use the CSV files in `data/processed/export/` for the app.
+NASA FIRMS (Fire Information for Resource Management System): MODIS Collection 6.1 and VIIRS 375 m active-fire data (NOAA-20 and Suomi NPP), retrieved 10 November 2026. https://firms.modaps.eosdis.nasa.gov/
 
----
+## Team
+
+| Role | Responsibility |
+|---|---|
+| M1, Team Owner | Integration, deployment, README, demo video, submission |
+| M2, Data Engineer | Data download, readiness gate, audit, provenance, exports, FIRA narration |
+| M3, Science Lead | Harmonization, sensitivity analysis, FRP correlation, anomaly detection, tests |
+| M4, Frontend A | App shell, dashboard, map |
+| M5, Frontend B | Calendar, comparison lab, FIRA panel, downloads, limitations |
