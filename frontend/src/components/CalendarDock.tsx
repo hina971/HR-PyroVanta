@@ -40,7 +40,8 @@ export default function CalendarDock() {
 
   const { data: daily } = useQuery({
     queryKey: ['daily', year],
-    queryFn: () => api.daily(year, `${year}-07-01`, `${year}-09-30`),
+    queryFn: () => api.daily(year === 'live' ? 2023 : year, `${year === 'live' ? 2023 : year}-07-01`, `${year === 'live' ? 2023 : year}-09-30`),
+    enabled: year !== 'live',
     retry: false,
     staleTime: 60_000,
   })
@@ -49,11 +50,26 @@ export default function CalendarDock() {
   // this season's busiest day, not hardcoded to the 2023 peak (2,111).
   const { data: seasonInfo } = useQuery({
     queryKey: ['seasonInfo', year],
-    queryFn: () => api.seasonInfo(year),
+    queryFn: () => api.seasonInfo(year === 'live' ? 2023 : year),
+    enabled: year !== 'live',
     retry: false,
     staleTime: 60_000,
   })
   const peakTotal = seasonInfo?.peakTotal ?? 2111
+
+  // LIVE MODE (v24): the calendar covers the archive seasons (Jul–Sep).
+  // A 5-day live window has no season calendar — say so instead of
+  // rendering the 2023 months as if they were live.
+  if (year === 'live') {
+    return (
+      <p style={{ fontSize: 13, lineHeight: 1.6, margin: 0 }}>
+        The calendar covers the archive seasons (Jul–Sep 2023 and 2026).
+        Live mode shows the last 5 days on the map above — there is no
+        season calendar for a 5-day window. Switch to 2023 or 2026 to
+        browse a full season day by day.
+      </p>
+    )
+  }
 
   const daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][currentMonth - 1]
   const days: DayDatum[] = Array.from({ length: daysInMonth }, (_, i) => {

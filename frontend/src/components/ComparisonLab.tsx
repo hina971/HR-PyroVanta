@@ -74,13 +74,15 @@ export default function ComparisonLab() {
   const year = useFireStore((s) => s.year)
   const { data: comparison } = useQuery({
     queryKey: ['comparison', year],
-    queryFn: () => api.comparison(year),
+    queryFn: () => api.comparison(year === 'live' ? 2023 : year),
+    enabled: year !== 'live',
     retry: false,
     staleTime: 60_000,
   })
   const { data: summary } = useQuery({
     queryKey: ['summary', year],
-    queryFn: () => api.summary(year, `${year}-07-01`, `${year}-09-30`),
+    queryFn: () => api.summary(year === 'live' ? 2023 : year, `${year === 'live' ? 2023 : year}-07-01`, `${year === 'live' ? 2023 : year}-09-30`),
+    enabled: year !== 'live',
     retry: false,
     staleTime: 60_000,
   })
@@ -119,6 +121,27 @@ export default function ComparisonLab() {
   const displayBars: Array<{ label: string; color: string; pct: number | null }> =
     bars ??
     LAB.radius.map((row) => ({ label: row.label, color: row.color, pct: row.pct }))
+
+  // LIVE MODE (v24): the lab tests matching thresholds across a full
+  // archive season — a 5-day live window has no sensitivity table, so
+  // say so instead of showing the 2023 bars as if they were live.
+  if (year === 'live') {
+    return (
+      <div className="card">
+        <div className="card-h">
+          <b>Sensor Comparison Lab</b>
+          <span>Does the result survive different thresholds?</span>
+        </div>
+        <div className="card-b">
+          <p style={{ fontSize: 13, lineHeight: 1.6, margin: 0 }}>
+            The Comparison Lab tests matching thresholds (0.5 / 1.0 / 2.0 km
+            × 1 / 4 / 6 h) across a full archive season. It isn’t available
+            for the 5-day live window — switch to 2023 or 2026 to run it.
+          </p>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="card">

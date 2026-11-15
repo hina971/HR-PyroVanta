@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState, type CSSProperties } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useFireStore, type View } from '../store'
 
@@ -96,6 +96,25 @@ export default function GuidedTour() {
   const [rect, setRect] = useState<Rect | null>(null)
   const startView = useRef<View>('dashboard')
   const timer = useRef<number | null>(null)
+  const retryTimer = useRef<number | null>(null)
+
+  // Measure a target, retrying for up to ~1s when it isn't found yet
+  // (the view may still be rendering after a switch). If it is never
+  // found, rect stays null and the tooltip renders centred on screen
+  // instead of vanishing — a missing target can never blank the tour.
+  const attemptMeasure = useCallback((selector: string, triesLeft: number) => {
+    const r = measure(selector)
+    if (r) {
+      setRect(r)
+      return
+    }
+    if (triesLeft <= 0) {
+      setRect(null)
+      return
+    }
+    if (retryTimer.current) window.clearTimeout(retryTimer.current)
+    retryTimer.current = window.setTimeout(() => attemptMeasure(selector, triesLeft - 1), 200)
+  }, [])
 
   const showStep = useCallback(
     (i: number) => {
@@ -104,15 +123,16 @@ export default function GuidedTour() {
       if (s.view) setView(s.view)
       // Let the view switch render, then measure and scroll.
       if (timer.current) window.clearTimeout(timer.current)
+      if (retryTimer.current) window.clearTimeout(retryTimer.current)
       timer.current = window.setTimeout(() => {
         const el = document.querySelector(s.target) as HTMLElement | null
         el?.scrollIntoView({ behavior: 'smooth', block: 'center' })
-        // Measure after the smooth scroll starts; re-measure once it lands.
+        attemptMeasure(s.target, 5)
+        // Re-measure once the smooth scroll lands, to re-glue the ring.
         window.setTimeout(() => setRect(measure(s.target)), 450)
-        setRect(measure(s.target))
       }, 60)
     },
-    [setView],
+    [setView, attemptMeasure],
   )
 
   // Open: remember the view, start at step 0. Close: restore the view.
@@ -130,6 +150,7 @@ export default function GuidedTour() {
     return () => {
       window.removeEventListener('keydown', onKey)
       if (timer.current) window.clearTimeout(timer.current)
+      if (retryTimer.current) window.clearTimeout(retryTimer.current)
     }
   }, [tourOpen, setTourOpen, showStep])
 
@@ -156,6 +177,55 @@ export default function GuidedTour() {
 
   const s = STEPS[step]
   const last = step === STEPS.length - 1
+
+  // The tooltip body is the same whether it sits under the highlight
+  // ring or centred on screen (the fallback when its target is missing).
+  const tooltipBody = (
+    <>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'baseline',
+          gap: 12,
+        }}
+      >
+        <b style={{ fontSize: 15 }}>{s.title}</b>
+        <span className="mono" style={{ fontSize: 11, color: 'var(--muted)' }}>
+          {step + 1} / {STEPS.length}
+        </span>
+      </div>
+      <p style={{ color: 'var(--muted)', fontSize: 13, lineHeight: 1.6, margin: '8px 0 14px' }}>
+        {s.text}
+      </p>
+      <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end' }}>
+        <button className="dl" onClick={close}>
+          Skip tour
+        </button>
+        {step > 0 && (
+          <button className="dl" onClick={() => setStep(step - 1)}>
+            ← Back
+          </button>
+        )}
+        <button
+          className="btn-ember"
+          onClick={() => (last ? close() : setStep(step + 1))}
+        >
+          {last ? 'Done ✓' : 'Next →'}
+        </button>
+      </div>
+    </>
+  )
+
+  const tooltipStyle: CSSProperties = {
+    width: 'min(360px, calc(100vw - 24px))',
+    background: 'var(--surface, #121216)',
+    border: '1px solid var(--line, #26262B)',
+    borderRadius: 14,
+    padding: 16,
+    pointerEvents: 'auto',
+    boxShadow: '0 18px 48px rgba(0,0,0,.55)',
+  }
 
   return (
     <AnimatePresence>
@@ -197,14 +267,18 @@ export default function GuidedTour() {
               }}
             />
           )}
-          {/* Tooltip card — placed under the highlight, clamped on-screen. */}
-          {rect && (
+          {/* Tooltip card — ALWAYS rendered, so a missing target can never
+              blank the tour. Under the highlight when the target is found;
+              centred on screen when it isn't. Only the ring is gated on
+              rect. */}
+          {rect ? (
             <motion.div
               key={step}
               initial={{ opacity: 0, y: 6 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.2 }}
               style={{
+                ...tooltipStyle,
                 position: 'fixed',
                 left: Math.max(
                   12,
@@ -214,48 +288,30 @@ export default function GuidedTour() {
                   rect.top + rect.height + 20,
                   window.innerHeight - 210,
                 ),
-                width: 'min(360px, calc(100vw - 24px))',
-                background: 'var(--surface, #121216)',
-                border: '1px solid var(--line, #26262B)',
-                borderRadius: 14,
-                padding: 16,
-                pointerEvents: 'auto',
-                boxShadow: '0 18px 48px rgba(0,0,0,.55)',
               }}
             >
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'baseline',
-                  gap: 12,
-                }}
-              >
-                <b style={{ fontSize: 15 }}>{s.title}</b>
-                <span className="mono" style={{ fontSize: 11, color: 'var(--muted)' }}>
-                  {step + 1} / {STEPS.length}
-                </span>
-              </div>
-              <p style={{ color: 'var(--muted)', fontSize: 13, lineHeight: 1.6, margin: '8px 0 14px' }}>
-                {s.text}
-              </p>
-              <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end' }}>
-                <button className="dl" onClick={close}>
-                  Skip tour
-                </button>
-                {step > 0 && (
-                  <button className="dl" onClick={() => setStep(step - 1)}>
-                    ← Back
-                  </button>
-                )}
-                <button
-                  className="btn-ember"
-                  onClick={() => (last ? close() : setStep(step + 1))}
-                >
-                  {last ? 'Done ✓' : 'Next →'}
-                </button>
-              </div>
+              {tooltipBody}
             </motion.div>
+          ) : (
+            <div
+              style={{
+                position: 'fixed',
+                left: '50%',
+                top: '50%',
+                transform: 'translate(-50%, -50%)',
+                pointerEvents: 'auto',
+              }}
+            >
+              <motion.div
+                key={`center-${step}`}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.2 }}
+                style={tooltipStyle}
+              >
+                {tooltipBody}
+              </motion.div>
+            </div>
           )}
         </div>
       )}

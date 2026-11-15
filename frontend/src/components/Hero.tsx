@@ -110,7 +110,9 @@ export default function Hero({
   const heroMatch = useCountUp(season.matched, 1400)
 
   const jumpToHottest = () => {
-    selectDay('2023-08-19')
+    // Archive seasons jump to the 2023 peak day. In live mode there is
+    // no peak-day filter — just scroll to the live map.
+    if (year !== 'live') selectDay('2023-08-19')
     scrollToMission()
   }
 
@@ -144,7 +146,9 @@ export default function Hero({
               className="pill eyebrow"
               style={{ color: 'var(--amber)', borderColor: 'rgba(255,176,32,.35)' }}
             >
-              {`"MODIS + VIIRS HARMONIZATION • CALIFORNIA • JUL–SEP ${year}"`}
+              {year === 'live'
+                ? '"🔴 LIVE • CALIFORNIA • LAST 5 DAYS"'
+                : `"MODIS + VIIRS HARMONIZATION • CALIFORNIA • JUL–SEP ${year}"`}
             </span>
             <h1>
               Two satellites
@@ -171,7 +175,7 @@ export default function Hero({
                 Explore the data ↓
               </button>
               <button className="btn-ghost" onClick={jumpToHottest}>
-                Jump to hottest day — Aug 19
+                {year === 'live' ? 'See the live map ↓' : 'Jump to hottest day — Aug 19'}
               </button>
             </div>
             <div className="hero-stats">
@@ -205,7 +209,9 @@ export default function Hero({
             >
               {isSample
                 ? 'DEMO VALUES — REPRESENTATIVE SAMPLE FOR UI PREVIEW • FORMAT: NASA FIRMS • MODIS C6.1 • VIIRS 375m (NOAA-20)'
-                : 'REAL DATA — NASA FIRMS • MODIS C6.1 • VIIRS 375m (NOAA-20 + S-NPP) • JUL–SEP ' + year}
+                : year === 'live'
+                  ? 'REAL DATA — NASA FIRMS NRT • MODIS + VIIRS • LAST 5 DAYS'
+                  : 'REAL DATA — NASA FIRMS • MODIS C6.1 • VIIRS 375m (NOAA-20 + S-NPP) • JUL–SEP ' + year}
             </p>
           </div>
 
@@ -213,7 +219,7 @@ export default function Hero({
             <div className="map-head">
               <b>{isSample ? 'CALIFORNIA — SAMPLE PREVIEW' : 'CALIFORNIA — REAL DETECTIONS'}</b>
               <span>
-                August {year} • {isSample ? 'Demo data' : 'Real data'} •{' '}
+                {year === 'live' ? 'Last 5 days' : `August ${year}`} • {isSample ? 'Demo data' : 'Real data'} •{' '}
                 <span style={{ color: 'var(--match)' }}>● Matched glow = agreement</span>
               </span>
             </div>

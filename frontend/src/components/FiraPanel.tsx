@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useFireStore } from '../store'
 import { FIRA_SEASON_TEXT, dayData, firaDayText } from '../data/sample'
 import { api } from '../lib/api'
+import { liveErrorMessage, liveSummaryText, useLiveData } from '../lib/liveData'
 
 // FIRA — Fire Intelligence & Research Assistant (demo's #firaText).
 // Template-driven narration from the computed results object only.
@@ -26,11 +27,22 @@ export default function FiraPanel() {
   const year = useFireStore((s) => s.year)
   const { data: apiFira } = useQuery({
     queryKey: ['fira', year, selectedDate],
-    queryFn: () => api.fira(year, selectedDate ?? undefined),
+    queryFn: () => api.fira(year === 'live' ? 2023 : year, selectedDate ?? undefined),
+    enabled: year !== 'live',
     retry: false,
     staleTime: 60_000,
   })
-  const fullText = apiFira?.text ?? sampleText
+  // LIVE MODE (v24): no archive narration exists for a 5-day window —
+  // narrate the live window's own numbers instead (never the 2023 text).
+  const { data: liveData, error: liveError } = useLiveData()
+  const liveText = year === 'live'
+    ? liveData
+      ? liveSummaryText(liveData)
+      : liveError
+        ? liveErrorMessage(liveError)
+        : 'Fetching the live window…'
+    : null
+  const fullText = liveText ?? apiFira?.text ?? sampleText
 
   useEffect(() => {
     if (timerRef.current) window.clearInterval(timerRef.current)
@@ -59,7 +71,9 @@ export default function FiraPanel() {
     <div className="card" style={{ borderColor: 'rgba(255,107,26,.35)' }}>
       <div className="card-h">
         <b>✦ FIRA — Storyteller</b>
-        <span style={{ color: 'var(--ember)' }}>Template • {apiFira ? 'Real data' : 'Demo sample'}</span>
+        <span style={{ color: 'var(--ember)' }}>
+          {year === 'live' ? 'Live • FIRMS NRT' : `Template • ${apiFira ? 'Real data' : 'Demo sample'}`}
+        </span>
       </div>
       <div className="card-b">
         <div className="fira-text" id="firaText">
@@ -73,7 +87,7 @@ export default function FiraPanel() {
           {streaming && text.length > 0 && <span className="cursor-blink"></span>}
         </div>
         <div style={{ marginTop: 12 }}>
-          <span className="chip">{apiFira ? 'Real data' : 'Demo sample data'}</span>
+          <span className="chip">{year === 'live' ? 'Live data' : apiFira ? 'Real data' : 'Demo sample data'}</span>
           <span className="chip">MODIS C6.1</span>
           <span className="chip">VIIRS 375 m</span>
         </div>

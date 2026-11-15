@@ -3,6 +3,7 @@ import { useFireStore } from '../store'
 import { SEASON, dayData, matchCoverage } from '../data/sample'
 import { useCountUp } from '../hooks/useCountUp'
 import { api } from '../lib/api'
+import { formatLiveWindow, type LiveResponse } from '../lib/liveData'
 import type { SeasonNumbers } from './Hero'
 
 // KPI strip (demo ids kModis/kViirs/kCoverage/kDay + subs).
@@ -10,13 +11,18 @@ import type { SeasonNumbers } from './Hero'
 // up); a selected day → that day's real daily row (api.daily(), which
 // reads the static daily.json when the backend is down). Falls back to
 // the demo dayData formula only if the real row is missing.
-export default function KpiStrip({ season }: { season: SeasonNumbers }) {
+//
+// LIVE MODE (v24): the day card shows the live window instead of a
+// season date, and the archive daily query is disabled (it would throw
+// for 'live' — archive loaders only serve 2023/2026).
+export default function KpiStrip({ season, live, liveLoading }: { season: SeasonNumbers; live?: LiveResponse | null; liveLoading?: boolean }) {
   const year = useFireStore((s) => s.year)
   const selectedDate = useFireStore((s) => s.selectedDate)
 
   const { data: daily } = useQuery({
     queryKey: ['daily', year],
-    queryFn: () => api.daily(year, `${year}-07-01`, `${year}-09-30`),
+    queryFn: () => api.daily(year === 'live' ? 2023 : year, `${year === 'live' ? 2023 : year}-07-01`, `${year === 'live' ? 2023 : year}-09-30`),
+    enabled: year !== 'live',
     retry: false,
     staleTime: 60_000,
   })
@@ -27,7 +33,16 @@ export default function KpiStrip({ season }: { season: SeasonNumbers }) {
   let dayLabel = 'All season'
   let daySub = `Jul 1 – Sep 30, ${year}`
   let dayAnomaly = false
-  if (selectedDate) {
+  if (year === 'live') {
+    // No single-day filter exists in live mode (the calendar is
+    // archive-only) — the card names the live window instead.
+    dayLabel = live ? `Last ${live.window.days} days` : liveLoading ? 'Loading…' : 'Live window'
+    daySub = live
+      ? `${formatLiveWindow(live)} · fetched ${new Date(live.fetchedAt).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}`
+      : liveLoading
+        ? 'Fetching live FIRMS data…'
+        : 'Live data unavailable'
+  } else if (selectedDate) {
     const [, m, d] = selectedDate.split('-').map(Number)
     const row = daily?.find((r) => r.date === selectedDate)
     if (row) {

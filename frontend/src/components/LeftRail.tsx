@@ -33,11 +33,20 @@ export default function LeftRail() {
             >
               2026
             </button>
+            <button
+              type="button"
+              className={`live-btn ${year === 'live' ? 'active' : ''}`}
+              onClick={() => setYear('live')}
+            >
+              🔴 Live
+            </button>
           </div>
           <div style={{ fontSize: 11, color: 'var(--muted)', marginTop: 6, lineHeight: 1.5 }}>
             {year === 2023
               ? 'Original season — full archive, Jul–Sep 2023.'
-              : 'Second season — archive + near-real-time, Jul–Sep 2026.'}
+              : year === 2026
+                ? 'Second season — archive + near-real-time, Jul–Sep 2026.'
+                : 'Live — NASA FIRMS near-real-time, last 5 days. Often empty outside fire season.'}
           </div>
         </div>
         <div className="rail-group">

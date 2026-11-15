@@ -35,6 +35,7 @@ import './RealMap.css'
 import { useFireStore, type Layers } from '../store'
 import { api } from '../lib/api'
 import { dataBase } from '../lib/realData'
+import { formatLiveWindow, liveErrorMessage, useLiveData, type LivePoint } from '../lib/liveData'
 import type { FirePoint } from '../data/sample'
 
 const LEAFLET_VERSION = '1.9.4'
@@ -170,6 +171,28 @@ interface GeoCollection {
   features: GeoFeature[]
 }
 
+// Live points -> the GeoFeature shape the plotter already understands,
+// so the map, popup and Inspector code below works unchanged for live
+// data. record_id keeps the LIVE- id (the Inspector shows it as
+// "Record #000123" via the numeric part, same as archive records).
+function livePointToGeo(p: LivePoint): GeoFeature {
+  return {
+    geometry: { coordinates: [p.lon, p.lat] },
+    properties: {
+      record_id: p.id,
+      sensor: p.sensor,
+      satellite: p.satellite,
+      timestamp_utc: p.timestamp_utc,
+      frp_mw: p.frp ?? 0,
+      confidence_raw: p.confidence_raw,
+      match_status: p.match,
+      match_group_id: p.match_group_id,
+      distance_km: p.distance_km,
+      time_diff_hours: p.time_diff_hours,
+    },
+  }
+}
+
 // Same colour rule as the app (App.tsx `apiPoint()`).
 function pointColor(f: GeoFeature): string {
   const p = f.properties
@@ -232,12 +255,17 @@ export default function RealMap() {
   const [timeRange, setTimeRange] = useState<TimeRange>('all')
   const [peakDay, setPeakDay] = useState('')
 
-  // Dataset year — 2023 (/data) or 2026 (/data/2026).
+  // Dataset year — 2023 (/data), 2026 (/data/2026), or 'live' (the
+  // live FIRMS window — points come from the shared live query, not a
+  // GeoJSON day file).
   const year = useFireStore((s) => s.year)
   // The calendar's selected date — null means "full season" (peak day).
+  // Never set in live mode (the calendar is archive-only).
   const selectedDate = useFireStore((s) => s.selectedDate)
   // Control Rail layer toggles — which categories to show.
   const layers = useFireStore((s) => s.layers)
+  // Live window data (shared query — one fetch per selection).
+  const { data: liveData, isLoading: liveLoading, error: liveError } = useLiveData()
   // Clicking a dot also fills the Inspector panel on the right (same as a
   // hero-map dot click). The popup alone is not enough — the panel is
   // where the match evidence lives.
@@ -308,6 +336,9 @@ export default function RealMap() {
   // Effect 2: whenever the selected date or the year changes (or the map
   // becomes ready), re-fetch that day's GeoJSON and re-plot the markers.
   // The year's peak day comes from that year's summary.json.
+  // LIVE MODE: no GeoJSON — the points come from the shared live query.
+  // Loading/error are handled here so the map never shows archive dots
+  // as if they were live, and an empty window shows a clear message.
   useEffect(() => {
     if (!mapReady) return
     let cancelled = false
@@ -319,24 +350,36 @@ export default function RealMap() {
 
       setStatus('loading')
       try {
-        // Null = full season -> this year's peak day (same convention as
-        // realData.ts loadDetections).
-        const peak = selectedDate ? null : await api.seasonInfo(year)
-        if (cancelled) return
-        if (peak) setPeakDay(peak.peakDay)
-        const date = selectedDate ?? peak?.peakDay ?? ''
-        if (!date) throw new Error('No peak day for this year')
-        const res = await fetch(`${dataBase(year)}/points/${date}.geojson`)
-        if (!res.ok) throw new Error(`No data file for ${date}`)
-        const geo = (await res.json()) as GeoCollection
-        if (cancelled) return
+        let all: GeoFeature[]
+        let date = ''
+        if (year === 'live') {
+          // Still fetching — keep the loading overlay; this effect
+          // re-runs when the data (or error) arrives.
+          if (liveLoading) return
+          if (liveError || !liveData) throw new Error(liveErrorMessage(liveError))
+          all = liveData.points.map(livePointToGeo)
+          date = liveData.window.to
+        } else {
+          // Null = full season -> this year's peak day (same convention as
+          // realData.ts loadDetections).
+          const peak = selectedDate ? null : await api.seasonInfo(year)
+          if (cancelled) return
+          if (peak) setPeakDay(peak.peakDay)
+          date = selectedDate ?? peak?.peakDay ?? ''
+          if (!date) throw new Error('No peak day for this year')
+          const res = await fetch(`${dataBase(year)}/points/${date}.geojson`)
+          if (!res.ok) throw new Error(`No data file for ${date}`)
+          const geo = (await res.json()) as GeoCollection
+          if (cancelled) return
 
-        const all = geo.features.filter(
-          (f) =>
-            f.geometry &&
-            Array.isArray(f.geometry.coordinates) &&
-            f.geometry.coordinates.length === 2,
-        )
+          all = geo.features.filter(
+            (f) =>
+              f.geometry &&
+              Array.isArray(f.geometry.coordinates) &&
+              f.geometry.coordinates.length === 2,
+          )
+        }
+
         // Time-of-day filter first (FIRMS-style window), then the Control
         // Rail layer toggles, then the strided sample so the plotted points
         // spread across California.
@@ -399,13 +442,18 @@ export default function RealMap() {
     return () => {
       cancelled = true
     }
-  }, [selectedDate, year, mapReady, timeRange, layers])
+  }, [selectedDate, year, mapReady, timeRange, layers, liveData, liveLoading, liveError])
 
-  const dateLine = selectedDate
-    ? `Selected day ${prettyDate(selectedDate)} · NASA FIRMS · MODIS C6.1 + VIIRS 375 m (NOAA-20 + S-NPP)`
-    : peakDay
-      ? `Peak day ${prettyDate(peakDay)} · NASA FIRMS · MODIS C6.1 + VIIRS 375 m (NOAA-20 + S-NPP)`
-      : `NASA FIRMS · MODIS C6.1 + VIIRS 375 m (NOAA-20 + S-NPP)`
+  const dateLine =
+    year === 'live'
+      ? liveData
+        ? `🔴 Live — last ${liveData.window.days} days (${formatLiveWindow(liveData)}) · NASA FIRMS NRT · fetched ${new Date(liveData.fetchedAt).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}`
+        : '🔴 Live — last 5 days · NASA FIRMS NRT'
+      : selectedDate
+        ? `Selected day ${prettyDate(selectedDate)} · NASA FIRMS · MODIS C6.1 + VIIRS 375 m (NOAA-20 + S-NPP)`
+        : peakDay
+          ? `Peak day ${prettyDate(peakDay)} · NASA FIRMS · MODIS C6.1 + VIIRS 375 m (NOAA-20 + S-NPP)`
+          : `NASA FIRMS · MODIS C6.1 + VIIRS 375 m (NOAA-20 + S-NPP)`
 
   return (
     <div className="realmap-card">
@@ -416,7 +464,9 @@ export default function RealMap() {
         </div>
         <span className="realmap-pill">
           {status === 'ready'
-            ? `${shown.toLocaleString()} REAL POINTS SHOWN`
+            ? year === 'live' && total === 0
+              ? 'NO LIVE DETECTIONS'
+              : `${shown.toLocaleString()} ${year === 'live' ? 'LIVE' : 'REAL'} POINTS SHOWN`
             : status === 'error'
               ? 'MAP UNAVAILABLE'
               : 'LOADING…'}
@@ -454,7 +504,9 @@ export default function RealMap() {
           </span>
         </div>
         {status === 'loading' && (
-          <div className="realmap-overlay">Loading real map…</div>
+          <div className="realmap-overlay">
+            {year === 'live' ? 'Fetching live FIRMS data…' : 'Loading real map…'}
+          </div>
         )}
         {status === 'error' && (
           <div className="realmap-overlay realmap-overlay-error">
@@ -465,11 +517,26 @@ export default function RealMap() {
             </button>
           </div>
         )}
+        {status === 'ready' && year === 'live' && total === 0 && (
+          // Empty live window — expected outside fire season, not a bug.
+          // Say so plainly instead of leaving an unexplained empty map.
+          <div className="realmap-overlay">
+            No active detections in California in the last {liveData?.window.days ?? 5} days.
+            <br />
+            <span style={{ fontSize: 12, opacity: 0.85 }}>
+              Fire season is over — switch to 2023 or 2026 to explore an archive season.
+            </span>
+          </div>
+        )}
       </div>
 
       <div className="realmap-foot">
         {status === 'ready'
-          ? `${shown.toLocaleString()} real detections plotted (strided sample of ${total.toLocaleString()} on ${prettyDate(shownDate)}${timeRange === 'all' ? '' : `, ${timeRangeLabel(timeRange)} UTC`}). Click a dot for its sensor, FRP and match status. Basemap © Esri, Maxar, Earthstar Geographics, and the GIS user community.`
+          ? year === 'live'
+            ? total === 0
+              ? `No live detections in the last ${liveData?.window.days ?? 5} days${liveData ? ` (${formatLiveWindow(liveData)})` : ''}. Fire season is over — the satellites see nothing burning right now.`
+              : `${shown.toLocaleString()} live detections plotted (strided sample of ${total.toLocaleString()} in the last ${liveData?.window.days ?? 5} days). Click a dot for its sensor, FRP and match status. Basemap © Esri, Maxar, Earthstar Geographics, and the GIS user community.`
+            : `${shown.toLocaleString()} real detections plotted (strided sample of ${total.toLocaleString()} on ${prettyDate(shownDate)}${timeRange === 'all' ? '' : `, ${timeRangeLabel(timeRange)} UTC`}). Click a dot for its sensor, FRP and match status. Basemap © Esri, Maxar, Earthstar Geographics, and the GIS user community.`
           : 'Real detections from NASA FIRMS, plotted on a real geographic basemap.'}
       </div>
     </div>
