@@ -8,7 +8,7 @@
 [![Team](https://img.shields.io/badge/Team-HR_Pyrovanta_(%23786)-FF0000?style=for-the-badge)](#)
 [![Python](https://img.shields.io/badge/Python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)](#)
 [![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](#)
-[![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)](#)
+[![Groq AI](https://img.shields.io/badge/Powered_by-Groq_AI-F55036?style=for-the-badge&logo=groq&logoColor=white)](#)
 
 *Challenge: Harmonization of MODIS and VIIRS Hot Spots*
 
@@ -22,7 +22,8 @@
   
   - [📖 What is FireFusion AI?](#-what-is-firefusion-ai)
   - [📊 Headline Results](#-headline-results)
-  - [✨ Key Features](#-key-features)
+  - [🧠 AI-Powered Analytics (NEW)](#-ai-powered-analytics-new)
+  - [✨ Core Platform Features](#-core-platform-features)
   - [⚙️ Architecture & Data Flow](#️-architecture--data-flow)
   - [🚀 The Future](#-the-future)
   - [💻 Getting Started](#-getting-started)
@@ -53,19 +54,31 @@ Users can instantly switch between three distinct datasets directly from the UI:
 | :--- | :--- | :--- |
 | **Total Records** | **39,899** (MODIS: 3,721 \| VIIRS: 36,178) | **33,027** Records |
 | **Confirmed Matches** | **98** (One-to-one matched pairs) | **64** Matched pairs |
+| **Match Coverage** | **2.6%** | **1.9%** |
 | **Ambiguous Groups** | **954** candidate groups | - |
 | **Unmatched Records**| **23,559** detections | - |
-| **Busiest Day** | 19 August 2023 *(2,111 detections)* | - |
+| **Peak Busiest Day** | **19 Aug 2023** *(2,111 detections)* | **11 Aug 2026** *(1,414 detections)* |
 
 ---
 
-## ✨ Key Features
+## 🧠 AI-Powered Analytics (NEW)
+
+FireFusion AI now integrates real-time, data-grounded AI analysis powered by **Groq (`openai/gpt-oss-120b`)**. *Note: The AI strictly quotes real FIRMS data and never invents numbers.*
+
+* ⚖️ **Season Comparison (AI):** One click on <kbd>✦ Compare seasons</kbd> in the Comparison Lab prompts the AI to evaluate the 2023 and 2026 California fire seasons side-by-side. It breaks down total records, matched pairs, match coverage, ambiguous groups, peak days, and FRP correlation. *(Covers archive seasons only; Live mode displays a contextual note).*
+* 📅 **Explain this Day (AI):** Every row in the Anomalous days panel features an <kbd>✦ Explain</kbd> button. Clicking it generates an inline, plain-English narration of that day using its real numbers: total detections, MODIS/VIIRS split, daily average multipliers, flagging sensor, robust-z score, and strongest FRP. Explanations are cached per day for instant re-opening.
+* 🤖 **Ask FireFusion AI (FIRA):** A conversational chat panel embedded directly in the app, ready to answer custom questions from your real data.
+
+> ⚠️ **Fallback Grace:** If the `GROQ_API_KEY` is not configured in Vercel, the panels gracefully display *"AI isn't connected yet"* without breaking the app.
+
+---
+
+## ✨ Core Platform Features
 
 * 🗺️ **Guided Tour & Interactive Map:** A guided tour walks first-time users through the platform. The map lets you toggle layers by sensor and matching status. Click any dot to inspect its sensor, FRP, confidence, and match status.
 * 📈 **Dashboard & Explainers:** View detection counts instantly. Includes a **"Why is the match rate only 2.6%?" Explainer** button on the Match Coverage KPI that breaks down the scientific reasons in plain English.
 * 🗓️ **Activity Calendar:** Track daily MODIS and VIIRS activity with anomaly outlines. 
 * 🧪 **Comparison Lab & Anomalies:** Test sensitivity to distance and time windows across satellite pairs. Includes an **Anomaly Explainer** that lists flagged days—clicking any specific day instantly jumps the map to that date.
-* 🤖 **Ask FireFusion AI (FIRA):** FIRA is a data-grounded storyteller. Now upgraded with a **Groq-powered chat panel** embedded in the app that answers questions directly from your real data. It never invents causes or impacts.
 * 📥 **Export Ready:** Downloadable harmonized datasets directly from the UI.
 
 ---
@@ -81,7 +94,7 @@ graph LR
     C -->|One-to-One Matches| D[Exported CSVs / JSONs]
     C -->|Ambiguous/Unmatched| D
     D -->|Static API via public/data| E((React + Vite Web App))
-    E <-->|Real-time Q&A| F[Groq API / FIRA Chat]
+    E <-->|Groq gpt-oss-120b| F[AI Features & FIRA]
 ```
 
 <details>
@@ -126,7 +139,7 @@ npm run dev
 npm run build        
 npm run preview      # Serve the production build locally
 ```
-> ⚠️ **Note:** The Groq API key is required in your `.env` file for the "Ask FireFusion AI" real-time chat feature to function.
+> 🔑 **Environment Variables:** Create a `.env` file and add your `VITE_GROQ_API_KEY` (or configure `GROQ_API_KEY` in Vercel) for the AI features to function.
 
 <details>
 <summary><b>⚠️ View Limitations & Disclaimers</b></summary>
@@ -150,13 +163,13 @@ npm run preview      # Serve the production build locally
 
 | Name | Role | Responsibilities |
 | :--- | :--- | :--- |
-| **[Hina Ramzan](https://www.linkedin.com/in/hina-ramzan/)** | 👑 Team Leader | Integration, deployment, demo video, submission |
+| **[Hina Ramzan](https://www.linkedin.com/in/hina-ramzan/)** | 👑 Team Leader / Owner | Integration, deployment, README, demo video, submission |
 | **[Muhammad Ihsan](https://www.linkedin.com/in/muhammad-ihsan-445350320/)** | 💾 Data Engineer | Data download, readiness gate, audit, provenance, exports, FIRA narration |
-| **[Hasnain Ahmad](https://www.linkedin.com/in/hasnain-ahmad-047210349/)** | 🔬 Science Lead | Harmonization, sensitivity analysis, FRP correlation, anomaly detection, tests, README |
-| **[Sharjeel Sarwar](https://www.linkedin.com/in/sharjeel-sarwar-a18414327/)** | 💻 Frontend Developer + AI Analysis| App shell, dashboard, map, calendar, comparison lab, FIRA panel, downloads, Anamoly explainer, AI chat panel, Hormonization |
+| **[Hasnain Ahmad](https://www.linkedin.com/in/hasnain-ahmad-047210349/)** | 🔬 Science Lead | Harmonization, sensitivity analysis, FRP correlation, anomaly detection, tests |
+| **[Sharjeel Sarwar](https://www.linkedin.com/in/sharjeel-sarwar-a18414327/)** | 💻 Frontend Developer | App shell, dashboard, map, calendar, comparison lab, FIRA panel, downloads |
 | **[Zukhraf Maryam](https://www.linkedin.com/in/zukhraf-maryam-275321293/)** | 🎨 Presentation | Slide deck creation, visual storytelling, pitch preparation, formatting |
 
 <div align="center">
   <br>
-  <i>Built for the NASA Space Apps Challenge 2026 </i>
+  <i>Built for the NASA Space Apps Challenge 2026</i>
 </div>
