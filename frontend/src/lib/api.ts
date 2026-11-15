@@ -122,7 +122,7 @@ export interface Health {
   data_ready: boolean
 }
 
-import { loadComparison, loadDaily, loadDetections, loadFira, loadMeta, loadSummary } from './realData'
+import { dataBase, loadComparison, loadDaily, loadDetections, loadFira, loadMeta, loadSeasonInfo, loadSummary } from './realData'
 
 async function get<T>(path: string, params?: Record<string, string>): Promise<T> {
   // No backend configured on a deployed site — do not fire a request at
@@ -145,52 +145,58 @@ async function get<T>(path: string, params?: Record<string, string>): Promise<T>
 // embedded demo sample, with no backend deployed. When VITE_API_URL is
 // set to a real backend, the backend wins and the static files are only
 // a fallback.
+//
+// YEAR SELECTOR (2026-11-15): every method takes the dataset year first
+// (2023 = /data, 2026 = /data/2026). The backend path ignores the year
+// (it serves its own data); the static fallback uses it.
 export const api = {
-  meta: async () => {
+  meta: async (year = 2023) => {
     try {
       return await get<Meta>('/meta')
     } catch {
-      return loadMeta()
+      return loadMeta(year)
     }
   },
-  summary: async (from?: string, to?: string) => {
+  summary: async (year = 2023, from?: string, to?: string) => {
     try {
       return await get<Summary>('/summary', { ...(from ? { from } : {}), ...(to ? { to } : {}) })
     } catch {
-      return loadSummary()
+      return loadSummary(year)
     }
   },
-  detections: async (params?: Record<string, string>) => {
+  detections: async (year = 2023, params?: Record<string, string>) => {
     try {
       return await get<DetectionsResponse>('/detections', params)
     } catch {
-      return loadDetections(Number(params?.limit ?? 200))
+      return loadDetections(Number(params?.limit ?? 200), year)
     }
   },
   detection: (id: string | number) => get<DetectionDetail>(`/detections/${id}`),
-  daily: async (from?: string, to?: string) => {
+  daily: async (year = 2023, from?: string, to?: string) => {
     try {
       return await get<DailyRow[]>('/daily', { ...(from ? { from } : {}), ...(to ? { to } : {}) })
     } catch {
-      return loadDaily()
+      return loadDaily(year)
     }
   },
-  comparison: async () => {
+  comparison: async (year = 2023) => {
     try {
       return await get<Comparison>('/comparison')
     } catch {
-      return loadComparison()
+      return loadComparison(year)
     }
   },
   anomalies: () => get<Anomaly[]>('/anomalies'),
-  fira: async (date?: string, groupId?: string) => {
+  fira: async (year = 2023, date?: string, groupId?: string) => {
     try {
       return await get<FiraResponse>('/fira', { ...(date ? { date } : {}), ...(groupId ? { group_id: groupId } : {}) })
     } catch {
-      return loadFira(date)
+      return loadFira(date, year)
     }
   },
   health: () => get<Health>('/health'),
-  downloadUrl: (file: 'harmonized.csv' | 'comparison.csv') =>
-    `${import.meta.env.BASE_URL}data/${file}`,
+  downloadUrl: (year: number, file: 'harmonized.csv' | 'comparison.csv') =>
+    `${import.meta.env.BASE_URL}data${year === 2026 ? '/2026' : ''}/${file}`,
+  // Peak day + season total for a year (from that year's summary.json).
+  seasonInfo: (year = 2023) => loadSeasonInfo(year),
 }

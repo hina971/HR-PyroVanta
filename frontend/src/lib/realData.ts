@@ -11,6 +11,13 @@
 // the frontend does it here, from static files — no backend needed.
 // When a real backend is deployed and VITE_API_URL is set, api.ts tries
 // it first and only falls back to these loaders.
+//
+// YEAR SELECTOR (2026-11-15): every loader takes a year. 2023 reads
+// /data (the original season); 2026 reads /data/2026 (the second dataset,
+// FIRMS archive + NRT, Jul–Sep 2026). The peak day and season total are
+// NOT hardcoded — loadSeasonInfo() reads them from that year's
+// summary.json, so the hero map and the real map always use the right
+// peak day for the selected year.
 import type {
   Comparison,
   DailyRow,
@@ -21,11 +28,13 @@ import type {
   Summary,
 } from './api'
 
-const DATA = '/data'
+export function dataBase(year: number): string {
+  return year === 2026 ? '/data/2026' : '/data'
+}
 
-async function fetchJson<T>(path: string): Promise<T> {
-  const res = await fetch(`${DATA}${path}`)
-  if (!res.ok) throw new Error(`Missing static data file: ${path}`)
+async function fetchJson<T>(path: string, year: number): Promise<T> {
+  const res = await fetch(`${dataBase(year)}${path}`)
+  if (!res.ok) throw new Error(`Missing static data file: ${path} (year ${year})`)
   return (await res.json()) as T
 }
 
@@ -52,8 +61,8 @@ interface RawSummary {
   }
 }
 
-export async function loadSummary(): Promise<Summary> {
-  const raw = await fetchJson<RawSummary>('/summary.json')
+export async function loadSummary(year: number): Promise<Summary> {
+  const raw = await fetchJson<RawSummary>('/summary.json', year)
   const c = raw.counts
   return {
     modis: c.modis,
@@ -67,7 +76,18 @@ export async function loadSummary(): Promise<Summary> {
     mean_frp_modis: raw.by_sensor.MODIS.mean_frp_mw,
     mean_frp_viirs: raw.by_sensor.VIIRS.mean_frp_mw,
     peak_day: raw.peak_day.date,
-    summary_line: `Across Jul–Sep 2023, MODIS recorded ${c.modis.toLocaleString()} detections and VIIRS recorded ${c.viirs.toLocaleString()}. FireFusion confirmed ${c.matched_pairs.toLocaleString()} one-to-one matched pairs (${raw.match_coverage.MODIS.match_coverage_pct.toFixed(2)}% of MODIS) and kept ${c.ambiguous_groups.toLocaleString()} candidate groups ambiguous. Peak day ${raw.peak_day.date} (${raw.peak_day.total.toLocaleString()} detections).`,
+    summary_line: `Across Jul–Sep ${year}, MODIS recorded ${c.modis.toLocaleString()} detections and VIIRS recorded ${c.viirs.toLocaleString()}. FireFusion confirmed ${c.matched_pairs.toLocaleString()} one-to-one matched pairs (${raw.match_coverage.MODIS.match_coverage_pct.toFixed(2)}% of MODIS) and kept ${c.ambiguous_groups.toLocaleString()} candidate groups ambiguous. Peak day ${raw.peak_day.date} (${raw.peak_day.total.toLocaleString()} detections).`,
+  }
+}
+
+// Peak day + season total for a year, read from that year's summary.json.
+// Used by loadDetections() and RealMap so neither hardcodes a 2023 date.
+export async function loadSeasonInfo(year: number): Promise<{ peakDay: string; peakTotal: number; total: number }> {
+  const raw = await fetchJson<RawSummary>('/summary.json', year)
+  return {
+    peakDay: raw.peak_day.date,
+    peakTotal: raw.peak_day.total,
+    total: raw.counts.modis + raw.counts.viirs,
   }
 }
 
@@ -86,8 +106,8 @@ interface RawDailyRow {
   flagged: boolean
 }
 
-export async function loadDaily(): Promise<DailyRow[]> {
-  const raw = await fetchJson<RawDailyRow[]>('/daily.json')
+export async function loadDaily(year: number): Promise<DailyRow[]> {
+  const raw = await fetchJson<RawDailyRow[]>('/daily.json', year)
   const byDate = new Map<string, DailyRow>()
   for (const r of raw) {
     let row = byDate.get(r.date)
@@ -144,8 +164,8 @@ interface RawComparison {
   day_night_split: Record<string, { day: number; night: number }>
 }
 
-export async function loadComparison(): Promise<Comparison> {
-  const raw = await fetchJson<RawComparison>('/comparison.json')
+export async function loadComparison(year: number): Promise<Comparison> {
+  const raw = await fetchJson<RawComparison>('/comparison.json', year)
   return {
     sensitivity: raw.sensitivity.map((r) => ({
       radius_km: r.radius_km,
@@ -173,8 +193,8 @@ interface RawFira {
   days: Record<string, string>
 }
 
-export async function loadFira(date?: string): Promise<FiraResponse> {
-  const raw = await fetchJson<RawFira>('/fira_narration.json')
+export async function loadFira(date: string | undefined, year: number): Promise<FiraResponse> {
+  const raw = await fetchJson<RawFira>('/fira_narration.json', year)
   const text = (date && raw.days[date]) || raw.season
   return { text, source: 'NASA FIRMS harmonization (MODIS C6.1 / VIIRS 375 m)' }
 }
@@ -192,8 +212,8 @@ interface RawConfig {
   attribution: string
 }
 
-export async function loadMeta(): Promise<Meta> {
-  const raw = await fetchJson<RawConfig>('/config.json')
+export async function loadMeta(year: number): Promise<Meta> {
+  const raw = await fetchJson<RawConfig>('/config.json', year)
   return {
     region: raw.region_name,
     bbox: raw.bbox,
@@ -208,15 +228,12 @@ export async function loadMeta(): Promise<Meta> {
 // ---------------------------------------------------------------------------
 // points/<date>.geojson -> DetectionsResponse
 // The map is a season overview and the app asks for one season sample
-// (limit 200), so we load the peak day (2023-08-19, 2,111 detections —
-// the most representative day) and take a strided sample across the
-// whole state so the dots spread like the demo's clusters. Every dot
-// is a real detection: real lat/lon, FRP, confidence, match status,
-// and (for matched pairs) the real partner distance / time gap.
+// (limit 700), so we load the year's PEAK day (the most representative
+// day) and take a strided sample across the whole state so the dots
+// spread like the demo's clusters. Every dot is a real detection: real
+// lat/lon, FRP, confidence, match status, and (for matched pairs) the
+// real partner distance / time gap.
 // ---------------------------------------------------------------------------
-const PEAK_DAY = '2023-08-19'
-const SEASON_TOTAL = 39899
-
 interface GeoFeature {
   type: string
   geometry: { type: string; coordinates: [number, number] }
@@ -259,12 +276,13 @@ function toDetection(f: GeoFeature): Detection {
   } as Detection & { distance_km: number | null; time_diff_hours: number | null }
 }
 
-export async function loadDetections(limit = 200): Promise<DetectionsResponse> {
-  const geo = await fetchJson<GeoCollection>(`/points/${PEAK_DAY}.geojson`)
+export async function loadDetections(limit = 200, year = 2023): Promise<DetectionsResponse> {
+  const { peakDay, total } = await loadSeasonInfo(year)
+  const geo = await fetchJson<GeoCollection>(`/points/${peakDay}.geojson`, year)
   const all = geo.features.map(toDetection)
   // Strided sample so the dots spread across California, not clumped.
   const step = Math.max(1, Math.floor(all.length / limit))
   const items: Detection[] = []
   for (let i = 0; i < all.length && items.length < limit; i += step) items.push(all[i])
-  return { items, total: SEASON_TOTAL, sampled: true, limit }
+  return { items, total, sampled: true, limit }
 }
