@@ -20,7 +20,7 @@ const STEPS: Step[] = [
   {
     target: '.topbar',
     title: 'Welcome to FireFusion AI',
-    text: 'This dashboard harmonizes NASA MODIS and VIIRS fire detections for California, July to September 2023. FIRA narrates what the data shows — this tour walks you through every view.',
+    text: 'This dashboard harmonizes NASA MODIS and VIIRS fire detections for California, July to September 2023. FIRA narrates what the data shows — this tour walks you through every feature.',
     view: 'dashboard',
   },
   {
@@ -30,15 +30,27 @@ const STEPS: Step[] = [
     view: 'dashboard',
   },
   {
+    target: '.year-seg',
+    title: 'Dataset — pick a season, or go Live',
+    text: '2023 and 2026 are the two full archive fire seasons. 🔴 Live switches to NASA FIRMS near-real-time data for the last 5 days — every number, the map and the KPIs follow the dataset you pick.',
+    view: 'dashboard',
+  },
+  {
     target: '#kpis',
     title: 'Summary cards',
     text: 'MODIS and VIIRS detections, confirmed matched pairs, and match coverage. Pick a day in the calendar and these numbers update to that day.',
     view: 'dashboard',
   },
   {
+    target: '.match-why',
+    title: 'Why is the match rate so low?',
+    text: 'Tap this button on the Match Coverage card and the explainer breaks the number down in plain English — the matched / ambiguous / unmatched split, plus the four reasons the method is strict on purpose. No AI key needed; every figure comes from the loaded data.',
+    view: 'dashboard',
+  },
+  {
     target: '#mainMap',
     title: 'Interactive fire map',
-    text: 'Every dot is a detection. Lime means a confirmed one-to-one match, rose means an ambiguous group. Click any point to inspect its record.',
+    text: 'Every dot is a real detection. Lime means a confirmed one-to-one match, rose means an ambiguous group. Click any point and the Inspector panel shows its sensor, satellite, FRP, confidence and match status. The Time (UTC) bar above the map filters part of the day.',
     view: 'dashboard',
   },
   {
@@ -48,21 +60,39 @@ const STEPS: Step[] = [
     view: 'dashboard',
   },
   {
-    target: '.tabs',
-    title: 'Two views',
-    text: 'Dashboard holds the map and calendar. The Sensor Comparison Lab tests whether the result survives different matching thresholds. Let’s go there next.',
+    target: '#view-lab',
+    title: 'Sensor Comparison Lab — the second view',
+    text: 'Switch between Dashboard and the Lab with the tabs above the map. The Lab tests whether the result survives different matching thresholds: change the time window and the satellite pair and the bars recompute from the real sensitivity table. Match coverage falls as the radius grows — wider radius pulls in more candidates and turns clean pairs ambiguous. FRP is compared, never summed.',
     view: 'lab',
   },
   {
-    target: '#view-lab',
-    title: 'Sensor Comparison Lab',
-    text: 'Change the time window and the satellite pair and the bars recompute from the real sensitivity table. Match coverage falls as the radius grows — wider radius pulls in more candidates and turns clean pairs ambiguous. FRP is compared, never summed.',
+    target: '.cmp-btn',
+    title: 'Compare seasons — AI',
+    text: 'One click and the AI compares the 2023 and 2026 fire seasons side by side from the real data: totals, matched pairs, coverage, peak days, and how the FRP correlation flipped between seasons. Needs the Groq key on the live site; without it you get a plain "AI isn’t connected yet" note.',
     view: 'lab',
+  },
+  {
+    target: '.anom-btn',
+    title: 'Anomalous days — and Explain this day',
+    text: 'Lists the season’s flagged days — the ones far above the daily average — and clicking one jumps the map and calendar straight to it. The ✦ Explain button on each row asks the AI to narrate that day in plain English from its real numbers.',
+    view: 'lab',
+  },
+  {
+    target: '.ask-fab',
+    title: 'Ask FireFusion AI',
+    text: 'The floating button opens a chat panel: ask anything about the data — "Why did fires peak on 19 Aug 2023?" or "Compare 2023 and 2026" — and the answer is grounded only in the loaded season data, with figures quoted. Needs the Groq key on the live site.',
+    view: 'dashboard',
   },
   {
     target: '#firaText',
     title: 'FIRA, the storyteller',
     text: 'Template-driven narration from the computed results only — it never invents causes, impacts or casualties. Replay it any time, or take this tour again from here.',
+    view: 'dashboard',
+  },
+  {
+    target: '.downloads',
+    title: 'Take the data with you',
+    text: 'Download the full harmonized season (harmonized.csv) or the 36-row sensitivity table (comparison.csv). Downloads follow the selected season — and in Live mode they say so plainly, because live detections aren’t archived yet.',
     view: 'dashboard',
   },
   {

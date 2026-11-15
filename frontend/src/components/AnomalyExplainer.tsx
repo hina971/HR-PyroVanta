@@ -32,6 +32,8 @@ import { useEffect, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { useFireStore } from '../store'
 import { api, type DailyRow } from '../lib/api'
+import { buildAskContext, buildLiveAskContext } from '../lib/askContext'
+import { NOT_CONNECTED_MSG, postAsk } from '../lib/askApi'
 import { useLiveData } from '../lib/liveData'
 
 const fmt = (n: number) => n.toLocaleString()
@@ -59,6 +61,14 @@ export default function AnomalyExplainer() {
   const setMonth = useFireStore((s) => s.setMonth)
   const setView = useFireStore((s) => s.setView)
   const [open, setOpen] = useState(false)
+
+  // "Explain this day" (AI, v26): per-day explanation state, keyed by
+  // date (live rows use a `live-` prefix). The answer is cached per day
+  // so re-opening a row doesn't re-ask. The explanation opens inline,
+  // under the row — the row's jump behaviour is untouched.
+  type ExplainState = { status: 'loading' | 'done' | 'err'; text: string }
+  const [explaining, setExplaining] = useState<Record<string, ExplainState>>({})
+  const [explainOpen, setExplainOpen] = useState<string | null>(null)
 
   // Same query key as KpiStrip / CalendarDock — shared, not refetched.
   // Disabled in live mode (archive loaders throw for 'live').
@@ -141,6 +151,74 @@ export default function AnomalyExplainer() {
     )
   }
 
+  // ---- "Explain this day" (AI, v26) ----
+  // The day's own numbers are put first in the context (verbatim from
+  // the loaded row), then the season context from askContext.ts — the
+  // model answers ONLY from those numbers. No figure is hardcoded.
+  async function explainArchiveDay(d: AnomDay) {
+    if (year === 'live') return
+    // Toggle: re-tapping a row that already has its answer just closes it.
+    if (explainOpen === d.date && explaining[d.date]?.status === 'done') {
+      setExplainOpen(null)
+      return
+    }
+    setExplainOpen(d.date)
+    if (explaining[d.date]?.status === 'done') return
+    setExplaining((m) => ({ ...m, [d.date]: { status: 'loading', text: '' } }))
+    try {
+      const dayBlock =
+        `Day under discussion: ${fmtDateShort(d.date)} — ${fmt(d.total)} detections ` +
+        `(MODIS ${fmt(d.modis)}, VIIRS ${fmt(d.viirs)}), ${d.mult.toFixed(1)}× the season daily average of ` +
+        `${fmt(Math.round(seasonAvg))}, flagged on ${d.maxZSensor} (robust-z ${d.maxZ.toFixed(1)}), ` +
+        `strongest single detection ${fmt(Math.round(d.maxFrp))} MW.`
+      const seasonContext = await buildAskContext(year, `Explain the fires on ${fmtDateShort(d.date)}`)
+      const res = await postAsk(
+        `Explain the fire detections on ${fmtDateShort(d.date)} in plain English, using only these numbers.`,
+        `${dayBlock}\n\n${seasonContext}`,
+      )
+      setExplaining((m) => ({
+        ...m,
+        [d.date]: res.ok ? { status: 'done', text: res.answer } : { status: 'err', text: res.error },
+      }))
+    } catch {
+      setExplaining((m) => ({ ...m, [d.date]: { status: 'err', text: NOT_CONNECTED_MSG } }))
+    }
+  }
+
+  // Live rows are busiest days, not anomalies — no FRP, no robust-z.
+  // Explain only what the live window supports, and say so in the
+  // context, so the model cannot invent intensity or a flag.
+  async function explainLiveDay(d: { date: string; modis: number; viirs: number; total: number }) {
+    const key = `live-${d.date}`
+    if (explainOpen === key && explaining[key]?.status === 'done') {
+      setExplainOpen(null)
+      return
+    }
+    setExplainOpen(key)
+    if (explaining[key]?.status === 'done' || !live.data) return
+    setExplaining((m) => ({ ...m, [key]: { status: 'loading', text: '' } }))
+    try {
+      const dayBlock =
+        `Day under discussion: ${fmtDateShort(d.date)} — ${fmt(d.total)} detections ` +
+        `(MODIS ${fmt(d.modis)}, VIIRS ${fmt(d.viirs)}), ` +
+        `${liveAvg > 0 ? (d.total / liveAvg).toFixed(1) : '—'}× the live window average of ` +
+        `${fmt(Math.round(liveAvg))} detections per day. This is a live near-real-time day: ` +
+        `no FRP and no robust-z score exist for it, so say nothing about fire intensity or ` +
+        `statistical anomaly — only the counts.`
+      const windowContext = await buildLiveAskContext(live.data, `Explain the fires on ${fmtDateShort(d.date)}`)
+      const res = await postAsk(
+        `Explain the fire detections on ${fmtDateShort(d.date)} in plain English, using only these numbers.`,
+        `${dayBlock}\n\n${windowContext}`,
+      )
+      setExplaining((m) => ({
+        ...m,
+        [key]: res.ok ? { status: 'done', text: res.answer } : { status: 'err', text: res.error },
+      }))
+    } catch {
+      setExplaining((m) => ({ ...m, [key]: { status: 'err', text: NOT_CONNECTED_MSG } }))
+    }
+  }
+
   const seasonLabel = isLive
     ? live.data
       ? `Live window · last ${live.data.window.days} days`
@@ -211,17 +289,41 @@ export default function AnomalyExplainer() {
                   </p>
                   <ul className="anom-list">
                     {liveDays.map((d) => (
-                      <li key={d.date} className="anom-row">
-                        <div className="anom-row-main">
-                          <b>{fmtDateShort(d.date)}</b>
-                          <span>
-                            {fmt(d.total)} detections — {liveAvg > 0 ? (d.total / liveAvg).toFixed(1) : '—'}×
-                            the window average of {fmt(Math.round(liveAvg))}
-                          </span>
+                      <li key={d.date} className="anom-item">
+                        <div className="anom-row">
+                          <div className="anom-row-jump anom-row-static">
+                            <div className="anom-row-main">
+                              <b>{fmtDateShort(d.date)}</b>
+                              <span>
+                                {fmt(d.total)} detections — {liveAvg > 0 ? (d.total / liveAvg).toFixed(1) : '—'}×
+                                the window average of {fmt(Math.round(liveAvg))}
+                              </span>
+                            </div>
+                            <span className="anom-row-sub">
+                              MODIS {fmt(d.modis)} · VIIRS {fmt(d.viirs)}
+                            </span>
+                          </div>
+                          <button
+                            className="anom-explain-btn"
+                            onClick={() => void explainLiveDay(d)}
+                            disabled={explaining[`live-${d.date}`]?.status === 'loading'}
+                            aria-label={`Explain ${fmtDateShort(d.date)} with AI`}
+                            title="Ask the AI to explain this day in plain English"
+                          >
+                            {explaining[`live-${d.date}`]?.status === 'loading' ? 'Explaining…' : '✦ Explain'}
+                          </button>
                         </div>
-                        <span className="anom-row-sub">
-                          MODIS {fmt(d.modis)} · VIIRS {fmt(d.viirs)}
-                        </span>
+                        {explainOpen === `live-${d.date}` && explaining[`live-${d.date}`] && (
+                          <div
+                            className={`anom-explain-box ${
+                              explaining[`live-${d.date}`].status === 'err' ? 'anom-explain-err' : ''
+                            }`}
+                          >
+                            {explaining[`live-${d.date}`].status === 'loading'
+                              ? 'Explaining…'
+                              : explaining[`live-${d.date}`].text}
+                          </div>
+                        )}
                       </li>
                     ))}
                   </ul>
@@ -244,28 +346,50 @@ export default function AnomalyExplainer() {
                 <p className="anom-note">
                   <b>{anomDays.length} anomalous days</b> in {year} · season daily average{' '}
                   <b>{fmt(Math.round(seasonAvg))} detections</b> · click a day to jump the map
-                  to it.
+                  to it · <b>✦ Explain</b> narrates it with AI.
                 </p>
                 <ul className="anom-list">
                   {anomDays.map((d) => (
-                    <li key={d.date}>
-                      <button
-                        className="anom-row"
-                        onClick={() => jumpToDay(d.date)}
-                        title={`Jump the map to ${fmtDateShort(d.date)}`}
-                      >
-                        <div className="anom-row-main">
-                          <b>{fmtDateShort(d.date)}</b>
-                          <span>
-                            {fmt(d.total)} detections — {d.mult.toFixed(1)}× the daily average
+                    <li key={d.date} className="anom-item">
+                      <div className="anom-row">
+                        <button
+                          className="anom-row-jump"
+                          onClick={() => jumpToDay(d.date)}
+                          title={`Jump the map to ${fmtDateShort(d.date)}`}
+                        >
+                          <div className="anom-row-main">
+                            <b>{fmtDateShort(d.date)}</b>
+                            <span>
+                              {fmt(d.total)} detections — {d.mult.toFixed(1)}× the daily average
+                            </span>
+                          </div>
+                          <span className="anom-row-sub">
+                            Flagged on {d.maxZSensor} (robust-z {d.maxZ.toFixed(1)}) · strongest
+                            single detection {fmt(Math.round(d.maxFrp))} MW · MODIS {fmt(d.modis)} · VIIRS{' '}
+                            {fmt(d.viirs)}
                           </span>
+                        </button>
+                        <button
+                          className="anom-explain-btn"
+                          onClick={() => void explainArchiveDay(d)}
+                          disabled={explaining[d.date]?.status === 'loading'}
+                          aria-label={`Explain ${fmtDateShort(d.date)} with AI`}
+                          title="Ask the AI to explain this day in plain English"
+                        >
+                          {explaining[d.date]?.status === 'loading' ? 'Explaining…' : '✦ Explain'}
+                        </button>
+                      </div>
+                      {explainOpen === d.date && explaining[d.date] && (
+                        <div
+                          className={`anom-explain-box ${
+                            explaining[d.date].status === 'err' ? 'anom-explain-err' : ''
+                          }`}
+                        >
+                          {explaining[d.date].status === 'loading'
+                            ? 'Explaining…'
+                            : explaining[d.date].text}
                         </div>
-                        <span className="anom-row-sub">
-                          Flagged on {d.maxZSensor} (robust-z {d.maxZ.toFixed(1)}) · strongest
-                          single detection {fmt(Math.round(d.maxFrp))} MW · MODIS {fmt(d.modis)} · VIIRS{' '}
-                          {fmt(d.viirs)}
-                        </span>
-                      </button>
+                      )}
                     </li>
                   ))}
                 </ul>
